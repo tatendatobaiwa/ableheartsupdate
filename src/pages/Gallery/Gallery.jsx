@@ -2,10 +2,10 @@ import React, { useState, useEffect, memo } from 'react';
 import './Gallery.css';
 
 const blobImages = [
-  '/src/assets/fixed/icons/blob1.webp',
-  '/src/assets/fixed/icons/blob3.webp',
-  '/src/assets/fixed/icons/blob4.webp',
-  '/src/assets/fixed/icons/blob2.webp',
+  '/assets/fixed/icons/blob1.webp',
+  '/assets/fixed/icons/blob3.webp',
+  '/assets/fixed/icons/blob4.webp',
+  '/assets/fixed/icons/blob2.webp',
 ];
 
 const Gallery = () => {
@@ -46,141 +46,141 @@ const Gallery = () => {
     {
       id: 1,
       title: 'Kedia Primary Donation',
-      coverImage: '/src/assets/fixed/kedia/kedia.webp',
+      coverImage: '/assets/fixed/kedia/kedia.webp',
       description: 'A heartfelt initiative to provide essential resources and support to Kedia Primary School.',
       date: 'July 6, 2024',
-      images: [{ id: 1, url: '/src/assets/fixed/kedia/kedia.webp', caption: 'Setting the stage: Organizing shoes and supplies for distribution.'},
-      { id: 2, url: '/src/assets/fixed/kedia/K1.webp', caption: 'A display of hope: New shoes lined up for eager young feet.'},      
-      { id: 3, url: '/src/assets/fixed/kedia/K2.webp', caption: 'Smiles of gratitude: A moment shared with the students and volunteers.'},
-      { id: 4, url: '/src/assets/fixed/kedia/K3.webp', caption: 'Joy in unity: Students celebrating the generous donations.'},
-      { id: 5, url: '/src/assets/fixed/kedia/K4.webp', caption: 'Grateful hearts: Capturing the spirit of the event with a selfie.'},
-      { id: 6, url: 'src/assets/fixed/kedia/K5.webp', caption: 'Sharing knowledge: A group of volunteers engaging with the community.'},
-      { id: 7, url: 'src/assets/fixed/kedia/K6.webp', caption: 'Bundles of care: Essential supplies ready for distribution to those in need.'}
+      images: [{ id: 1, url: '/assets/fixed/kedia/kedia.webp', caption: 'Setting the stage: Organizing shoes and supplies for distribution.'},
+      { id: 2, url: '/assets/fixed/kedia/K1.webp', caption: 'A display of hope: New shoes lined up for eager young feet.'},      
+      { id: 3, url: '/assets/fixed/kedia/K2.webp', caption: 'Smiles of gratitude: A moment shared with the students and volunteers.'},
+      { id: 4, url: '/assets/fixed/kedia/K3.webp', caption: 'Joy in unity: Students celebrating the generous donations.'},
+      { id: 5, url: '/assets/fixed/kedia/K4.webp', caption: 'Grateful hearts: Capturing the spirit of the event with a selfie.'},
+      { id: 6, url: '/assets/fixed/kedia/K5.webp', caption: 'Sharing knowledge: A group of volunteers engaging with the community.'},
+      { id: 7, url: '/assets/fixed/kedia/K6.webp', caption: 'Bundles of care: Essential supplies ready for distribution to those in need.'}
         ]
     },
     {
       id: 2,
       title: 'Shakawe JSS Donation',
-      coverImage: '/src/assets/fixed/shakawe/shakawedono.webp',
+      coverImage: '/assets/fixed/shakawe/shakawedono.webp',
       description: 'A generous contribution aimed at enhancing the learning environment for students at Shakawe Junior Secondary School.',
       date: 'April 29, 2021',
-      images: [{ id: 1, url: '/src/assets/fixed/shakawe/shakawedono.webp', caption: 'Collaborative efforts: Volunteers working together to organize donations for Shakawe JSS.'},
-      { id: 2, url: '/src/assets/fixed/shakawe/S1.webp', caption: 'Prepared with care: A set of new uniforms ready to bring smiles to students in need.'},
-      { id: 3, url: '/src/assets/fixed/shakawe/S2.webp', caption: 'Making a difference: Reception of donation boxes from Able Hearts.'}      
+      images: [{ id: 1, url: '/assets/fixed/shakawe/shakawedono.webp', caption: 'Collaborative efforts: Volunteers working together to organize donations for Shakawe JSS.'},
+      { id: 2, url: '/assets/fixed/shakawe/S1.webp', caption: 'Prepared with care: A set of new uniforms ready to bring smiles to students in need.'},
+      { id: 3, url: '/assets/fixed/shakawe/S2.webp', caption: 'Making a difference: Reception of donation boxes from Able Hearts.'}      
     ]
     },
     {
       id: 3,
       title: 'Lavender High Tea',
-      coverImage: '/src/assets/fixed/lavender/lavender.webp',
+      coverImage: '/assets/fixed/lavender/lavender.webp',
       description: 'A delightful gathering to raise funds and awareness for community development projects.',
       date: 'August 9, 2020',
-      images: [{ id: 1, url: '/src/assets/fixed/lavender/lavender.webp', caption: 'Elegance and purpose: Guests enjoy the Lavender High Tea in their stunning attire.'},
-      { id: 2, url: '/src/assets/fixed/lavender/L1.webp', caption: 'Moments of connection: Sharing laughter and inspiration at the Lavender High Tea.'},
-      { id: 3, url: '/src/assets/fixed/lavender/L2.webp', caption: 'Words of empowerment: A speaker addressing attendees about community impact.'},
-      { id: 4, url: '/src/assets/fixed/lavender/L3.webp', caption: 'A picture-perfect day: The vibrant Lavender High Tea setup, blending charm and philanthropy'}      
+      images: [{ id: 1, url: '/assets/fixed/lavender/lavender.webp', caption: 'Elegance and purpose: Guests enjoy the Lavender High Tea in their stunning attire.'},
+      { id: 2, url: '/assets/fixed/lavender/L1.webp', caption: 'Moments of connection: Sharing laughter and inspiration at the Lavender High Tea.'},
+      { id: 3, url: '/assets/fixed/lavender/L2.webp', caption: 'Words of empowerment: A speaker addressing attendees about community impact.'},
+      { id: 4, url: '/assets/fixed/lavender/L3.webp', caption: 'A picture-perfect day: The vibrant Lavender High Tea setup, blending charm and philanthropy'}      
     ]
     },
     {
       id: 4,
       title: 'Covid-19 Community Relief Packages',
-      coverImage: '/src/assets/fixed/covid/covid.webp',
+      coverImage: '/assets/fixed/covid/covid.webp',
       description: 'A dedicated effort to distribute essential supplies to communities affected by the pandemic.',
       date: '2020',
-      images: [{ id: 1, url: '/src/assets/fixed/covid/covid.webp', caption: 'A heartwarming moment: Able Hearts Foundation spreading hope with COVID relief packages to the elderly, blending compassion and community support.'},
-      { id: 2, url: '/src/assets/fixed/covid/C1.webp', caption: 'A closer look: The thoughtful contents of an Able Hearts COVID relief package, filled with essentials to brighten the lives of the elderly.'},
-      { id: 3, url: '/src/assets/fixed/covid/C2.webp', caption: 'A closer look: The thoughtful contents of an Able Hearts COVID relief package, filled with essentials to brighten the lives of the elderly.'},
-      { id: 4, url: '/src/assets/fixed/covid/C3.webp', caption: 'A moment of unity: The Able Hearts team with Honourable Member of Parliament, Mr. Ignatius Moswaane, working together to support our community.'},
-      { id: 5, url: '/src/assets/fixed/covid/C4.webp', caption: 'A heartwarming moment: Able Hearts Foundation spreading hope with COVID relief packages to the elderly, blending compassion and community support.'}
+      images: [{ id: 1, url: '/assets/fixed/covid/covid.webp', caption: 'A heartwarming moment: Able Hearts Foundation spreading hope with COVID relief packages to the elderly, blending compassion and community support.'},
+      { id: 2, url: '/assets/fixed/covid/C1.webp', caption: 'A closer look: The thoughtful contents of an Able Hearts COVID relief package, filled with essentials to brighten the lives of the elderly.'},
+      { id: 3, url: '/assets/fixed/covid/C2.webp', caption: 'A closer look: The thoughtful contents of an Able Hearts COVID relief package, filled with essentials to brighten the lives of the elderly.'},
+      { id: 4, url: '/assets/fixed/covid/C3.webp', caption: 'A moment of unity: The Able Hearts team with Honourable Member of Parliament, Mr. Ignatius Moswaane, working together to support our community.'},
+      { id: 5, url: '/assets/fixed/covid/C4.webp', caption: 'A heartwarming moment: Able Hearts Foundation spreading hope with COVID relief packages to the elderly, blending compassion and community support.'}
 
       ]
     },
     {
       id: 5,
       title: 'Tsogang Trust',
-      coverImage: '/src/assets/fixed/tsogangtrust/tsogangtrust.webp',
+      coverImage: '/assets/fixed/tsogangtrust/tsogangtrust.webp',
       description: 'Collaboration with Tsogang Trust to empower local communities through education and skill development.',
       date: 'October 27, 2022',
-      images: [{ id: 1, url: '/src/assets/fixed/tsogangtrust/tsogangtrust.webp', caption: 'A generous gesture: Senn Foods providing essential foodstuffs and supplies to Tsogang Trust, fueling hope and community support.'},
-      { id: 2, url: 'src/assets/fixed/tsogangtrust/T1.webp', caption: 'Our Selfless Leader: Ms. Sakshi Bhargava, our visionary founder, leading with compassion and dedication.'},      
-      { id: 3, url: '/src/assets/fixed/tsogangtrust/T2.webp', caption: 'A heartwarming connection: Ms. Sakshi Bhargava with one of the bright young minds at Tsogang Trust, inspiring the next generation with care and compassion.'},
-      { id: 4, url: '/src/assets/fixed/tsogangtrust/T3.webp', caption: 'A generous gesture: Senn Foods providing essential foodstuffs and supplies to Tsogang Trust, fueling hope and community support.'}
+      images: [{ id: 1, url: '/assets/fixed/tsogangtrust/tsogangtrust.webp', caption: 'A generous gesture: Senn Foods providing essential foodstuffs and supplies to Tsogang Trust, fueling hope and community support.'},
+      { id: 2, url: '/assets/fixed/tsogangtrust/T1.webp', caption: 'Our Selfless Leader: Ms. Sakshi Bhargava, our visionary founder, leading with compassion and dedication.'},      
+      { id: 3, url: '/assets/fixed/tsogangtrust/T2.webp', caption: 'A heartwarming connection: Ms. Sakshi Bhargava with one of the bright young minds at Tsogang Trust, inspiring the next generation with care and compassion.'},
+      { id: 4, url: '/assets/fixed/tsogangtrust/T3.webp', caption: 'A generous gesture: Senn Foods providing essential foodstuffs and supplies to Tsogang Trust, fueling hope and community support.'}
     ]
     },
     {
       id: 6,
       title: 'Mochudi Resource Center',
-      coverImage: '/src/assets/fixed/mochudi/mochud.webp',
+      coverImage: '/assets/fixed/mochudi/mochud.webp',
       description: 'An initiative to equip the Mochudi Resource Center with vital resources to foster community engagement.',
       date: 'April 22, 2021',
-      images: [{ id: 1, url: '/src/assets/fixed/mochudi/mochud.webp', caption: 'A moment of impact: The Able Hearts team delivering essential supplies to the Mochudi Resource Center, strengthening support for the community.'},
-      { id: 2, url: '/src/assets/fixed/mochudi/M1.webp', caption: 'A touch of kindness: Ms. Sakshi Bhargava sharing a special moment with the little ones, spreading love and encouragement at Tsogang Trust.'},
-      { id: 3, url: '/src/assets/fixed/mochudi/M2.webp', caption: 'On the ground: The Able Hearts team sorting packages on-site at Mochudi Resource Center, ensuring every child receives the support they need.'},
-      { id: 4, url: '/src/assets/fixed/mochudi/M3.webp', caption: 'A moment of impact: The Able Hearts team delivering essential supplies to the Mochudi Resource Center, strengthening support for the community.'},
-      { id: 5, url: '/src/assets/fixed/mochudi/M4.webp', caption: 'A closer look: The thoughtful contents of an Able Hearts Mochudi Resource Center package, filled with essentials to brighten the lives of the Children.'},
-      { id: 6, url: '/src/assets/fixed/mochudi/M5.webp', caption: 'Sharing knowledge: The crew engaging with the Children through fun and learning.'},
-      { id: 7, url: '/src/assets/fixed/mochudi/M6.webp', caption: 'A moment of giving: The Able Hearts team proudly presenting the carefully prepared packages, bringing hope and support to those in need.'}
+      images: [{ id: 1, url: '/assets/fixed/mochudi/mochud.webp', caption: 'A moment of impact: The Able Hearts team delivering essential supplies to the Mochudi Resource Center, strengthening support for the community.'},
+      { id: 2, url: '/assets/fixed/mochudi/M1.webp', caption: 'A touch of kindness: Ms. Sakshi Bhargava sharing a special moment with the little ones, spreading love and encouragement at Tsogang Trust.'},
+      { id: 3, url: '/assets/fixed/mochudi/M2.webp', caption: 'On the ground: The Able Hearts team sorting packages on-site at Mochudi Resource Center, ensuring every child receives the support they need.'},
+      { id: 4, url: '/assets/fixed/mochudi/M3.webp', caption: 'A moment of impact: The Able Hearts team delivering essential supplies to the Mochudi Resource Center, strengthening support for the community.'},
+      { id: 5, url: '/assets/fixed/mochudi/M4.webp', caption: 'A closer look: The thoughtful contents of an Able Hearts Mochudi Resource Center package, filled with essentials to brighten the lives of the Children.'},
+      { id: 6, url: '/assets/fixed/mochudi/M5.webp', caption: 'Sharing knowledge: The crew engaging with the Children through fun and learning.'},
+      { id: 7, url: '/assets/fixed/mochudi/M6.webp', caption: 'A moment of giving: The Able Hearts team proudly presenting the carefully prepared packages, bringing hope and support to those in need.'}
     ]
     },
     {
       id: 7,
       title: 'Dynamic Talent Show',
-      coverImage: '/src/assets/fixed/dynamictalent/talentshow.webp',
+      coverImage: '/assets/fixed/dynamictalent/talentshow.webp',
       description: 'A showcase of vibrant talents aimed at celebrating creativity and diversity.',
       date: 'August 20, 2023',
-      images: [{ id: 1, url: '/src/assets/fixed/dynamictalent/talentshow.webp', caption: ''},
-      { id: 2, url: '/src/assets/fixed/dynamictalent/DT1.webp', caption: ''},
-      { id: 3, url: '/src/assets/fixed/dynamictalent/DT2.webp', caption: ''},
-      { id: 4, url: '/src/assets/fixed/dynamictalent/DT3.webp', caption: ''},
-      { id: 5, url: '/src/assets/fixed/dynamictalent/DT4.webp', caption: ''},
-      { id: 6, url: '/src/assets/fixed/dynamictalent/DT5.webp', caption: ''},
-      { id: 7, url: '/src/assets/fixed/dynamictalent/DT6.webp', caption: ''},
-      { id: 8, url: '/src/assets/fixed/dynamictalent/DT7.webp', caption: ''},
-      { id: 9, url: '/src/assets/fixed/dynamictalent/DT8.webp', caption: ''},
-      { id: 10, url: '/src/assets/fixed/dynamictalent/DT9.webp', caption: ''},
-      { id: 11, url: '/src/assets/fixed/dynamictalent/DT10.webp', caption: ''},
-      { id: 12, url: '/src/assets/fixed/dynamictalent/DT11.webp', caption: ''},
-      { id: 13, url: '/src/assets/fixed/dynamictalent/DT12.webp', caption: ''},
-      { id: 15, url: '/src/assets/fixed/dynamictalent/DT14.webp', caption: ''}
+      images: [{ id: 1, url: '/assets/fixed/dynamictalent/talentshow.webp', caption: ''},
+      { id: 2, url: '/assets/fixed/dynamictalent/DT1.webp', caption: ''},
+      { id: 3, url: '/assets/fixed/dynamictalent/DT2.webp', caption: ''},
+      { id: 4, url: '/assets/fixed/dynamictalent/DT3.webp', caption: ''},
+      { id: 5, url: '/assets/fixed/dynamictalent/DT4.webp', caption: ''},
+      { id: 6, url: '/assets/fixed/dynamictalent/DT5.webp', caption: ''},
+      { id: 7, url: '/assets/fixed/dynamictalent/DT6.webp', caption: ''},
+      { id: 8, url: '/assets/fixed/dynamictalent/DT7.webp', caption: ''},
+      { id: 9, url: '/assets/fixed/dynamictalent/DT8.webp', caption: ''},
+      { id: 10, url: '/assets/fixed/dynamictalent/DT9.webp', caption: ''},
+      { id: 11, url: '/assets/fixed/dynamictalent/DT10.webp', caption: ''},
+      { id: 12, url: '/assets/fixed/dynamictalent/DT11.webp', caption: ''},
+      { id: 13, url: '/assets/fixed/dynamictalent/DT12.webp', caption: ''},
+      { id: 15, url: '/assets/fixed/dynamictalent/DT14.webp', caption: ''}
     ]
     },
     {
       id: 8,
       title: 'Lephoi Able Hearts Garden and Fun Day',
-      coverImage: '/src/assets/fixed/lephoi/garden.webp',
+      coverImage: '/assets/fixed/lephoi/garden.webp',
       description: 'A fun-filled day celebrating community spirit and sustainable gardening initiatives.',
       date: 'August 15, 2020',
-      images: [{ id: 1, url: '/src/assets/fixed/lephoi/garden.webp', caption: 'Able Hearts Garden Grand Opening: The Grand Opening!'},
-      { id: 2, url: '/src/assets/fixed/lephoi/LG1.webp', caption: 'Our Selfless Leader: Ms. Sakshi Bhargava, our visionary founder, leading with compassion and dedication.'},
-      { id: 3, url: '/src/assets/fixed/lephoi/LG2.webp', caption: 'Creative Moments: The kids had an amazing time unleashing their creativity and making beautiful beads during the fun day!'},
-      { id: 4, url: '/src/assets/fixed/lephoi/LG3.webp', caption: 'Creative Moments: The kids had an amazing time unleashing their creativity and making beautiful beads during the fun day!'},
-      { id: 5, url: '/src/assets/fixed/lephoi/LG4.webp', caption: 'Leading with Love: Our founder, Ms. Sakshi Bhargava, guiding the kids as they create their beautiful beadwork—turning moments into memories.'},
-      { id: 6, url: '/src/assets/fixed/lephoi/LG5.webp', caption: 'Spreading love and hope: Able Hearts at the Lephoi Centre, delivering essential donations to those in need.'},
-      { id: 7, url: '/src/assets/fixed/lephoi/LG6.webp', caption: 'Together for a cause: The Able Hearts crew, united in service and compassion.'},
-      { id: 8, url: '/src/assets/fixed/lephoi/LG7.webp', caption: 'UCCSA Lephoi Centre: For Learners with Visual Impairment'}]
+      images: [{ id: 1, url: '/assets/fixed/lephoi/garden.webp', caption: 'Able Hearts Garden Grand Opening: The Grand Opening!'},
+      { id: 2, url: '/assets/fixed/lephoi/LG1.webp', caption: 'Our Selfless Leader: Ms. Sakshi Bhargava, our visionary founder, leading with compassion and dedication.'},
+      { id: 3, url: '/assets/fixed/lephoi/LG2.webp', caption: 'Creative Moments: The kids had an amazing time unleashing their creativity and making beautiful beads during the fun day!'},
+      { id: 4, url: '/assets/fixed/lephoi/LG3.webp', caption: 'Creative Moments: The kids had an amazing time unleashing their creativity and making beautiful beads during the fun day!'},
+      { id: 5, url: '/assets/fixed/lephoi/LG4.webp', caption: 'Leading with Love: Our founder, Ms. Sakshi Bhargava, guiding the kids as they create their beautiful beadwork—turning moments into memories.'},
+      { id: 6, url: '/assets/fixed/lephoi/LG5.webp', caption: 'Spreading love and hope: Able Hearts at the Lephoi Centre, delivering essential donations to those in need.'},
+      { id: 7, url: '/assets/fixed/lephoi/LG6.webp', caption: 'Together for a cause: The Able Hearts crew, united in service and compassion.'},
+      { id: 8, url: '/assets/fixed/lephoi/LG7.webp', caption: 'UCCSA Lephoi Centre: For Learners with Visual Impairment'}]
     },
     {
       id: 9,
       title: 'News Articles',
-      coverImage: '/src/assets/fixed/newspaper/NP1.webp',
+      coverImage: '/assets/fixed/newspaper/NP1.webp',
       description: 'A collection of impactful news articles highlighting community achievements and milestones.',
       date: '',
-      images: [{ id: 1, url: '/src/assets/fixed/newspaper/NP1.webp', caption: 'Celebrating Milestones: Huge thanks to our media supporters for featuring the Able Hearts garden handover—your coverage helps us inspire more change!'},
-      { id: 2, url: '/src/assets/fixed/newspaper/NP2.webp', caption: 'A Musical Moment: Special appreciation to Kgosi Moagi for performing a beautiful song during the Able Hearts garden handover ceremony at the Lephoi Centre. Your talent added so much meaning to the day!'},
-      { id: 3, url: '/src/assets/fixed/newspaper/NP3.webp', caption: 'Grateful for the Spotlight: A heartfelt thank you to The Voice Newspaper Botswana and @themonitor for sharing our story and amplifying our mission!'},
-      { id: 4, url: '/src/assets/fixed/newspaper/NP4.webp', caption: 'Making Waves: Thank you to The Voice Newspaper Botswana and @themonitor for showcasing our journey of giving back and supporting vulnerable communities. Together, we make a difference!'},
-      { id: 4, url: '/src/assets/fixed/newspaper/NP5.webp', caption: 'Amplifying Impact: Thank you @therealyaronafm for giving us a platform to share our mission and reach the hearts of so many. Your support helps us make a greater difference in the lives of vulnerable communities!'}]
+      images: [{ id: 1, url: '/assets/fixed/newspaper/NP1.webp', caption: 'Celebrating Milestones: Huge thanks to our media supporters for featuring the Able Hearts garden handover—your coverage helps us inspire more change!'},
+      { id: 2, url: '/assets/fixed/newspaper/NP2.webp', caption: 'A Musical Moment: Special appreciation to Kgosi Moagi for performing a beautiful song during the Able Hearts garden handover ceremony at the Lephoi Centre. Your talent added so much meaning to the day!'},
+      { id: 3, url: '/assets/fixed/newspaper/NP3.webp', caption: 'Grateful for the Spotlight: A heartfelt thank you to The Voice Newspaper Botswana and @themonitor for sharing our story and amplifying our mission!'},
+      { id: 4, url: '/assets/fixed/newspaper/NP4.webp', caption: 'Making Waves: Thank you to The Voice Newspaper Botswana and @themonitor for showcasing our journey of giving back and supporting vulnerable communities. Together, we make a difference!'},
+      { id: 4, url: '/assets/fixed/newspaper/NP5.webp', caption: 'Amplifying Impact: Thank you @therealyaronafm for giving us a platform to share our mission and reach the hearts of so many. Your support helps us make a greater difference in the lives of vulnerable communities!'}]
     },
     {
       id: 10,
       title: 'First Ever Event',
-      coverImage: '/src/assets/fixed/firstevent/FE1.webp',
+      coverImage: '/assets/fixed/firstevent/FE1.webp',
       description: 'The landmark event that marked the beginning of our journey in making a difference.',
       date: 'August 25, 2017',
-      images: [{ id: 1, url: '/src/assets/fixed/firstevent/FE1.webp', caption: 'A Moment of Unity: Students gather to celebrate the first Able Hearts event, fostering inclusion and hope.'},
-      { id: 2, url: '/src/assets/fixed/firstevent/FE2.webp', caption: 'Spreading Smiles: Engaging with the youth through fun and learning.'},
-      { id: 3, url: '/src/assets/fixed/firstevent/FE3.webp', caption: 'Empowering Through Giving: Distributing clothes, books, and toys to ensure brighter tomorrows for the children.'},
-      { id: 4, url: '/src/assets/fixed/firstevent/FE4.webp', caption: 'Bridging Gaps: Smiles abound as donations of school shoes bring joy and opportunity.'}]
+      images: [{ id: 1, url: '/assets/fixed/firstevent/FE1.webp', caption: 'A Moment of Unity: Students gather to celebrate the first Able Hearts event, fostering inclusion and hope.'},
+      { id: 2, url: '/assets/fixed/firstevent/FE2.webp', caption: 'Spreading Smiles: Engaging with the youth through fun and learning.'},
+      { id: 3, url: '/assets/fixed/firstevent/FE3.webp', caption: 'Empowering Through Giving: Distributing clothes, books, and toys to ensure brighter tomorrows for the children.'},
+      { id: 4, url: '/assets/fixed/firstevent/FE4.webp', caption: 'Bridging Gaps: Smiles abound as donations of school shoes bring joy and opportunity.'}]
     }
   ];
 
@@ -188,7 +188,7 @@ const Gallery = () => {
     {
       id: 1,
       type: 'image',
-      url: '/src/assets/fixed/IND1.webp',
+      url: '/assets/fixed/IND1.webp',
       caption: 'Certificate of Appreciation from Lephoi Centre for the Blind.',
       date: 'December 21, 2020',
     },
