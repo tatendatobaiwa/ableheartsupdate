@@ -19,7 +19,9 @@ const Footer = () => {
           <div className="footer-wrapper">
             <div className="footer-column">
               <ul className="ablehearts-logo" style={{paddingLeft: '0'}}>
-                <img src={ablehearts} alt="ablehearts-logo" height="110" style={{ padding: '2rem'}} />
+                <Link to="/">
+                  <img src={ablehearts} alt="ablehearts-logo" height="110" style={{ padding: '2rem'}} />
+                </Link>
               </ul>
             </div>
             <div className="footer-column">

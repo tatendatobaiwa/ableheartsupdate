@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './TermsOfUse.css';
 
 const blobImages = [
@@ -9,94 +10,72 @@ const blobImages = [
 ];
 
 const TermsOfUse = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 300);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    const elements = document.querySelectorAll('.pre-animate');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    elements.forEach((element) => observer.observe(element));
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   return (
-    <div className="terms-of-use-container pre-animate">
-      {/* Background blobs */}
-      <div className="background-blobs">
-        {blobImages.map((blob, index) => (
-          <img
-            key={index}
-            src={blob}
-            alt={`Decorative blob ${index + 1}`}
-            className={`blobt blob-${index + 1}`}
-          />
-        ))}
-      </div>
-      <h1 className="terms-of-use-title">Terms of Use</h1>
-      <p className="terms-of-use-intro">
-        Welcome to Able Hearts! By accessing or using this website, you agree to the following terms and conditions. Please review them carefully.
-      </p>
-      <h2 className="terms-of-use-section-title">1. Acceptance of Terms</h2>
-      <p className="terms-of-use-text">
-        By visiting this website, you acknowledge that you have read, understood, and agreed to these terms. If you do not agree with any part of these terms, please discontinue use of the site.
-      </p>
-      <h2 className="terms-of-use-section-title">2. Use of Content</h2>
-      <p className="terms-of-use-text">
-        All content provided on this website, including text, images, and other materials, is for informational purposes only. Unauthorized use, reproduction, or distribution of content is strictly prohibited.
-      </p>
-      <h2 className="terms-of-use-section-title">3. User Conduct</h2>
-      <ul className="terms-of-use-list">
-        <li className="terms-of-use-item">Do not use this website for illegal or unauthorized purposes.</li>
-        <li className="terms-of-use-item">Do not attempt to interfere with the website’s functionality or security.</li>
-        <li className="terms-of-use-item">Respect the intellectual property rights of others.</li>
-      </ul>
-      <h2 className="terms-of-use-section-title">4. Limitation of Liability</h2>
-      <p className="terms-of-use-text">
-        Able Hearts is not responsible for any damages arising from your use of this website or reliance on the information provided. Use this site at your own risk.
-      </p>
-      <h2 className="terms-of-use-section-title">5. Privacy Policy</h2>
-      <p className="terms-of-use-text">
-        We are committed to protecting your privacy. Please review our <a href="/privacy-policy" className="terms-of-use-link">Privacy Policy</a> to understand how your information is collected, used, and shared.
-      </p>
-      <h2 className="terms-of-use-section-title">6. Modifications to Terms</h2>
-      <p className="terms-of-use-text">
-        We reserve the right to update these terms at any time. Changes will be effective immediately upon posting. It is your responsibility to review these terms periodically.
-      </p>
-      <h2 className="terms-of-use-section-title">7. Contact Information</h2>
-      <p className="terms-of-use-contact">
-        If you have questions about these Terms of Use, please contact us at: 
-        <a href="mailto:ableheartsfoundation@gmail.com" className="terms-of-use-email"> ableheartsfoundation@gmail.com</a>
-      </p>
-      {isScrolled && (
-        <button className="scroll-to-top-btn" onClick={scrollToTop}>
-          ↑
-        </button>
-      )}
+    <div className="legal-container">
+      <header className="legal-header">
+        <h1>Terms of Use</h1>
+        <p>Last Updated: October 26, 2023</p>
+      </header>
+
+      <section className="legal-section">
+        <h2>1. Acceptance of Terms</h2>
+        <p>
+          Welcome to Able Hearts Foundation (“we,” “us,” or “our”). By accessing or using our website, you agree to be bound by these Terms of Use and our Privacy Policy. If you do not agree, please do not use our website.
+        </p>
+      </section>
+
+      <section className="legal-section">
+        <h2>2. Use of Website Content</h2>
+        <p>
+          All content on this website, including text, graphics, logos, images, and software, is the property of Able Hearts Foundation or its content suppliers and is protected by international copyright laws. You may use the content for personal, non-commercial purposes only.
+        </p>
+      </section>
+
+      <section className="legal-section">
+        <h2>3. User Conduct</h2>
+        <p>You agree not to use the website for any unlawful purpose or in any way that could damage, disable, or impair the website. Prohibited activities include, but are not limited to:</p>
+        <ul>
+          <li>Harassing or harming another person.</li>
+          <li>Uploading or transmitting viruses or other malicious code.</li>
+          <li>Attempting to gain unauthorized access to our computer systems.</li>
+        </ul>
+      </section>
+
+      <section className="legal-section">
+        <h2>4. Disclaimers and Limitation of Liability</h2>
+        <p>
+          The information on our website is provided "as is" without any warranties, express or implied. We do not guarantee the accuracy, completeness, or usefulness of any information. To the fullest extent permitted by law, Able Hearts Foundation disclaims all liability for any damages arising out of your use of, or inability to use, the website.
+        </p>
+      </section>
+
+      <section className="legal-section">
+        <h2>5. Links to Third-Party Websites</h2>
+        <p>
+          Our website may contain links to third-party websites. These links are provided for your convenience only. We do not endorse or assume any responsibility for the content or practices of these third-party sites.
+        </p>
+      </section>
+
+      <section className="legal-section">
+        <h2>6. Privacy Policy</h2>
+        <p>
+          Your privacy is important to us. Our <Link to="/privacy-policy" className="legal-link">Privacy Policy</Link> explains how we collect, use, and protect your personal information. Please review it to understand our practices.
+        </p>
+      </section>
+
+      <section className="legal-section">
+        <h2>7. Changes to These Terms</h2>
+        <p>
+          We reserve the right to modify these Terms of Use at any time. We will notify you of any changes by posting the new terms on this page and updating the "Last Updated" date. Your continued use of the website after any such changes constitutes your acceptance of the new terms.
+        </p>
+      </section>
+
+      <section className="legal-section">
+        <h2>8. Contact Information</h2>
+        <p>
+          If you have any questions about these Terms of Use, please contact us at:
+          <a href="mailto:ableheartsfoundation@gmail.com" className="legal-link"> ableheartsfoundation@gmail.com</a>
+        </p>
+      </section>
     </div>
   );
 };
