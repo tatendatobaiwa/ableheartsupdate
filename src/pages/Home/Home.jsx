@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Home.css';
-import NewsletterSignup from '/src/components/NewsLetterSignup.jsx';  
-import { useAccessibility } from '/src/context/AccessibilityContext.jsx';
+import NewsletterSignup from "../../components/NewsLetterSignup.jsx";  
+import { useAccessibility } from "../../context/AccessibilityContext.jsx";
 
 import landingPageImage from '/src/assets/fixed/landingpageimage.webp';
 import whiteLogo from '/src/assets/fixed/icons/whiteablehearts.webp';
