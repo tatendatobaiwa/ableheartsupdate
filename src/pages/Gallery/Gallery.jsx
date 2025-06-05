@@ -79,6 +79,15 @@ import firstEvent4 from '../../assets/fixed/firstevent/FE4.webp';
 
 import ind1 from '../../assets/fixed/IND1.webp';
 
+import cheshirefoundationCover from '../../assets/fixed/chesirefoundation/chescover.webp';
+import cheshirefoundation1 from '../../assets/fixed/chesirefoundation/ches1.webp';
+import cheshirefoundation2 from '../../assets/fixed/chesirefoundation/ches2.webp';
+import cheshirefoundation3 from '../../assets/fixed/chesirefoundation/ches3.webp';
+
+import tlokwengCover from '../../assets/fixed/tlokwengfamily/tlok2.webp';
+import tlokweng1 from '../../assets/fixed/tlokwengfamily/tlok1.webp';
+import tlokweng2 from '../../assets/fixed/tlokwengfamily/tlok3.webp';
+
 const blobImages = [
   blob1,
   blob3,
@@ -89,7 +98,6 @@ const blobImages = [
 const Gallery = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedMedia, setSelectedMedia] = useState(null); 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -271,59 +279,54 @@ const Gallery = () => {
         { id: 3, url: firstEvent3, caption: 'Empowering Through Giving: Distributing clothes, books, and toys to ensure brighter tomorrows for the children.'},
         { id: 4, url: firstEvent4, caption: 'Bridging Gaps: Smiles abound as donations of school shoes bring joy and opportunity.'}
       ]
+    },
+    {
+      id: 11,
+      title: 'Cheshire Foundation',
+      coverImage: cheshirefoundationCover,
+      description: 'A collaboration with Cheshire Foundation to provide essential resources to vulnerable communities by the BIUST branch.',
+      date: 'May 15, 2025',
+      images: [
+        { id: 1, url: cheshirefoundationCover, caption: 'Members of Ablehearts BIUST branch and staff from the Cheshire Foundation.'},
+        { id: 2, url: cheshirefoundation1, caption: 'Ablehearts BIUST branch delivering food and clothing donations to the Cheshire Foundation.'},
+        { id: 3, url: cheshirefoundation2, caption: 'The Cheshire Foundation of Botswana, Palapye Regional Office, recipient of the donations.'},
+        { id: 4, url: cheshirefoundation3, caption: 'Ablehearts BIUST members with a Cheshire Foundation vehicle during their donation visit.'}
+      ]
+    },
+    {
+      id: 12,
+      title: 'Tlokweng Family Visit',
+      coverImage: tlokwengCover,
+      description: 'AbleHearts UB branch travelled to Tlokweng, Botswana to provide essential resources to a chosen family.',
+      date: 'May 8, 2025',
+      images: [
+        { id: 1, url: tlokwengCover, caption: 'Ablehearts UB delivering food and clothing donations to a family in Tlokweng, Botswana.'},
+        { id: 2, url: tlokweng1, caption: 'Ablehearts UB members spreading love during their donation drive in Tlokweng.'},
+        { id: 3, url: tlokweng2, caption: 'Members of the Ablehearts UB branch during their community outreach in Tlokweng.'}
+      ]
     }
-  ];
+  ].sort((a, b) => {
+    // Handle cases where date might be an empty string
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1; // Empty date goes to the end
+    if (!b.date) return -1; // Empty date goes to the end
 
-  const individualMedia = [
-    {
-      id: 1,
-      type: 'image',
-      url: ind1,
-      caption: 'Certificate of Appreciation from Lephoi Centre for the Blind.',
-      date: 'December 21, 2020',
-    },
-    {
-      id: 2,
-      type: 'video',
-      url: 'https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fweb.facebook.com%2Fableheartsfoundation%2Fvideos%2F1023655192465414%2F&show_text=false&width=267&t=0',
-      caption: 'Kedia Primary School Visit.',
-      date: 'July 6, 2024',
-    },
-    {
-      id: 3,
-      type: 'video',
-      url: 'https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fweb.facebook.com%2Fableheartsfoundation%2Fvideos%2F627034052479114%2F&show_text=false&width=560&t=0',
-      caption: 'Donations Handover for Tsogang Trust.',
-      date: 'October 27, 2022',
-    },
-    {
-      id: 4,
-      type: 'video',
-      url: 'https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fweb.facebook.com%2Fableheartsfoundation%2Fvideos%2F929323177971101%2F&show_text=false&width=560&t=0',
-      caption: 'Mochudi Resource Center Visit.',
-      date: 'December 7, 2021',
-    }
-  ];
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB - dateA; // Latest date first
+  });
 
   const handleEventClick = React.useCallback((event) => {
     setSelectedEvent(event);
     setSelectedImage(null);
-    setSelectedMedia(null);
   }, []);
 
   const handleImageClick = React.useCallback((image) => {
     setSelectedImage(image);
   }, []);
 
-  const handleMediaClick = React.useCallback((media) => {
-    setSelectedMedia(media);
-    setSelectedEvent(null);
-    setSelectedImage(null);
-  }, []);
-
   const closeEventModal = React.useCallback(() => setSelectedEvent(null), []);
   const closeImageModal = React.useCallback(() => setSelectedImage(null), []);
-  const closeMediaModal = React.useCallback(() => setSelectedMedia(null), []);
   
   const FixedImage = memo(({ src, alt, className, onClick }) => (
     <img
@@ -373,40 +376,6 @@ const Gallery = () => {
               <div className="event-card-overlay">
                 <h3 className="event-title">{event.title}</h3>
                 <p className="event-date">{event.date}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <h2>Individual Media</h2>
-        <div className="individual-media-grid">
-          {individualMedia.map((media) => (
-            <div
-              key={media.id}
-              className="media-card"
-              onClick={() => handleMediaClick(media)}
-            >
-              {media.type === "image" ? (
-                <FixedImage
-                  src={media.url}
-                  alt={media.caption}
-                  className="media-image"
-                  loading="lazy"
-                />
-              ) : (
-                <iframe
-                  src={media.url}
-                  title={`Media ${media.id}`}
-                  className="media-video"
-                  loading="lazy"
-                  frameBorder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              )}
-              <div className="media-card-overlay">
-                <p className="media-caption">{media.caption}</p>
-                <p className="media-date">{media.date}</p>
               </div>
             </div>
           ))}
@@ -470,48 +439,6 @@ const Gallery = () => {
             <p className="modal-image-caption">{selectedImage.caption}</p>
           </div>
         </div>
-      )}
-
-      {selectedMedia && (
-        <div className="modal-overlay-gallery" onClick={closeMediaModal}>
-          <div
-            className={`modal-content-gallery ${selectedMedia?.type === 'video' ? 'video-modal' : ''}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="close-button-gallery" onClick={closeMediaModal}>
-              &times;
-            </button>
-            {selectedMedia.type === "image" ? (
-              <FixedImage
-                src={selectedMedia.url}
-                alt={selectedMedia.caption}
-                className="modal-media-image"
-                loading="lazy"
-              />
-            ) : (
-              <iframe
-                src={selectedMedia.url}
-                title="Selected Media"
-                loading="lazy"
-                frameBorder="0"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                allowFullScreen
-                className="modal-media-video"
-              />
-            )}
-            <p className="modal-media-caption">{selectedMedia.caption}</p>
-          </div>
-        </div>
-      )}
-
-      {isScrolled && (
-        <button 
-          className="scroll-to-top-btn-gallery" 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Scroll to top"
-        >
-          ↑
-        </button>
       )}
     </div>
   );
