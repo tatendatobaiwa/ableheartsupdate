@@ -238,35 +238,30 @@ const Home = () => {
         </p>
       </div>
       <div className="newsletter-container pre-animate">
-        <div className="contour-overlay">
-          <img
-            src={getImageUrl('scribble')}
-            alt=""
-            onError={handleImageError}
-            loading="lazy"
-            className="lazy-image"
-            data-image-key="scribble"
-            width={1000}
-            height={1000}
-          />
-        </div>
-        <NewsletterSignup />
-        <div className="newsletter-image">
-          <img
-            src={getImageUrl('newsletter')}
-            alt="Newsletter signup graphic"
-            onError={handleImageError}
-            width={500}
-            height={500}
-            loading="lazy"
-            className="lazy-image"
-            data-image-key="newsletter"
-          />
-        </div>
+      <div className="contour-overlay">
+        <img
+          src={getImageUrl('scribble')}
+          alt="Scribblebackground"
+          onError={handleImageError}
+          loading="lazy"
+          className="lazy-image" // Add this class
+          data-image-key="scribble" // Add this data attribute
+        />
       </div>
-      <button onClick={toggleDyslexiaMode} className="accessibility-toggle">
-        {isDyslexiaModeEnabled ? 'Disable Dyslexia Mode' : 'Enable Dyslexia Mode'}
-      </button>
+      <NewsletterSignup />
+      <div className="newsletter-image">
+        <img
+          src={getImageUrl('newsletter')}
+          alt="Newsletter"
+          onError={handleImageError}
+          width="100%"
+          height="auto"
+          loading="lazy"
+          className="lazy-image" // Add this class
+          data-image-key="newsletter" // Add this data attribute
+        />
+      </div>
+    </div>
       <div className="collaborators-container pre-animate">
         <h3>Our Valued Collaborators</h3>
         <div className="logo-bar">

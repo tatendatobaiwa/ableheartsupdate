@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import ableheartslogo from '/src/assets/fixed/icons/ableheartslogo.webp';
 import './Header.css';
+import { useAccessibility } from '/src/context/AccessibilityContext.jsx';
 
 const Header = () => {
   const [isMenuActive, setMenuActive] = useState(false);
   const [isDropdownActive, setDropdownActive] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSettingsDropdownActive, setIsSettingsDropdownActive] = useState(false);
 
   // Scroll event listener (moved to top-level)
   useEffect(() => {
@@ -24,6 +26,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { isDyslexiaModeEnabled, toggleDyslexiaMode, isScreenReaderModeEnabled, toggleScreenReaderMode } = useAccessibility();
 
   const handleLogoClick = () => {
     navigate('');
@@ -37,6 +40,10 @@ const Header = () => {
     setDropdownActive(!isDropdownActive);
   };
 
+  const toggleSettingsDropdown = () => {
+    setIsSettingsDropdownActive(!isSettingsDropdownActive);
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleMousedown = (event) => {
@@ -44,11 +51,15 @@ const Header = () => {
       if (isDropdownActive && !event.target.closest('.nav-item.dropdown')) {
         setDropdownActive(false);
       }
+      // Close settings dropdown when clicking outside
+      if (isSettingsDropdownActive && !event.target.closest('.settings-dropdown-container')) {
+        setIsSettingsDropdownActive(false);
+      }
     };
 
     document.addEventListener('mousedown', handleMousedown);
     return () => document.removeEventListener('mousedown', handleMousedown);
-  }, [isDropdownActive]); // Add isDropdownActive to dependency array
+  }, [isDropdownActive, isSettingsDropdownActive]);
 
 
   const isActive = (path) => location.pathname === path;
@@ -115,6 +126,24 @@ const Header = () => {
                 <a href="/shop" className={isActive('/shop') ? 'active' : ''}>
                   <span>Shop</span>
                 </a>
+              </li>
+              <li className={`nav-item settings-dropdown-container ${isSettingsDropdownActive ? 'active' : ''}`}>
+                <button onClick={toggleSettingsDropdown} className="settings-button">
+                  <span>Settings</span>
+                </button>
+                <ul className="dropdown-menu settings-dropdown-menu">
+                  <li>
+                    <button onClick={toggleDyslexiaMode} className="dyslexia-toggle-button">
+                      {isDyslexiaModeEnabled ? 'Disable Dyslexia Mode' : 'Enable Dyslexia Mode'}
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={toggleScreenReaderMode} className="screen-reader-toggle-button">
+                      {isScreenReaderModeEnabled ? 'Disable Screen Reader' : 'Enable Screen Reader'}
+                    </button>
+                  </li>
+                  {/* Add other settings options here */}
+                </ul>
               </li>
             </ul>
           </div>

@@ -239,3 +239,82 @@ header {
     background-color: rgba(255, 255, 255, 0.6);
 }
 
+/* Settings Dropdown */
+.nav-item.settings-dropdown-container {
+  position: relative;
+}
+
+.settings-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #043F70;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.settings-button:hover {
+  background: #d4ecff;
+}
+
+.settings-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%; /* Center the dropdown */
+  transform: translateX(-50%);
+  background: #FFFFFF;
+  border-radius: 4px;
+  z-index: 10;
+  padding: 0.5rem 0;
+  list-style: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px; /* Adjust as needed */
+}
+
+.nav-item.settings-dropdown-container.active .settings-dropdown-menu {
+  display: block;
+}
+
+.settings-dropdown-menu li {
+  white-space: nowrap;
+  padding: 0;
+}
+
+.settings-dropdown-menu li button {
+  font-family: Poppins, 'sans-serif';
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: #043F70;
+  font-weight: 600;
+  transition: background 0.3s ease, color 0.3s ease;
+  padding: 1rem 2.4rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.settings-dropdown-menu li button:hover {
+  background: #d4ecff;
+  color: #008CFF;
+}
+
+.dyslexia-toggle-button {
+  /* Specific styles for the dyslexia button if needed, otherwise it inherits from .settings-dropdown-menu li button */
+}
+
+.screen-reader-toggle-button {
+  /* Specific styles for the screen reader button if needed, otherwise it inherits from .settings-dropdown-menu li button */
+}
+

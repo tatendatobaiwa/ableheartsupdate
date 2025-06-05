@@ -169,13 +169,13 @@ body {
 
 .mission-container h2 {
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 3.5rem;
   margin-bottom: 1rem;
 }
 
 .mission-container p {
   line-height: 1.6;
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin-bottom: 3rem;
   max-width: 800px;
   margin-left: auto;
@@ -302,55 +302,61 @@ body {
 
 /* Collaborators Section */
 .collaborators-container {
+  padding: 4rem 2rem;
   text-align: center;
-  margin-bottom: 4rem;
+  background-color: white;
+  overflow: hidden;
 }
 
 .collaborators-container h3 {
-  font-family: Poppins, 'sans-serif';
-  font-size: 3rem;
-  margin: 3rem 0;
+  font-family: Poppins, "sans-serif";
   color: #043F70;
+  font-weight: 600;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .logo-bar {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
+  overflow: hidden; /* Hide overflowing parts of the slider */
 }
 
 .logo-slider {
   display: flex;
-  gap: 2rem;
+  white-space: nowrap;
   animation: slide 40s linear infinite;
+  gap: 2rem; /* Consistent gap between logos */
 }
 
 .logo-slider img {
-  height: 100px;
-  object-fit: contain;
+  flex-shrink: 0; /* Prevent images from shrinking below their intrinsic size */
+  height: 100px; /* Ensure a consistent height */
+  width: auto; /* Maintain aspect ratio */
+  margin: 0 1rem; /* Adjust spacing between logos */
 }
 
-/* Navigation Buttons */
+/* Button Styling (Prev/Next for Carousel) */
 .prev-button,
 .next-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
-  border: none;
-  font-size: 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
+  border: none;
+  padding: 10px 15px;
   cursor: pointer;
-  z-index: 2;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  z-index: 3;
 }
 
 .prev-button { left: 10px; }
 .next-button { right: 10px; }
 
-/* Animation Keyframes */
+/* Animations */
 @keyframes fadeIn {
   from {
-   opacity: 0;
+    opacity: 0;
     transform: translateY(20px);
   }
   to {
@@ -360,11 +366,10 @@ body {
 }
 
 @keyframes slide {
-  from { transform: translateX(0); }
- to { transform: translateX(-50%); }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Half of the full duplicated set */
 }
 
-/* Animation Classes */
 .pre-animate {
   opacity: 0;
   transform: translateY(20px);
@@ -380,7 +385,7 @@ body {
 }
 
 /* Responsive Styles */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 854px) and (max-width: 1024px) {
   .blob2 {
     top: 20rem;
     right: -15rem;
@@ -397,12 +402,25 @@ body {
   .newsletter-container { padding: 2rem 0; }
 
   .newsletter-text p { padding: 0;}
+
 }
 
-@media (max-width: 767px) {
-  .blob {
-    animation: none; /* Disable blob animation on smaller screens */
+@media (min-width: 768px) and (max-width: 853px) {
+  .blob2 {
+    top: 22rem;
   }
+  .blob3 {
+    top: 5rem;
+    left: -10rem;
+  }
+
+  .blob4 {
+    top: -17rem;
+    left: 14rem;
+  }
+  .newsletter-container { padding: 2rem 0; }
+
+  .newsletter-text p { padding: 0;}
 }
 
 @media (max-width: 576px) {
@@ -422,13 +440,14 @@ body {
   .event-details-row {
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 1rem;
   }
   
   .event-details h2 { font-size: 1rem; }
   .event-details p { font-size: 0.8rem; padding: 0; }
   
   .mission-container { padding: 2rem 1rem; }
+  
+  .blob { animation: none; }
   
   .blob2, .blob3, .blob4 {
     width: 450px;
@@ -462,18 +481,9 @@ body {
   
   .newsletter-image { width: 100%; }
   
-  .newsletter-form {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .newsletter-input {
-    width: 100%;
-    margin-bottom: 1rem;
-  }
-  
+  .newsletter-input,
   .newsletter-button {
-    width: 100%;
+    width: 80%;
   }
 }
 
@@ -488,4 +498,114 @@ body {
     gap: 2rem;
     animation: slide 40s linear infinite;
   }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .newsletter-container {
+    padding: 2rem 0;
+  }
+
+  .newsletter-content-wrapper {
+    padding: 0 2rem;
+    gap: 1.5rem;
+  }
+
+  .newsletter-left-panel {
+    width: 65%; /* Adjust left panel width for tablets */
+  }
+
+  .newsletter-image {
+    width: 30%; /* Adjust image width for tablets */
+  }
+}
+
+@media (max-width: 767px) {
+  .newsletter-container {
+    padding: 2rem 0;
+  }
+
+  .newsletter-content-wrapper {
+    flex-direction: column; /* Stack items vertically */
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+
+  .contour-overlay {
+    width: 100%; /* Cover full width when stacked */
+    opacity: 0.05; /* Make background image very subtle when stacked */
+  }
+
+  .newsletter-left-panel {
+    width: 100%; /* Full width when stacked */
+    text-align: center; /* Center text when stacked */
+  }
+
+  .newsletter-text {
+    padding: 0;
+    width: 100%;
+  }
+
+  .newsletter-image {
+    width: 80%; /* Larger image for mobile stack */
+    max-width: 300px;
+    justify-content: center; /* Center image when stacked */
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .newsletter-input,
+  .newsletter-button {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-content-wrapper {
+    padding: 0 0.5rem;
+  }
+
+  .newsletter-text h3 {
+    font-size: 1.5rem;
+  }
+
+  .newsletter-text p {
+    font-size: 1rem;
+  }
+
+  .newsletter-image {
+    width: 90%; /* Even larger relative width for smallest screens */
+  }
+}
+
+/* Screen Reader Mode Adjustments for Home Page */
+body.screen-reader-mode .carousel-container {
+  height: auto !important;
+  min-height: 50px; /* Provide a small buffer, or remove if not needed */
+}
+
+body.screen-reader-mode .mission-container {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+
+body.screen-reader-mode .newsletter-container {
+  flex-direction: column !important;
+  align-items: center !important;
+  padding: 2rem 1rem !important;
+}
+
+body.screen-reader-mode .newsletter-text {
+  width: 100% !important;
+  text-align: center !important;
+  padding: 0 !important;
+}
+
+body.screen-reader-mode .collaborators-container {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
 }
