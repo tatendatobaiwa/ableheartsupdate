@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import scribble from '/src/assets/fixed/icons/scribblebackground.webp';
 import DonationForm from '/src/components/DonationForm.jsx';  
 
@@ -13,6 +14,7 @@ const blobImages = [
 
 const GetInvolved = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,7 +106,7 @@ const GetInvolved = () => {
             </p>
             <button
               className="find-out-more-button"
-              onClick={() => (window.location.href = '/ablehearts-ub')}
+              onClick={() => navigate('/ablehearts-ub')}
             >
               Become a Member
             </button>
@@ -131,7 +133,7 @@ const GetInvolved = () => {
             </p>
             <button
               className="find-out-more-button"
-              onClick={() => (window.location.href = '/ablehearts-biust')}
+              onClick={() => navigate('/ablehearts-biust')}
             >
               Become a Member
             </button>

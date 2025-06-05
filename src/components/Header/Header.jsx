@@ -123,9 +123,9 @@ const Header = () => {
  <Link to="/gallery" className={isActive('/gallery') ? 'active' : ''} prefetch="intent"><span>Gallery</span></Link>
               </li>
               <li className={`nav-item ${isMenuActive ? 'visible' : ''}`}>
-                <a href="/shop" className={isActive('/shop') ? 'active' : ''}>
+                <Link to="/shop" className={isActive('/shop') ? 'active' : ''} prefetch="intent">
                   <span>Shop</span>
-                </a>
+                </Link>
               </li>
               <li className={`nav-item settings-dropdown-container ${isSettingsDropdownActive ? 'active' : ''}`}>
                 <button onClick={toggleSettingsDropdown} className="settings-button">

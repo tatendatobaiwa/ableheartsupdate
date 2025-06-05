@@ -233,12 +233,12 @@ const Shop = () => {
               </div>
               <div className="quantity-selector">
                 <p className="text-sm mb-2">Quantity:</p>
-                <div className="flex items-center justify-center gap-4">
-                  <button 
+                <div className="quantity-input-container">
+                  <button
                     className="quantity-btn"
-                    onClick={() => setQuantity(quantity + 1)}
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   >
-                    <Plus size={16} />
+                    <Minus size={16} />
                   </button>
                   <input
                     type="number"
@@ -250,11 +250,11 @@ const Shop = () => {
                       setQuantity(value);
                     }}
                   />
-                  <button 
+                  <button
                     className="quantity-btn"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    onClick={() => setQuantity(quantity + 1)}
                   >
-                    <Minus size={16} />
+                    <Plus size={16} />
                   </button>
                 </div>
               </div>
