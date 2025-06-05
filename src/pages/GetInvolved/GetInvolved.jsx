@@ -59,6 +59,9 @@ const GetInvolved = () => {
           src={blob}
           alt={`Decorative blob ${index + 1}`}
           className={`blobg blob-${index + 1}`}
+          loading="lazy"
+          width="800" /* Replace with actual blob image width */
+          height="auto" /* Replace with actual blob image height */
         />
       ))}
       </div>
@@ -69,14 +72,13 @@ const GetInvolved = () => {
           <p>
             Join us in making a difference. Volunteer, donate, or partner with us to create meaningful change.
           </p>
-          <DonationForm />
         </div>
         <div className="right-content">
           <div className="video-placeholder">
             <iframe
               src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/ableheartsfoundation/videos/1023655192465414"
               width="100%"
-              style={{ border: 'none', overflow: 'hidden' }}
+              height="600px"
               scrolling="no"
               frameBorder="0"
               allowFullScreen
@@ -84,6 +86,11 @@ const GetInvolved = () => {
             ></iframe>
           </div>
         </div>
+      </div>
+      
+      {/* Donation Form Section */}
+      <div className="donation-form-section pre-animate">
+        <DonationForm />
       </div>
 
       {/* AbleHearts UB Section */}
@@ -107,6 +114,9 @@ const GetInvolved = () => {
               src="/src/assets/fixed/ubvolunteers.webp"
               alt="AbleHearts UB"
               className="placeholder-image"
+              loading="lazy"
+              width="500" /* Replace with actual image width */
+              height="300" /* Replace with actual image height */
             />
           </div>
         </div>
@@ -131,6 +141,9 @@ const GetInvolved = () => {
               src="/src/assets/fixed/biustvolunteers.webp"
               alt="AbleHearts BIUST"
               className="placeholder-image"
+              loading="lazy"
+              width="500" /* Replace with actual image width */
+              height="300" /* Replace with actual image height */
             />
           </div>
         </div>
@@ -138,7 +151,9 @@ const GetInvolved = () => {
         {/* Partnerships Section */}
         <div className="content-container1" style={{ backgroundColor: '#0066cc', marginBottom: '0' }}>
           <div className="contour-overlay">
-            <img src={scribble} alt="Scribblebackground" style={{ height: '80rem' }} />
+            <img src={scribble} alt="Scribblebackground" style={{ height: '80rem' }} 
+            loading="lazy" width="1000" /* Replace with actual image width */ height="auto" /* Replace with actual image height */
+            />
           </div>
           <div className="left-contentP">
             <h2 style={{ color: 'white' }}>Partnerships</h2>
@@ -161,6 +176,9 @@ const GetInvolved = () => {
               alt="Partnerships"
               className="placeholder-image"
               style={{ borderRadius: '0' }}
+              loading="lazy"
+              width="500" /* Replace with actual image width */
+              height="300" /* Replace with actual image height */
             />
           </div>
         </div>

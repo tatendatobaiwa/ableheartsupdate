@@ -26,7 +26,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDyslexiaModeEnabled, toggleDyslexiaMode, isScreenReaderModeEnabled, toggleScreenReaderMode } = useAccessibility();
+  const { isDyslexiaModeEnabled, toggleDyslexiaMode } = useAccessibility();
 
   const handleLogoClick = () => {
     navigate('');
@@ -135,11 +135,6 @@ const Header = () => {
                   <li>
                     <button onClick={toggleDyslexiaMode} className="dyslexia-toggle-button">
                       {isDyslexiaModeEnabled ? 'Disable Dyslexia Mode' : 'Enable Dyslexia Mode'}
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={toggleScreenReaderMode} className="screen-reader-toggle-button">
-                      {isScreenReaderModeEnabled ? 'Disable Screen Reader' : 'Enable Screen Reader'}
                     </button>
                   </li>
                   {/* Add other settings options here */}

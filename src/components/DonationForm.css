@@ -1,12 +1,15 @@
 .donation-form-card {
   width: 100%;
-  max-width: 32rem;
+  max-width: calc(100% - 4rem); /* Smaller than page width by 2rem on each side */
   min-height: 400px;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the container */
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: 2rem; /* Uniform padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-success {
@@ -19,6 +22,7 @@
 
 .form-header {
   margin-bottom: 2rem;
+  width: 100%;
 }
 
 .form-title {
@@ -37,35 +41,46 @@
   font-size: 0.875rem;
 }
 
+.form-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .donation-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  width: 100%;
 }
 
 .form-field {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .form-label {
   font-family: Poppins, sans-serif;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #043F70;
+  text-align: left;
 }
 
 .form-input,
 .form-select,
 .donation-textarea {
   width: 100%;
-  padding: 1rem 0;
+  padding: 1.5rem 1.2rem;
   border: 1px solid #e2e8f0;
   border-radius: 0.375rem;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: 1.1rem;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .form-input:focus,
@@ -148,17 +163,21 @@
 /* Enhanced Responsive Styles */
 @media (max-width: 768px) {
   .donation-form-card {
-    max-width: calc(100% - 8rem);
-    margin: 1rem;
+    max-width: calc(100% - 2rem); /* Adjust max-width for smaller screens */
+    margin: 1rem auto; /* Center on smaller screens */
     padding: 1.5rem;
   }
 
   .form-title {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
 
   .form-subtitle {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
   }
 
   .donation-form {
@@ -168,14 +187,16 @@
   .form-input,
   .form-select,
   .donation-textarea {
-    padding: 0.625rem 0;
+    padding: 1rem 0.9rem;
+    font-size: 1rem;
+    box-sizing: border-box;
   }
 }
 
 @media (max-width: 480px) {
   .donation-form-card {
-    margin: 0.5rem;
-    max-width: calc(100% - 3rem);
+    margin: 0.5rem auto; /* Center on very small screens */
+    max-width: calc(100% - 1rem); /* Adjust max-width for very small screens */
     padding: 1rem;
   }
 
@@ -184,27 +205,68 @@
   }
 
   .form-title {
-    font-size: 1.125rem;
+    font-size: 1.2rem;
   }
 
   .form-subtitle {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
   }
 
   .form-label {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
   }
 
   .form-input,
   .form-select,
   .donation-textarea {
-    font-size: 0.8125rem;
-    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    padding: 0.8rem 0.7rem;
+    box-sizing: border-box;
   }
 
   .submit-button {
-    padding: 0.625rem;
-    font-size: 0.9375rem;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .form-note {
+    font-size: 0.8rem;
+  }
+
+  .error-message {
+    font-size: 0.875rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .donation-form-card {
+    margin: 0.25rem auto; /* Center on smallest screens */
+    padding: 0.75rem;
+  }
+
+  .form-title {
+    font-size: 1.1rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .form-label {
+    font-size: 0.85rem;
+  }
+
+  .form-input,
+  .form-select,
+  .donation-textarea {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
   }
 
   .form-note {
@@ -212,23 +274,54 @@
   }
 
   .error-message {
-    font-size: 0.8125rem;
-    padding: 0.625rem;
+    font-size: 0.85rem;
   }
 }
 
-/* Handle very small screens */
-@media (max-width: 320px) {
-  .donation-form-card {
-    margin: 0.25rem;
-    padding: 0.75rem;
-  }
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
 
-  .form-title {
-    font-size: 1rem;
-  }
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: Poppins, sans-serif;
+  font-size: 0.875rem;
+  color: #043F70;
+}
 
-  .donation-form {
-    gap: 1rem;
-  }
+.radio-group input[type="radio"] {
+  /* default radio button styling */
+  appearance: none; /* Hide default radio button */
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #008CFF;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.radio-group input[type="radio"]::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.2s ease;
+  background-color: #008CFF; /* Inner circle color */
+}
+
+.radio-group input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+.radio-group input[type="radio"]:focus {
+  outline: 2px solid #008CFF; /* Focus outline */
+  outline-offset: 2px;
 }

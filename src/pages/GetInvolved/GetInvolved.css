@@ -130,11 +130,16 @@
     align-items: center;
     position: relative;
     z-index: 3;
+    margin-top: 2rem;
+  }
+  
+  .donation-form-section {
+    padding: 0 4rem; /* Add horizontal padding to the section */
   }
   
   /* Left Content */
   .left-content {
-    width: 50%;
+    width: 45%; /* Adjusted width to allow space for video */
     padding: 0 2rem;
     text-align: left;
   }
@@ -159,9 +164,8 @@
     font-family: Poppins, "sans-serif";
     line-height: 1.6;
     color: #043F70;
-    font-size: large;
-    margin-bottom: 3rem;
     font-size: 1.2rem;
+    margin-bottom: 3rem;
   }
   
   .buttons-container {
@@ -192,16 +196,23 @@
     justify-content: center;
     align-items: center;
     padding: 0 4rem;
-    display: flex;
-    width: 31%;
+    width: 55%;
     z-index: 1;
   }
   
+  .video-placeholder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
   .video-placeholder iframe {
-    width: 25rem;
-    height: 35rem;
+    width: 100%;
+    height: 600px; /* Explicit height for larger video */
     border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
 
   .left-contentP {
@@ -235,7 +246,6 @@
 
 .placeholder-image {
   width: 100%;
-  width: 439px;
   height: auto;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -322,13 +332,12 @@
     padding: 0 2rem;
   }
 
-  .right-content iframe {
-    width: 100%;
-    height: auto;
+  .right-content {
+    min-height: 400px; /* Ensure a minimum height for tablets */
   }
 
-  .right-content iframe {
-    display: none;
+  .video-placeholder iframe {
+    height: 400px; /* Fixed height for tablets */
   }
 
   .email-button {
@@ -343,7 +352,10 @@
 }
 
 @media (max-width: 540px) {
-  .right-content iframe {
-    display: none;
+  .right-content {
+    min-height: 300px; /* Ensure a minimum height for mobile */
+  }
+  .video-placeholder iframe {
+    height: 300px; /* Fixed height for mobile */
   }
 }

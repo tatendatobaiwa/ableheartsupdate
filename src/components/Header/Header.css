@@ -275,7 +275,7 @@ header {
   background: #FFFFFF;
   border-radius: 4px;
   z-index: 10;
-  padding: 0.5rem 0;
+  padding: 0 0.5rem;
   list-style: none;
   min-width: max-content; /* Ensure it's wide enough for content */
 }
