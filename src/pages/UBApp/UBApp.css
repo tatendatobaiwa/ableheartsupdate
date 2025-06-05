@@ -1,9 +1,11 @@
 .ub-app-page-background {
   position: relative;
   width: 100%;
-  min-height: 120vh;
+  min-height: 100vh;
   overflow: hidden;
-  background-color: #f3f3f3;
+  background-color: #f8f9fa;
+  padding: 2rem 0;
+  font-family: Poppins, "sans-serif";
 }
 
 .ub-app-container {
@@ -11,60 +13,185 @@
   z-index: 2;
   max-width: 800px;
   margin: 0 auto;
-  padding: 40px;
-  background-color: rgb(233, 233, 233);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .ub-app-logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .ub-app-logo {
   width: auto;
-  height: 100px;
+  height: 90px;
 }
 
 .ub-app-title {
   text-align: center;
   color: #043F70;
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.ub-app-description {
+  text-align: center;
+  color: #555;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
 }
 
 .ub-app-application-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1.5rem;
+}
+
+.ub-app-fieldset {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 0;
+}
+
+.ub-app-legend {
+  font-weight: 600;
+  color: #043F70;
+  padding: 0 0.5rem;
+  margin-left: 1rem;
+  font-size: 1.2rem;
 }
 
 .ub-app-label {
-  font-weight: bold;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .ub-app-input,
-.ub-app-textarea {
-  padding: 10px;
+.ub-app-textarea,
+.ub-app-country-code-select {
+  width: 100%;
+  padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.ub-app-input:focus,
+.ub-app-textarea:focus,
+.ub-app-country-code-select:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+.ub-app-phone-input-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.ub-app-country-code-select {
+  flex: 0 0 150px;
+}
+
+.ub-app-button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 .ub-app-submit-button,
 .ub-app-back-button {
   font-family: Poppins, "sans-serif";
-  padding: 10px 20px;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  color: #fff;
-  background-color: #007BFF;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
-.ub-app-submit-button:hover,
+.ub-app-submit-button {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.ub-app-submit-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.ub-app-back-button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
 .ub-app-back-button:hover {
+  background-color: #e0e0e0;
+}
+
+.ub-app-error {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.ub-app-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.ub-app-success-popup {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.ub-app-success-popup h3 {
+  color: #043F70;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.ub-app-success-popup p {
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.ub-app-success-close-button {
+  padding: 0.75rem 2rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.ub-app-success-close-button:hover {
   background-color: #0056b3;
 }
 
@@ -102,55 +229,6 @@
 .ub-app-blob.ub-app-blob-4 {
   top: 80%;
   left: 75%;
-}
-
-.ub-app-error {
-  color: red;
-}
-
-.ub-app-success-popup {
-  position: fixed; /* Ensures the popup stays in view even when scrolling */
-  top: 50%; /* Centers the popup vertically */
-  left: 50%; /* Centers the popup horizontally */
-  transform: translate(-50%, -50%); /* Adjusts for the element's own dimensions */
-  z-index: 1000; /* Makes sure it's in front of other elements */
-  background-color: white; /* Popup background */
-  padding: 20px; /* Adds spacing inside the popup */
-  border-radius: 8px; /* Smooths the corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
-  text-align: center; /* Centers text inside */
-}
-
-.ub-app-success-close-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.ub-app-success-close-button:hover {
-  background-color: #0056b3;
-}
-
-.ub-app-phone-input-container {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.ub-app-country-code-select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.ub-app-country-code-select:focus {
-  outline: none;
-  border-color: #007bff;
 }
 
 @media (max-width: 768px) {
