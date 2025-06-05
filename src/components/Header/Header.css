@@ -270,15 +270,14 @@ header {
   display: none;
   position: absolute;
   top: 100%;
-  left: 50%; /* Center the dropdown */
-  transform: translateX(-50%);
+  left: 40%; /* Move the dropdown to the left */
+  transform: translateX(-50%); /* Adjust for perfect centering based on new left */
   background: #FFFFFF;
   border-radius: 4px;
   z-index: 10;
   padding: 0.5rem 0;
   list-style: none;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  min-width: 200px; /* Adjust as needed */
+  min-width: max-content; /* Ensure it's wide enough for content */
 }
 
 .nav-item.settings-dropdown-container.active .settings-dropdown-menu {
@@ -297,7 +296,7 @@ header {
   color: #043F70;
   font-weight: 600;
   transition: background 0.3s ease, color 0.3s ease;
-  padding: 1rem 2.4rem;
+  padding: 1rem 1rem;
   width: 100%;
   text-align: left;
   background: none;
