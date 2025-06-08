@@ -85,9 +85,7 @@ const Header = () => {
               aria-controls="nav-links"
             >
               ☰
- {isMenuActive && (
- <button className="menu-close-button" onClick={toggleMenu}>X</button>
- )} </button>
+            </button>
             <ul id="nav-links" className={`nav-links ${isMenuActive ? 'active' : ''}`}>
               <li className={`nav-item ${isMenuActive ? 'visible' : ''}`}>
  <Link to="/" className={isActive('/') ? 'active' : ''} prefetch="intent">
