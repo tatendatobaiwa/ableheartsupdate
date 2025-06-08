@@ -1,5 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import './Gallery.css';
+import Footer from '../../components/Footer/Footer';
 
 import blob1 from '../../assets/fixed/icons/blob1.webp';
 import blob2 from '../../assets/fixed/icons/blob2.webp';
@@ -342,13 +343,13 @@ const Gallery = () => {
   return (
     <div className={`container-gallery ${isLoaded ? 'content-loaded' : ''}`}>
       {/* Blobs section - kept intact */}
-      <div className="background-blobs-gallery">
+      <div className="background-blobs">
         {blobImages.map((blob, index) => (
           <FixedImage
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`blobs-gallery blobs-gallery-${index + 1}`}
+            className={`blobg blob-${index + 1}`}
           />
         ))}
       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UBApp.css';
 import countryCodes from '/src/data/countryCodes.json';
+import Footer from '../../components/Footer/Footer';
 
 const blobImages = [
   '/src/assets/fixed/icons/blob1.webp',
@@ -69,13 +70,13 @@ const UBApp = () => {
 
   return (
     <div className="ub-app-page-background">
-      <div className="ub-app-background-blobs">
+      <div className="background-blobs">
         {blobImages.map((blob, index) => (
           <img
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`ub-app-blob ub-app-blob-${index + 1}`}
+            className={`blobg blob-${index + 1}`}
           />
         ))}
       </div>

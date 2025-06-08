@@ -34,7 +34,7 @@ function App() {
           />
         ))}
       </div>
-      <div className="app-content">
+      <div className="app-content" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <ScrollToTop /> {/* Ensures scroll-to-top functionality */}
         <Header />
         {/* Main Routes */}

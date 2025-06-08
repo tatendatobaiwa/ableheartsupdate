@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AboutUs.css';
 import ubLogo from '/src/assets/fixed/icons/ub.webp';
 import biustLogo from '/src/assets/fixed/icons/biust.webp';
+import Footer from '../../components/Footer/Footer';
 
 const ubTeam = [
   { name: 'Keya Paymaster', role: 'President', image: '/src/assets/fixed/team/ub/keya.webp' },

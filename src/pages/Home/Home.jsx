@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './Home.css';
 import NewsletterSignup from "../../components/NewsLetterSignup.jsx";  
 import { useAccessibility } from "../../context/AccessibilityContext.jsx";
+import Footer from '../../components/Footer/Footer';
 
 import landingPageImage from '/src/assets/fixed/landingpageimage.webp';
 import whiteLogo from '/src/assets/fixed/icons/whiteablehearts.webp';
@@ -143,147 +144,149 @@ const Home = () => {
   };  
 
   return (
-    <div className="home-container">
-      <div 
-        className="carousel-container pre-animate"
-        role="region" 
-        aria-label="Image Carousel"
-        aria-live="polite"
-      >
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}            role="group"
-            aria-roledescription="slide"
-            style={{ backgroundImage: `url(${getImageUrl(slide.image)})` }}
-          >
-            <div className="slide-content">
-              <div className="event-details">
-                <div className="event-details-row">
-                  <img 
-                    src={slide.logo} 
-                    alt="Event Logo" 
-                    className="event-logo event-logo-slide"
-                    loading="lazy" 
-                    onError={handleImageError}
-                    width={200}
-                    height="auto"
-                  />
-                  <div className="event-text">
-                    <h2>{slide.title}</h2>
-                    <p>{slide.date}</p>
+    <div className="page-wrapper">
+      <div className="home-container">
+        <div 
+          className="carousel-container pre-animate"
+          role="region" 
+          aria-label="Image Carousel"
+          aria-live="polite"
+        >
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}            role="group"
+              aria-roledescription="slide"
+              style={{ backgroundImage: `url(${getImageUrl(slide.image)})` }}
+            >
+              <div className="slide-content">
+                <div className="event-details">
+                  <div className="event-details-row">
+                    <img 
+                      src={slide.logo} 
+                      alt="Event Logo" 
+                      className="event-logo event-logo-slide"
+                      loading="lazy" 
+                      onError={handleImageError}
+                      width={200}
+                      height="auto"
+                    />
+                    <div className="event-text">
+                      <h2>{slide.title}</h2>
+                      <p>{slide.date}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="carousel-indicators">
-                {slides.map((_, idx) => (
-                  <button
-                    key={idx}
-                    className={`indicator ${currentSlide === idx ? 'active' : ''}`}
-                    onClick={() => handleIndicatorClick(idx)}
-                    aria-label={`Go to slide ${idx + 1}`}
-                    {...(currentSlide === idx && { 'aria-current': 'true' })}
-                  />
-                ))}
+                <div className="carousel-indicators">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      className={`indicator ${currentSlide === idx ? 'active' : ''}`}
+                      onClick={() => handleIndicatorClick(idx)}
+                      aria-label={`Go to slide ${idx + 1}`}
+                      {...(currentSlide === idx && { 'aria-current': 'true' })}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
+          ))}
+          <button className="prev-button" onClick={handlePrevSlide} aria-label="Previous Slide">
+            &#8249;
+          </button>
+          <button className="next-button" onClick={handleNextSlide} aria-label="Next Slide">
+            &#8250;
+          </button>
+        </div>
+        <div className="mission-container pre-animate">
+          {/* Background blobs */}
+          <div className="background-blobs">
+            <img
+              src={getImageUrl('blob2')}
+              alt=""
+              className="blobg blob-1"
+              loading="lazy"
+              width={480}
+              height={556}
+            />
+            <img
+              src={getImageUrl('blob3')}
+              alt=""
+              className="blobg blob-2"
+              loading="lazy"
+              width={516}
+              height={556}
+            />
+            <img
+              src={getImageUrl('blob4')}
+              alt=""
+              className="blobg blob-3"
+              loading="lazy"
+              width={516}
+              height={596}
+            />
           </div>
-        ))}
-        <button className="prev-button" onClick={handlePrevSlide} aria-label="Previous Slide">
-          &#8249;
-        </button>
-        <button className="next-button" onClick={handleNextSlide} aria-label="Next Slide">
-          &#8250;
-        </button>
-      </div>
-      <div className="mission-container pre-animate">
-        {/* Background blobs */}
-        <div className="mission-blobs">
+          <h2>Our Mission</h2>
+          <p>
+            At Able Hearts, our mission is to break barriers, challenge stigma, and
+            empower individuals with disabilities to embrace their full potential.
+            Guided by our belief that{' '}
+            <span className="highlight">
+              "We are all equal in the fact that we are all different,"
+            </span>{' '}
+            we are committed to fostering inclusivity, celebrating diversity, and
+            driving meaningful change in communities. Together, we strive to create
+            a future where compassion and equality thrive.
+          </p>
+        </div>
+        <div className="newsletter-container pre-animate">
+        <div className="contour-overlay">
           <img
-            src={getImageUrl('blob2')}
-            alt=""
-            className="blob blob2"
+            src={getImageUrl('scribble')}
+            alt="Scribblebackground"
+            onError={handleImageError}
             loading="lazy"
-            width={480}
-            height={556}
-          />
-          <img
-            src={getImageUrl('blob3')}
-            alt=""
-            className="blob blob3"
-            loading="lazy"
-            width={516}
-            height={556}
-          />
-          <img
-            src={getImageUrl('blob4')}
-            alt=""
-            className="blob blob4"
-            loading="lazy"
-            width={516}
-            height={596}
+            className="lazy-image" // Add this class
+            data-image-key="scribble" // Add this data attribute
           />
         </div>
-        <h2>Our Mission</h2>
-        <p>
-          At Able Hearts, our mission is to break barriers, challenge stigma, and
-          empower individuals with disabilities to embrace their full potential.
-          Guided by our belief that{' '}
-          <span className="highlight">
-            "We are all equal in the fact that we are all different,"
-          </span>{' '}
-          we are committed to fostering inclusivity, celebrating diversity, and
-          driving meaningful change in communities. Together, we strive to create
-          a future where compassion and equality thrive.
-        </p>
+        <NewsletterSignup />
+        <div className="newsletter-image">
+          <img
+            src={getImageUrl('newsletter')}
+            alt="Newsletter"
+            onError={handleImageError}
+            width="100%"
+            height="auto"
+            loading="lazy"
+            className="lazy-image" // Add this class
+            data-image-key="newsletter" // Add this data attribute
+          />
+        </div>
       </div>
-      <div className="newsletter-container pre-animate">
-      <div className="contour-overlay">
-        <img
-          src={getImageUrl('scribble')}
-          alt="Scribblebackground"
-          onError={handleImageError}
-          loading="lazy"
-          className="lazy-image" // Add this class
-          data-image-key="scribble" // Add this data attribute
-        />
-      </div>
-      <NewsletterSignup />
-      <div className="newsletter-image">
-        <img
-          src={getImageUrl('newsletter')}
-          alt="Newsletter"
-          onError={handleImageError}
-          width="100%"
-          height="auto"
-          loading="lazy"
-          className="lazy-image" // Add this class
-          data-image-key="newsletter" // Add this data attribute
-        />
-      </div>
-    </div>
-      <div className="collaborators-container pre-animate">
-        <h3>Our Valued Collaborators</h3>
-        <div className="logo-bar">
-          <div className="logo-slider">
-            {[
-              'india', 'minjex', 'nortex', 'trans', 'tropicana', 'sennfoods',
-              'francistownelectronics', 'valentines', 'bush', 'strub', 'bms',
-              'india', 'minjex', 'nortex', 'trans', 'tropicana', 'sennfoods',
-              'francistownelectronics', 'valentines', 'bush', 'strub', 'bms'
-            ].map((logo, index) => (
-              <img
-                key={index}
-                src={getImageUrl(logo)}
-                className="collaborator-logo"
-                alt={`${logo} logo`}
-                height={100}
-                data-imagename={logo}
-                width={150}
-                onError={handleImageError}
-                loading="lazy"
-              />
-            ))}
+        <div className="collaborators-container pre-animate">
+          <h3>Our Valued Collaborators</h3>
+          <div className="logo-bar">
+            <div className="logo-slider">
+              {[
+                'india', 'minjex', 'nortex', 'trans', 'tropicana', 'sennfoods',
+                'francistownelectronics', 'valentines', 'bush', 'strub', 'bms',
+                'india', 'minjex', 'nortex', 'trans', 'tropicana', 'sennfoods',
+                'francistownelectronics', 'valentines', 'bush', 'strub', 'bms'
+              ].map((logo, index) => (
+                <img
+                  key={index}
+                  src={getImageUrl(logo)}
+                  className="collaborator-logo"
+                  alt={`${logo} logo`}
+                  height={100}
+                  data-imagename={logo}
+                  width={150}
+                  onError={handleImageError}
+                  loading="lazy"
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

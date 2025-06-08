@@ -3,6 +3,7 @@ import { ShoppingCart, X, Plus, Minus } from 'lucide-react';
 import { db } from '/src/firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Shop.css';
+import Footer from '../../components/Footer/Footer';
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 const blobImages = [
@@ -164,7 +165,7 @@ const Shop = () => {
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`blobs blob-${index + 1}`}
+            className={`blobg blob-${index + 1}`}
           />
         ))}
       </div>

@@ -1,11 +1,17 @@
+.page-wrapper {
+  position: relative; /* Establishes a stacking context */
+  z-index: 1; /* Base layer for content */
+  min-height: 100vh;
+}
+
 .programs-container {
   position: relative;
   overflow: hidden;
   padding: 2rem 4rem;
   border-radius: 8px;
   font-family: Poppins, "sans-serif";
-  z-index: 1;
-  background-color: #f9f9f9;
+  z-index: 2;
+  background-color: white;
 }
 
 @keyframes fadeIn {
@@ -104,45 +110,47 @@
 }
 
 .background-blobs {
-  position: absolute;
+  position: fixed; 
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
+  pointer-events: none;
+  background-color: #f9f9f9;
 }
 
-.blob {
+.blobg {
   position: absolute;
-  width: 800px;
+  width: 600px;
   height: auto;
   filter: blur(5px); 
   animation: float 20s infinite ease-in-out;
 }
 
-.blob-1 {
+.blobg.blob-1 {
   top: 0%;
-  left: 5%;
-  animation-delay: 0s;
-}
-
-.blob-2 {
-  top: 30%;
-  right: 10%;
-  animation-delay: 3s;
-}
-
-.blob-3 {
-  bottom: 40%;
   left: 0%;
-  animation-delay: 6s;
+  animation: moveBlob1 20s infinite ease-in-out;
 }
 
-.blob-4 {
+.blobg.blob-2 {
+  top: 25%;
+  right: 5%;
+  animation: moveBlob2 20s infinite ease-in-out;
+}
+
+.blobg.blob-3 {
+  bottom: 20%;
+  left: 0%;
+  animation: moveBlob3 20s infinite ease-in-out;
+}
+
+.blobg.blob-4 {
   bottom: 0%;
-  right: 0%;
-  animation-delay: 9s;
+  right: -10%;
+  animation: moveBlob4 20s infinite ease-in-out;
 }
 
 @keyframes float {
@@ -154,12 +162,24 @@
   }
 }
 
-
-@keyframes moveBlobs {
+@keyframes moveBlob1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(50px, -30px) scale(1.1); }
-  50% { transform: translate(-50px, 50px) scale(1.2); }
-  75% { transform: translate(30px, -50px) scale(1.1); }
+  50% { transform: translate(20px, 20px) scale(1.1); }
+}
+
+@keyframes moveBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 30px) scale(1.15); }
+}
+
+@keyframes moveBlob3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+}
+
+@keyframes moveBlob4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-25px, -25px) scale(1.12); }
 }
 
 @media (max-width: 768px) {
