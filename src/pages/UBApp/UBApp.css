@@ -40,7 +40,7 @@
 
 .ub-app-description {
   text-align: center;
-  color: #555;
+  color: #333;
   margin-bottom: 2rem;
   font-size: 1.1rem;
 }
@@ -127,18 +127,18 @@
 }
 
 .ub-app-submit-button:hover {
-  background-color: #0056b3;
+  background-color: #004d99;
   transform: translateY(-2px);
 }
 
 .ub-app-back-button {
-  background-color: #f0f0f0;
+  background-color: #e9ecef;
   color: #333;
-  border: 1px solid #ccc;
+  border: 1px solid #adb5bd;
 }
 
 .ub-app-back-button:hover {
-  background-color: #e0e0e0;
+  background-color: #ced4da;
 }
 
 .ub-app-error {
@@ -177,7 +177,7 @@
 }
 
 .ub-app-success-popup p {
-  color: #555;
+  color: #333;
   margin-bottom: 2rem;
 }
 

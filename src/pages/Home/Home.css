@@ -93,13 +93,13 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .indicator.active {
-  background-color: #F4BC2A;
+  background-color: #CC9917;
 }
 
 /* Event Details */
@@ -226,13 +226,13 @@ body {
 .mission-container h2,
 .mission-container p {
   font-family: Poppins, "sans-serif";
-  color: #043F70;
+  color: #333;
   position: relative;
   z-index: 2;
 }
 
 .highlight {
-  color: #0066cc;
+  color: #004d99;
   font-weight: 700;
 }
 
@@ -301,7 +301,7 @@ body {
 
 .newsletter-button {
   padding: 0.75rem 1.5rem;
-  background-color: #F4BC2A;
+  background-color: #CC9917;
   color: #043F70;
   border: none;
   border-radius: 4px;
@@ -309,7 +309,8 @@ body {
 }
 
 .newsletter-button:hover {
-  background-color: #c59210;
+  background-color: #A37A12;
+  text-decoration: underline;
 }
 
 .newsletter-image {
@@ -337,7 +338,7 @@ body {
 
 .collaborators-container h3 {
   font-family: Poppins, "sans-serif";
-  color: #043F70;
+  color: #333;
   font-weight: 600;
   font-size: 2.5rem;
   margin-bottom: 2rem;
@@ -367,7 +368,7 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
   border: none;
   padding: 10px 15px;
@@ -375,10 +376,17 @@ body {
   font-size: 1.5rem;
   border-radius: 5px;
   z-index: 3;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .prev-button { left: 10px; }
 .next-button { right: 10px; }
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #F4BC2A;
+}
 
 /* Animations */
 @keyframes fadeIn {

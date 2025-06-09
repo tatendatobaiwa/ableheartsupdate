@@ -163,7 +163,7 @@
   .left-content p {
     font-family: Poppins, "sans-serif";
     line-height: 1.6;
-    color: #043F70;
+    color: #333; /* Darkened for better contrast */
     font-size: 1.2rem;
     margin-bottom: 3rem;
   }
@@ -187,7 +187,8 @@
   }
   
   .cta-button:hover {
-    background-color: #005bb5;
+    background-color: #004d99; /* Darker blue for better contrast on hover */
+    text-decoration: underline; /* Added for non-color distinction if acting as link */
   }
   
   /* Right Content */
@@ -243,7 +244,7 @@
   .left-contentP p {
     font-family: Poppins, "sans-serif";
     line-height: 1.6;
-    color: #043F70;
+    color: #CCC; /* Lightened for better contrast on dark background */
     font-size: 1.2rem;
   }
 
@@ -270,8 +271,9 @@
   }
   
   .find-out-more-button:hover {
-    background-color: #004d99;
+    background-color: #004d99; /* Darker blue for better contrast on hover */
     transform: scale(1.05);
+    text-decoration: underline; /* Added for non-color distinction */
   }
  
   .contour-overlay {
@@ -300,10 +302,11 @@
   }
   
   .email-button:hover {
-    background-color: #004c99;
+    background-color: #003F70; /* Darker blue for better contrast on hover */
     color: white;
     transform: scale(1.05);
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: underline; /* Added for non-color distinction */
   }
 
 /* Responsive Adjustments */

@@ -51,6 +51,7 @@
 
 .scroll-to-top-btn:hover {
   background-color: #043F70;
+  text-decoration: underline;
 }
 
 .scroll-to-top-btn.show {
@@ -67,7 +68,7 @@
 
 .programs-intro {
   font-size: 1.2rem;
-  color: #043F70;
+  color: #333;
   text-align: center;
   margin-bottom: 3rem;
 }
@@ -82,6 +83,24 @@
   transform: translateY(-4px);
 }
 
+.program-card-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+.program-image-wrapper {
+  flex-shrink: 0;
+}
+
+.program-text-wrapper {
+  flex-grow: 1;
+}
+
 .program-title {
   font-size: 1.8rem;
   font-weight: 600;
@@ -89,24 +108,19 @@
   margin-bottom: 1rem;
 }
 
-.program-content {
-  display: flex;
-  align-items: flex-start;
-  gap: 2rem;
+.program-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
 }
 
+/* Ensure the program image fits within its wrapper */
 .program-image {
   width: 500px;
   height: 400px;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.program-description {
-  font-size: 1.7rem;
-  line-height: 1.6;
-  color: #043F70;
 }
 
 /* Background blobs */
@@ -191,6 +205,21 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  .program-card-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .program-image-wrapper {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .program-text-wrapper {
+    width: 100%;
   }
 
     .program-image {

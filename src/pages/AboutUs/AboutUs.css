@@ -26,7 +26,7 @@
 
 .about-subtitle {
   font-size: 1.2rem;
-  color: #555;
+  color: #333;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -214,7 +214,17 @@
 }
 
 .team-member-role {
-  color: #555;
+  color: #333;
+}
+
+.team-member-card a {
+  text-decoration: none;
+  color: inherit;
+  transition: text-decoration 0.3s ease;
+}
+
+.team-member-card a:hover {
+  text-decoration: underline;
 }
 
 /* Scroll to Top Button */

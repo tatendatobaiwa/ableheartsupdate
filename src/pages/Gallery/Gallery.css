@@ -26,7 +26,7 @@
   
   .subtitle-gallery {
     font-size: 1.2rem;
-    color: #043F70;
+    color: #333;
     max-width: 800px;
     margin: 0 auto;
   }
@@ -128,7 +128,7 @@
   }
   
   .modal-description-gallery {
-    color: #043F70;
+    color: #333;
     line-height: 1.6;
   }
   
@@ -401,6 +401,7 @@
   
   .scroll-to-top-btn-gallery:hover {
     background-color: #043F70;
+    text-decoration: underline;
   }
 
   .events-grid {
@@ -424,6 +425,7 @@
   .event-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    text-decoration: underline;
   }
   
   .event-cover-image {
@@ -511,6 +513,7 @@
   
   .event-image-card:hover {
     transform: translateY(-3px);
+    text-decoration: underline;
   }
   
   .event-image {
