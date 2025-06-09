@@ -4,19 +4,38 @@ import ubLogo from '/src/assets/fixed/icons/ub.webp';
 import biustLogo from '/src/assets/fixed/icons/biust.webp';
 import Footer from '../../components/Footer/Footer';
 
+import blob1 from '../../assets/fixed/icons/blob1.webp';
+import blob2 from '../../assets/fixed/icons/blob2.webp';
+import blob3 from '../../assets/fixed/icons/blob3.webp';
+import blob4 from '../../assets/fixed/icons/blob4.webp';
+
 const ubTeam = [
-  { name: 'Keya Paymaster', role: 'President', image: '/src/assets/fixed/team/ub/keya.webp' },
-  { name: 'Sharon Kenanao', role: 'Vice President', image: '/src/assets/fixed/team/ub/sharon.webp' },
-  { name: 'Mothusi Bleb', role: 'Treasurer', image: '/src/assets/fixed/team/ub/mothusi.webp' },
-  { name: 'Tlotlo Upendo', role: 'Secretary', image: '/src/assets/fixed/team/ub/tlotlo.webp' },
+  { name: 'Banoziba Gombalume', role: 'President', image: '/src/assets/fixed/bano.jpg' }
 ];
 
 const biustTeam = [
-  { name: 'Katlego Dijeng', role: 'Chairperson', image: '/src/assets/fixed/team/biust/katlego.webp' },
-  { name: 'Tinotenda Watatenda', role: 'Vice Chairperson', image: '/src/assets/fixed/team/biust/tino.webp' },
-  { name: 'Masedi Kgopolo', role: 'Treasurer', image: '/src/assets/fixed/team/biust/masedi.webp' },
-  { name: 'Natasha Marumolo', role: 'Secretary', image: '/src/assets/fixed/team/biust/natasha.webp' },
+  { name: 'Kgosi Moagi-Angaman ', role: 'President', image: '/src/assets/fixed/kgosi.jpg' }
 ];
+
+const blobImages = [
+  blob1,
+  blob3,
+  blob4,
+  blob2,
+];
+
+const ubPresident = {
+  name: 'Banoziba Gombalume',
+  role: 'President',
+  image: '/src/assets/fixed/bano.jpg',
+  linkedin: 'https://www.linkedin.com/in/banoziba-gombalume-b86018199/', // Placeholder link
+};
+
+const biustPresident = {
+  name: 'Kgosi Moagi-Angaman',
+  role: 'President',
+  image: '/src/assets/fixed/kgosi.jpg',
+};
 
 const AboutUs = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,6 +72,20 @@ const AboutUs = () => {
 
   return (
     <div className="about-container">
+      {/* Background blobs */}
+      <div className="background-blobs">
+        {blobImages.map((blob, index) => (
+          <img
+            key={index}
+            src={blob}
+            alt={`Decorative blob ${index + 1}`}
+            className={`blobg blob-${index + 1}`}
+            loading="lazy"
+            width="800" // Placeholder for actual width
+            height="auto" // Placeholder for actual height
+          />
+        ))}
+      </div>
       <header className="about-header pre-animate">
         <h1 className="about-main-title">About Able Hearts Foundation</h1>
         <p className="about-subtitle">
@@ -141,31 +174,31 @@ const AboutUs = () => {
       </section>
       
       <section className="about-section team-section pre-animate">
-        <h2 className="section-title">Meet Our Teams</h2>
+        <h2 className="section-title">Meet Our Branch Presidents\</h2>
         <div className="team-branch">
           <img src={ubLogo} alt="UB Logo" className="branch-logo"/>
           <h3 className="branch-title">University of Botswana Branch</h3>
           <div className="team-grid">
-            {ubTeam.map(member => (
-              <div className="team-member-card" key={member.name}>
-                <div className="team-member-image-placeholder"></div>
-                <h4 className="team-member-name">{member.name}</h4>
-                <p className="team-member-role">{member.role}</p>
-              </div>
-            ))}
+            <div className="team-member-card" key={ubPresident.name}>
+              <a href={ubPresident.linkedin} target="_blank" rel="noopener noreferrer">
+                <img src={ubPresident.image} alt={ubPresident.name} className="team-member-image"/>
+              </a>
+              <h4 className="team-member-name">{ubPresident.name}</h4>
+              <p className="team-member-role">{ubPresident.role}</p>
+            </div>
           </div>
         </div>
         <div className="team-branch">
           <img src={biustLogo} alt="BIUST Logo" className="branch-logo"/>
           <h3 className="branch-title">BIUST Branch</h3>
           <div className="team-grid">
-            {biustTeam.map(member => (
-              <div className="team-member-card" key={member.name}>
-                <div className="team-member-image-placeholder"></div>
-                <h4 className="team-member-name">{member.name}</h4>
-                <p className="team-member-role">{member.role}</p>
-              </div>
-            ))}
+            <div className="team-member-card" key={biustPresident.name}>
+              <a href={biustPresident.linkedin} target="_blank" rel="noopener noreferrer">
+                <img src={biustPresident.image} alt={biustPresident.name} className="team-member-image"/>
+              </a>
+              <h4 className="team-member-name">{biustPresident.name}</h4>
+              <p className="team-member-role">{biustPresident.role}</p>
+            </div>
           </div>
         </div>
       </section>

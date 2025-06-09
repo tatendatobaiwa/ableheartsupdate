@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
+import { db } from '../firebase/config';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Basic email validation
-    if (!email.includes('@')) {
-      setMessage('Please enter a valid email');
+    setMessage(''); // Clear previous messages
+
+    if (!email.includes('@') || !email.includes('.')) {
+      setMessage('Please enter a valid email address.');
       return;
     }
 
-    // Get existing emails from localStorage
-    const existingEmails = JSON.parse(localStorage.getItem('newsletterEmails') || '[]');
-    
-    // Check if email already exists
-    if (existingEmails.includes(email)) {
-      setMessage('You are already subscribed!');
-      return;
+    setLoading(true);
+    try {
+      await addDoc(collection(db, 'newsletter_subscribers'), {
+        email: email,
+        subscribedAt: serverTimestamp(),
+      });
+      setEmail('');
+      setMessage('Thanks for subscribing!');
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      setMessage('Failed to subscribe. Please try again.');
+    } finally {
+      setLoading(false);
+      setTimeout(() => setMessage(''), 3000);
     }
-
-    // Add new email and save back to localStorage
-    localStorage.setItem('newsletterEmails', JSON.stringify([...existingEmails, email]));
-    
-    // Clear form and show success message
-    setEmail('');
-    setMessage('Thanks for subscribing!');
-    
-    // Clear message after 3 seconds
-    setTimeout(() => setMessage(''), 3000);
   };
 
   return (
@@ -47,13 +47,14 @@ const NewsletterSignup = () => {
           placeholder="Enter your email"
           className="newsletter-input"
           required
+          disabled={loading}
         />
-        <button type="submit" className="newsletter-button">
-          Subscribe
+        <button type="submit" className="newsletter-button" disabled={loading}>
+          {loading ? 'Subscribing...' : 'Subscribe'}
         </button>
       </form>
       {message && (
-        <p style={{ marginTop: '10px', color: message.includes('already') || message.includes('valid') ? '#e74c3c' : '#2ecc71' }}>
+        <p style={{ marginTop: '10px', color: message.includes('Thanks') ? '#2ecc71' : '#e74c3c' }}>
           {message}
         </p>
       )}
