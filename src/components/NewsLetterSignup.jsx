@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { db } from '../firebase/config';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState('');
@@ -18,6 +18,17 @@ const NewsletterSignup = () => {
 
     setLoading(true);
     try {
+      // Check if email already exists
+      const q = query(collection(db, 'newsletter_subscribers'), where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        setMessage('You are already subscribed!');
+        setLoading(false);
+        setTimeout(() => setMessage(''), 3000);
+        return;
+      }
+
       await addDoc(collection(db, 'newsletter_subscribers'), {
         email: email,
         subscribedAt: serverTimestamp(),
