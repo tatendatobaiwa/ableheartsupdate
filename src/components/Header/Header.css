@@ -91,8 +91,11 @@ header {
     border-radius: 4px; 
   }  
   
-  .nav-links li a:hover {
-    background: #d4ecff; 
+  .nav-links li a:hover,
+  .nav-links li a:focus {
+    background: #E0F2F7; /* Lighter blue for hover */
+    color: #005BB5; /* Darker blue for hover */
+    text-decoration: none;
   }
   
   .mini-logo {
@@ -302,11 +305,5 @@ header {
   color: #008CFF;
 }
 
-.dyslexia-toggle-button {
-  /* Specific styles for the dyslexia button if needed, otherwise it inherits from .settings-dropdown-menu li button */
-}
 
-.screen-reader-toggle-button {
-  /* Specific styles for the screen reader button if needed, otherwise it inherits from .settings-dropdown-menu li button */
-}
 

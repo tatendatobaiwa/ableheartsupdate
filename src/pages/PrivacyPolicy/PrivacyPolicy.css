@@ -8,9 +8,22 @@
   background-color: #f9f9f9;
 }
 
+.privacy-page-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 4rem;
+  border-radius: 8px;
+  font-family: Poppins, "sans-serif";
+  z-index: 1;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin: 2rem auto;
+  max-width: 90%; /* Adjust as needed */
+}
+
 /* Background blobs for Privacy Policy */
 .privacy-background-blobs {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -18,7 +31,7 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background-color: #f9f9f9;
+  background-color: transparent; /* Changed to transparent as wrapper has background */
 }
 
 .privacy-blobg {

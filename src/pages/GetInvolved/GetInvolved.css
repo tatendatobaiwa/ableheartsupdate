@@ -131,6 +131,7 @@
     position: relative;
     z-index: 3;
     margin-top: 2rem;
+    max-height: fit-content;
   }
   
   .donation-form-section {
@@ -188,7 +189,6 @@
   
   .cta-button:hover {
     background-color: #004d99; /* Darker blue for better contrast on hover */
-    text-decoration: underline; /* Added for non-color distinction if acting as link */
   }
   
   /* Right Content */
@@ -219,13 +219,13 @@
     overflow: hidden;
   }
 
-  .left-contentP {
+  .partnership-left-content {
     width: 50%;
     padding: 0 2rem;
     text-align: left;
   }
 
-  .left-contentP h1 {
+  .partnership-left-content h1 {
     font-family: Poppins, "sans-serif";
     font-weight: 600;
     color: #043F70;
@@ -233,7 +233,7 @@
     font-size: 3rem;
   }
 
-  .left-contentP h2 {
+  .partnership-left-content h2 {
     font-family: Poppins, "sans-serif";
     font-weight: 600;
     color: #043F70;
@@ -241,7 +241,7 @@
     font-size: 2rem;
   }
 
-  .left-contentP p {
+  .partnership-left-content p {
     font-family: Poppins, "sans-serif";
     line-height: 1.6;
     color: #CCC; /* Lightened for better contrast on dark background */
@@ -250,9 +250,9 @@
 
 .placeholder-image {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  height: auto; /* Adjust height automatically */
+  border-radius: 8px; /* Slightly rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Find Out More Button */
@@ -273,7 +273,6 @@
   .find-out-more-button:hover {
     background-color: #004d99; /* Darker blue for better contrast on hover */
     transform: scale(1.05);
-    text-decoration: underline; /* Added for non-color distinction */
   }
  
   .contour-overlay {
@@ -302,11 +301,13 @@
   }
   
   .email-button:hover {
-    background-color: #003F70; /* Darker blue for better contrast on hover */
-    color: white;
-    transform: scale(1.05);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-decoration: underline; /* Added for non-color distinction */
+    background-color: #003366;
+  }
+  
+  .contour-overlay img {
+    max-height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 
 /* Responsive Adjustments */
@@ -331,10 +332,10 @@
   .placeholder-image {
     width: 100%;
   }
-  .left-contentP {
+  .partnership-left-content {
     width: 100%;  }
 
-  .left-contentP h2, p {
+  .partnership-left-content h2, p {
     padding: 0 2rem;
   }
 
@@ -374,4 +375,19 @@
   .video-placeholder iframe {
     height: 300px !important; /* Fixed height for mobile */
   }
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  margin-bottom: 3rem; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0; 
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
 }

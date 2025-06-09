@@ -15,6 +15,7 @@
   margin-bottom: 2rem;
   position: relative;
   z-index: 1;
+  border-radius: 10px;
 }
 
 .about-main-title {
@@ -224,7 +225,7 @@
 }
 
 .team-member-card a:hover {
-  text-decoration: underline;
+  color: inherit;
 }
 
 /* Scroll to Top Button */

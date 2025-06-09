@@ -243,25 +243,25 @@ const Home = () => {
         <div className="newsletter-container pre-animate">
         <div className="contour-overlay">
           <img
-            src={getImageUrl('scribble')}
+            src={scribble}
             alt="Scribblebackground"
             onError={handleImageError}
             loading="lazy"
             className="lazy-image" // Add this class
-            data-image-key="scribble" // Add this data attribute
+            width="1000" /* Explicit width for scribble */
+            height="1280" /* Explicit height for scribble */
           />
         </div>
         <NewsletterSignup />
         <div className="newsletter-image">
           <img
-            src={getImageUrl('newsletter')}
+            src={newsletter}
             alt="Newsletter"
             onError={handleImageError}
             width="400"
             height="400"
             loading="lazy"
             className="lazy-image" // Add this class
-            data-image-key="newsletter" // Add this data attribute
           />
         </div>
       </div>

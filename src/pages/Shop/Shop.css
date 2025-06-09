@@ -22,6 +22,9 @@
   margin-bottom: 2rem;
   position: relative;
   z-index: 2;
+  border-radius: 10px;
+  padding: 2rem 0;
+  
 }
 
 .title-shop {
@@ -60,7 +63,6 @@
 .product-card-shop:hover {
   transform: translateY(-4px);
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
-  text-decoration: underline;
 }
 
 .product-image-shop {
@@ -189,7 +191,6 @@
 
 .send-inquiry-button:hover {
   background-color: #004d99;
-  text-decoration: underline;
 }
 
 /* Scroll to top button */
@@ -215,7 +216,6 @@
 
 .scroll-to-top-btn:hover {
   background-color: #043F70;
-  text-decoration: underline;
 }
 
 /* Animation styles */
@@ -390,7 +390,6 @@
 
 .add-to-cart-button:hover {
   background-color: #004d99;
-  text-decoration: underline;
 }
 
 /* Mini Cart */
@@ -483,7 +482,6 @@
 
 .checkout-button:hover {
   background-color: #004d99;
-  text-decoration: underline;
 }
 
 .empty-cart-message {

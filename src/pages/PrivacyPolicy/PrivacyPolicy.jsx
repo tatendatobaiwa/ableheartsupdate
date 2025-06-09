@@ -11,7 +11,7 @@ const blobImages = [
 
 const PrivacyPolicy = () => {
   return (
-    <>
+    <div className="privacy-page-wrapper">
       <div className="privacy-background-blobs">
         {blobImages.map((blob, index) => (
           <img
@@ -92,7 +92,7 @@ const PrivacyPolicy = () => {
           </p>
         </section>
       </div>
-    </>
+    </div>
   );
 };
 

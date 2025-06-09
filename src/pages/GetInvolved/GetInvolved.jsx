@@ -70,7 +70,7 @@ const GetInvolved = () => {
       </div>
       {/* Main Get Involved Section */}
       <div className="content-container pre-animate">
-        <div className="left-content">
+        <div className="left-content card">
           <h1>Get Involved</h1>
           <p>
             Join us in making a difference. Volunteer, donate, or partner with us to create meaningful change.
@@ -99,7 +99,7 @@ const GetInvolved = () => {
       {/* AbleHearts UB Section */}
       <div className="additional-section pre-animate">
         <div className="content-container">
-          <div className="left-content">
+          <div className="left-content card">
             <h2>AbleHearts UB</h2>
             <p>
               Our AbleHearts chapter at UB fosters a vibrant community of students working together to make a difference
@@ -126,7 +126,7 @@ const GetInvolved = () => {
 
         {/* AbleHearts BIUST Section */}
         <div className="content-container">
-          <div className="left-content">
+          <div className="left-content card">
             <h2>AbleHearts BIUST</h2>
             <p>
               At BIUST, our AbleHearts chapter champions inclusion and innovation to support individuals with
@@ -154,12 +154,12 @@ const GetInvolved = () => {
         {/* Partnerships Section */}
         <div className="content-container1" style={{ backgroundColor: '#0066cc', marginBottom: '0' }}>
           <div className="contour-overlay">
-            <img src={scribble} alt="Scribblebackground" style={{ height: '80rem' }} 
+            <img src={scribble} alt="Scribblebackground" 
             loading="lazy" width="1000" 
             height="1280" 
             />
           </div>
-          <div className="left-contentP">
+          <div className="partnership-left-content">
             <h2 style={{ color: 'white' }}>Partnerships</h2>
             <p style={{ color: 'white' }}>
               Partner with us to amplify our efforts. Together, we can create impactful initiatives that empower

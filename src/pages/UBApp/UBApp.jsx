@@ -88,7 +88,7 @@ const UBApp = () => {
           />
         </div>
 
-        <h1 className="ub-app-title">UB Chapter Application</h1>
+        <h1 className="ub-app-title">UB Branch Application</h1>
         <p className="ub-app-description">
           Join the AbleHearts community at UB! Fill out the form below to apply for membership and start making a difference.
         </p>

@@ -169,12 +169,12 @@ const Shop = () => {
           />
         ))}
       </div>
-      <div className={`shophead pre-animate ${isLoaded ? 'fade-in' : ''}`}>
+      <header className={`shophead pre-animate ${isLoaded ? 'fade-in' : ''}`}>
         <h1 className="title-shop">Shop with a Purpose</h1>
         <p className="subtitle-shop">
           Support our mission by purchasing items from our shop. Every purchase helps fund our initiatives.
         </p>
-      </div>
+      </header>
       <div className={`main-shop pre-animate ${isLoaded ? 'fade-in' : ''}`}>
         <div className="product-grid-shop">
           {products.map((product) => (

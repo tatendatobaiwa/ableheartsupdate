@@ -60,13 +60,13 @@ const ProgramsAndInitiatives = () => {
             />
           ))}
         </div>
-
-        <h1 className="programs-title pre-animate">Programs & Initiatives</h1>
-        <p className="programs-intro pre-animate">
-          At Able Hearts Foundation, we are dedicated to creating meaningful and lasting change.
-          Explore our key programs and initiatives aimed at empowering marginalized communities.
-        </p>
-
+        <header className="programs-header-card pre-animate">
+          <h1 className="programs-title">Programs & Initiatives</h1>
+          <p className="programs-intro">
+            At Able Hearts Foundation, we are dedicated to creating meaningful and lasting change.
+            Explore our key programs and initiatives aimed at empowering marginalized communities.
+          </p>
+        </header>
         <section className="program pre-animate">
           <div className="program-card-container">
             <div className="program-image-wrapper">
@@ -195,16 +195,6 @@ const ProgramsAndInitiatives = () => {
 
         <section className="program pre-animate">
           <div className="program-card-container">
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/kedia/kedia.webp"
-                alt="School Donations"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
             <div className="program-text-wrapper">
               <h2 className="program-title">School Donations</h2>
               <p className="program-description">
@@ -214,8 +204,8 @@ const ProgramsAndInitiatives = () => {
             <div className="program-image-wrapper">
               <img
                 className="program-image"
-                src="/src/assets/fixed/shakawe/shakawedono.webp"
-                alt="Shakawe JSS Donations"
+                src="/src/assets/fixed/kedia/kedia.webp"
+                alt="School Donations"
                 loading="lazy"
                 width="500"
                 height="400"

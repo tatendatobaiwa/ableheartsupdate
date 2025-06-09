@@ -1,309 +1,229 @@
-/* Legal Page General Container */
-.legal-container {
-  max-width: 800px;
-  margin: 4rem auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+.terms-page-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.terms-background-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: #f9f9f9;
+}
+
+.terms-blobg {
+  position: absolute;
+  width: 600px;
+  height: auto;
+  filter: blur(5px);
+  animation: float 20s infinite ease-in-out;
+}
+
+.terms-blobg.blob-1 {
+  top: 0%;
+  left: -5%;
+  animation: moveBlob1 20s infinite ease-in-out;
+}
+
+.terms-blobg.blob-2 {
+  top: 20%;
+  right: -10%;
+  animation: moveBlob2 20s infinite ease-in-out;
+}
+
+.terms-blobg.blob-3 {
+  bottom: -20%;
+  left: 0%;
+  animation: moveBlob3 20s infinite ease-in-out;
+}
+
+.terms-blobg.blob-4 {
+  bottom: -30%;
+  right: -10%;
+  animation: moveBlob4 20s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes moveBlob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 20px) scale(1.1); }
+}
+
+@keyframes moveBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 30px) scale(1.15); }
+}
+
+@keyframes moveBlob3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+}
+
+@keyframes moveBlob4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-25px, -25px) scale(1.12); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pre-animate {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+/* Terms of Use Container */
+.terms-of-use-container {
+  max-width: 800px; /* Adjusted max-width */
+  margin: 0 auto; /* Center the container */
+  padding: 3rem 2rem; /* Add generous padding */
+  background-color: #ffffff; /* White background */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow */
   font-family: 'Poppins', sans-serif;
   color: #333;
   line-height: 1.8;
+  position: relative;
+  z-index: 1; /* Ensure content is above blobs */
 }
 
 /* Header Section */
-.legal-header {
+.terms-of-use-header {
   text-align: center;
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0; /* Subtle separator */
 }
 
-.legal-header h1 {
+.terms-of-use-title {
   font-size: 2.75rem;
   font-weight: 700;
-  color: #043F70;
+  color: #043F70; /* Deep Blue */
   margin: 0;
 }
 
-.legal-header p {
+.terms-of-use-intro {
   margin-top: 0.5rem;
   font-size: 0.9rem;
-  color: #777;
+  color: #555;
 }
 
 /* Content Sections */
-.legal-section {
+.terms-of-use-section {
   margin-bottom: 2rem;
 }
 
-.legal-section h2 {
+.terms-of-use-section-title {
   font-size: 1.75rem;
   font-weight: 600;
-  color: #005BB5;
+  color: #005BB5; /* Lighter Blue */
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eee; /* Subtle separator */
 }
 
-.legal-section p {
+.terms-of-use-text {
   margin-bottom: 1rem;
-  color: #444;
+  color: #333;
 }
 
 /* List Styling */
-.legal-section ul {
+.terms-of-use-list {
   list-style-type: disc;
   padding-left: 2rem;
   margin-bottom: 1rem;
 }
 
-.legal-section li {
+.terms-of-use-item {
   margin-bottom: 0.75rem;
+  color: #333;
 }
 
 /* Link Styling */
-.legal-link {
-  color: #005BB5;
+.terms-of-use-link,
+.terms-of-use-email {
+  color: #008CFF;
   font-weight: 500;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.legal-link:hover {
-  color: #043F70;
-  text-decoration: underline;
+.terms-of-use-link:hover,
+.terms-of-use-email:hover {
+  color: #004d99;
+  text-decoration: underline; /* Underline on hover for better UX */
+}
+
+/* Email Contact Styling */
+.terms-of-use-contact {
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  color: #333;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .legal-container {
+  .terms-of-use-container {
     margin: 2rem 1rem;
     padding: 1.5rem;
   }
 
-  .legal-header h1 {
+  .terms-of-use-title {
     font-size: 2.25rem;
   }
 
-  .legal-section h2 {
+  .terms-of-use-section-title {
     font-size: 1.5rem;
+  }
+
+  .terms-of-use-text,
+  .terms-of-use-intro {
+    font-size: 1rem;
   }
 }
 
-/* Terms of Use Container */
-.terms-of-use-container {
-    padding: 2rem 4rem;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Poppins, "sans-serif";
-    position: relative;
-    z-index: 1;
+@media (max-width: 540px) {
+  .terms-of-use-container {
+    margin: 1rem;
+    padding: 1rem;
   }
-  
-  /* Title Styling */
+
   .terms-of-use-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #043F70; /* Deep Blue */
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
   }
-  
-  /* Section Titles */
+
   .terms-of-use-section-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #005bb5; /* Lighter Blue */
-    margin-top: 2rem;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
+    font-size: 1.3rem;
   }
-  
-  /* Paragraph Text */
+
   .terms-of-use-text,
   .terms-of-use-intro {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #043F70;
-    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
   }
-  
-  /* Lists */
-  .terms-of-use-list {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-  }
-  
-  .terms-of-use-item {
-    padding-left: 1.5rem;
-    margin-bottom: 0.8rem;
-    position: relative;
-    color: #043F70;
-    font-size: 1.1rem;
-  }
-  
-  .terms-of-use-item::before {
-    content: "•";
-    color: #005bb5; /* Blue bullet points */
-    position: absolute;
-    left: 0;
-    font-size: 1.5rem;
-    line-height: 1;
-  }
-  
-  /* Links */
-  .terms-of-use-link {
-    color: #008CFF;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  
-  .terms-of-use-link:hover {
-    text-decoration: underline;
-    color: #005bb5;
-  }
-  
-  /* Email Contact Styling */
-  .terms-of-use-contact {
-    font-size: 1.1rem;
-    margin-top: 2rem;
-    color: #043F70;
-  }
-  
-  .terms-of-use-email {
-    color: #008CFF;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .terms-of-use-email:hover {
-    text-decoration: underline;
-    color: #005bb5;
-  }
-
-.terms-background-blobs {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    background-color: #f9f9f9;
-  }
-  
-  .terms-blobg {
-    position: absolute;
-    width: 600px;
-    height: auto;
-    filter: blur(5px); 
-    animation: float 20s infinite ease-in-out;
-  }
-  
-  .terms-blobg.blob-1 {
-    top: 0%;
-    left: -5%;
-    animation: moveBlob1 20s infinite ease-in-out;
-  }
-  
-  .terms-blobg.blob-2 {
-    top: 20%;
-    right: -10%;
-    animation: moveBlob2 20s infinite ease-in-out;
-  }
-  
-  .terms-blobg.blob-3 {
-    bottom: -20%;
-    left: 0%;
-    animation: moveBlob3 20s infinite ease-in-out;
-  }
-  
-  .terms-blobg.blob-4 {
-    bottom: -30%;
-    right: -10%;
-    animation: moveBlob4 20s infinite ease-in-out;
-  }
-  
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-  
-  
-  @keyframes moveBlobs {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(50px, -30px) scale(1.1); }
-    50% { transform: translate(-50px, 50px) scale(1.2); }
-    75% { transform: translate(30px, -50px) scale(1.1); }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Base Animations */
-  .pre-animate {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  
-  .fade-in {
-    animation: fadeIn 1.2s ease-out forwards;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .terms-of-use-container {
-      padding: 1.5rem 2rem;
-    }
-  
-    .terms-of-use-title {
-      font-size: 2rem;
-    }
-  
-    .terms-of-use-section-title {
-      font-size: 1.5rem;
-    }
-  
-    .terms-of-use-text,
-    .terms-of-use-intro,
-    .terms-of-use-contact {
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 540px) {
-    .terms-of-use-container {
-      padding: 1rem 1.5rem;
-    }
-  
-    .terms-of-use-title {
-      font-size: 1.8rem;
-      padding-top: 2rem;
-    }
-  
-    .terms-of-use-section-title {
-      font-size: 1.3rem;
-    }
-  
-    .terms-of-use-text,
-    .terms-of-use-intro,
-    .terms-of-use-contact {
-      font-size: 0.9rem;
-    }
-  }
+}
   
