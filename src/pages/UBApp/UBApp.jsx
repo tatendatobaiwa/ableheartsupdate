@@ -70,19 +70,22 @@ const UBApp = () => {
 
   return (
     <div className="ub-app-page-background">
-      <div className="background-blobs">
+      <div className="ub-background-blobs">
         {blobImages.map((blob, index) => (
           <img
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`blobg blob-${index + 1}`}
+            className={`ub-blobg blob-${index + 1}`}
           />
         ))}
       </div>
       <div className="ub-app-container">
         <div className="ub-app-logo-container">
-          <img src="/src/assets/fixed/icons/ub.webp" alt="UB Logo" className="ub-app-logo" />
+          <img src="/src/assets/fixed/icons/ub.webp" alt="UB Logo" className="ub-app-logo" 
+          width="90"
+          height="90"
+          />
         </div>
 
         <h1 className="ub-app-title">UB Chapter Application</h1>

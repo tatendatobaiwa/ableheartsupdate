@@ -72,19 +72,22 @@ const BIUSTApp = () => {
   return (
     <div className="biust-app-page-background">
       {/* Background blobs */}
-      <div className="background-blobs">
+      <div className="biust-background-blobs">
         {blobImages.map((blob, index) => (
           <img
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`blobg blob-${index + 1}`}
+            className={`biust-blobg blob-${index + 1}`}
           />
         ))}
       </div>
       <div className="biust-app-container">
         <div className="biust-app-logo-container">
-          <img src="/src/assets/fixed/icons/biust.webp" alt="biust Logo" className="biust-app-logo" />
+          <img src="/src/assets/fixed/icons/biust.webp" alt="biust Logo" className="biust-app-logo" 
+          width="90"
+          height="90"
+          />
         </div>
 
         <h1 className="biust-app-title">BIUST Branch Application</h1>

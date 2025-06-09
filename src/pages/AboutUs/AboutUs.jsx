@@ -73,13 +73,13 @@ const AboutUs = () => {
   return (
     <div className="about-container">
       {/* Background blobs */}
-      <div className="background-blobs">
+      <div className="about-background-blobs">
         {blobImages.map((blob, index) => (
           <img
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`blobg blob-${index + 1}`}
+            className={`about-blobg blob-${index + 1}`}
             loading="lazy"
             width="800" // Placeholder for actual width
             height="auto" // Placeholder for actual height

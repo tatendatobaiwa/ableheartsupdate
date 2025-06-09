@@ -2,9 +2,29 @@ import React from 'react';
 import './PrivacyPolicy.css';
 import Footer from '../../components/Footer/Footer';
 
+const blobImages = [
+  '/src/assets/fixed/icons/blob1.webp',
+  '/src/assets/fixed/icons/blob3.webp',
+  '/src/assets/fixed/icons/blob4.webp',
+  '/src/assets/fixed/icons/blob2.webp',
+];
+
 const PrivacyPolicy = () => {
   return (
     <>
+      <div className="privacy-background-blobs">
+        {blobImages.map((blob, index) => (
+          <img
+            key={index}
+            src={blob}
+            alt={`Decorative blob ${index + 1}`}
+            className={`privacy-blobg blob-${index + 1}`}
+            loading="lazy"
+            width="600"
+            height="600"
+          />
+        ))}
+      </div>
       <div className="legal-container">
         <header className="legal-header">
           <h1>Privacy Policy</h1>

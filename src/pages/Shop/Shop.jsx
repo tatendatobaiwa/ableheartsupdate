@@ -159,13 +159,13 @@ const Shop = () => {
 
   return (
     <div className={`container-shop ${isLoaded ? 'content-loaded' : ''}`}>
-      <div className="background-blobs">
+      <div className="shop-background-blobs">
         {blobImages.map((blob, index) => (
           <img
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`blobg blob-${index + 1}`}
+            className={`shop-blobg blob-${index + 1}`}
           />
         ))}
       </div>
@@ -188,6 +188,8 @@ const Shop = () => {
                 alt={product.name}
                 className="product-image-shop"
                 loading="lazy"
+                width="300"
+                height="300"
               />
               <h2 className="product-title-shop">{product.name}</h2>
               <p className="product-price-shop">${product.price.toFixed(2)}</p>
@@ -212,6 +214,8 @@ const Shop = () => {
                     alt={selectedProduct.name}
                     className="modal-image-shop zoomable"
                     onClick={() => handleImageClick(image)}
+                    width="100"
+                    height="100"
                   />
                 ))}
               </div>

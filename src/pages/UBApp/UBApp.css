@@ -195,7 +195,8 @@
   background-color: #0056b3;
 }
 
-.background-blobs {
+/* Background blobs */
+.ub-background-blobs {
   position: fixed; 
   top: 0;
   left: 0;
@@ -204,9 +205,10 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
+  background-color: #f9f9f9;
 }
 
-.blobg {
+.ub-blobg {
   position: absolute;
   width: 600px;
   height: auto;
@@ -214,25 +216,25 @@
   animation: float 20s infinite ease-in-out;
 }
 
-.blobg.blob-1 {
+.ub-blobg.blob-1 {
   top: 0%;
   left: 0%;
   animation: moveBlob1 20s infinite ease-in-out;
 }
 
-.blobg.blob-2 {
+.ub-blobg.blob-2 {
   top: 25%;
   right: 5%;
   animation: moveBlob2 20s infinite ease-in-out;
 }
 
-.blobg.blob-3 {
+.ub-blobg.blob-3 {
   bottom: 20%;
   left: 0%;
   animation: moveBlob3 20s infinite ease-in-out;
 }
 
-.blobg.blob-4 {
+.ub-blobg.blob-4 {
   bottom: 0%;
   right: -10%;
   animation: moveBlob4 20s infinite ease-in-out;

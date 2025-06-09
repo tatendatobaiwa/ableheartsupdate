@@ -155,7 +155,8 @@ const Home = () => {
           {slides.map((slide, index) => (
             <div
               key={index}
-              className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}            role="group"
+              className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
+              role="group"
               aria-roledescription="slide"
               style={{ backgroundImage: `url(${getImageUrl(slide.image)})` }}
             >
@@ -168,8 +169,8 @@ const Home = () => {
                       className="event-logo event-logo-slide"
                       loading="lazy" 
                       onError={handleImageError}
-                      width={200}
-                      height="auto"
+                      width={100}
+                      height={100}
                     />
                     <div className="event-text">
                       <h2>{slide.title}</h2>
@@ -200,11 +201,11 @@ const Home = () => {
         </div>
         <div className="mission-container pre-animate">
           {/* Background blobs */}
-          <div className="background-blobs">
+          <div className="home-background-blobs">
             <img
               src={getImageUrl('blob2')}
               alt=""
-              className="blobg blob-1"
+              className="home-blobg blob-1"
               loading="lazy"
               width={480}
               height={556}
@@ -212,7 +213,7 @@ const Home = () => {
             <img
               src={getImageUrl('blob3')}
               alt=""
-              className="blobg blob-2"
+              className="home-blobg blob-2"
               loading="lazy"
               width={516}
               height={556}
@@ -220,7 +221,7 @@ const Home = () => {
             <img
               src={getImageUrl('blob4')}
               alt=""
-              className="blobg blob-3"
+              className="home-blobg blob-3"
               loading="lazy"
               width={516}
               height={596}
@@ -256,8 +257,8 @@ const Home = () => {
             src={getImageUrl('newsletter')}
             alt="Newsletter"
             onError={handleImageError}
-            width="100%"
-            height="auto"
+            width="400"
+            height="400"
             loading="lazy"
             className="lazy-image" // Add this class
             data-image-key="newsletter" // Add this data attribute

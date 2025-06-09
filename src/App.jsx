@@ -24,16 +24,9 @@ const blobImages = [
 function App() {
   return (
     <>
-      <div className="background-blobs">
-        {blobImages.map((blob, index) => (
-          <img
-            key={index}
-            src={blob}
-            alt={`Decorative blob ${index + 1}`}
-            className={`blob blob-${index + 1}`}
-          />
-        ))}
-      </div>
+      {/* Background blobs */}
+      {/* This section is being removed to allow per-page blob control */}
+      
       <div className="app-content" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <ScrollToTop /> {/* Ensures scroll-to-top functionality */}
         <Header />

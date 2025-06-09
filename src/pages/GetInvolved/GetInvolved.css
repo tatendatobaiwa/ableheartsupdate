@@ -4,7 +4,7 @@
   min-height: 100vh;
 }
 
-.background-blobs {
+.get-involved-background-blobs {
   position: fixed; 
   top: 0;
   left: 0;
@@ -17,7 +17,7 @@
 
 }
 
-.blobg {
+.get-involved-blobg {
   position: absolute;
   width: 600px;
   height: auto;
@@ -25,25 +25,25 @@
   animation: float 20s infinite ease-in-out;
 }
 
-.blobg.blob-1 {
+.get-involved-blobg.blob-1 {
   top: 0%;
   left: 0%;
   animation: moveBlob1 20s infinite ease-in-out;
 }
 
-.blobg.blob-2 {
+.get-involved-blobg.blob-2 {
   top: 25%;
   right: 5%;
   animation: moveBlob2 20s infinite ease-in-out;
 }
 
-.blobg.blob-3 {
+.get-involved-blobg.blob-3 {
   bottom: 20%;
   left: 0%;
   animation: moveBlob3 20s infinite ease-in-out;
 }
 
-.blobg.blob-4 {
+.get-involved-blobg.blob-4 {
   bottom: 0%;
   right: -10%;
   animation: moveBlob4 20s infinite ease-in-out;

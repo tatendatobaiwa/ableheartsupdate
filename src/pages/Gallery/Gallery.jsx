@@ -329,13 +329,15 @@ const Gallery = () => {
   const closeEventModal = React.useCallback(() => setSelectedEvent(null), []);
   const closeImageModal = React.useCallback(() => setSelectedImage(null), []);
   
-  const FixedImage = memo(({ src, alt, className, onClick }) => (
+  const FixedImage = memo(({ src, alt, className, onClick, width, height }) => (
     <img
       src={src}
       alt={alt}
       className={className}
       onClick={onClick}
       loading="lazy"
+      width={width}
+      height={height}
     />
   ));
   FixedImage.displayName = 'FixedImage';
@@ -343,13 +345,15 @@ const Gallery = () => {
   return (
     <div className={`container-gallery ${isLoaded ? 'content-loaded' : ''}`}>
       {/* Blobs section - kept intact */}
-      <div className="background-blobs">
+      <div className="gallery-background-blobs">
         {blobImages.map((blob, index) => (
           <FixedImage
             key={index}
             src={blob}
             alt={`Decorative blob ${index + 1}`}
-            className={`blobg blob-${index + 1}`}
+            className={`gallery-blobg blob-${index + 1}`}
+            width="800"
+            height="800"
           />
         ))}
       </div>
@@ -373,6 +377,8 @@ const Gallery = () => {
                 src={event.coverImage}
                 alt={event.title}
                 className="event-cover-image"
+                width="300"
+                height="225"
               />
               <div className="event-card-overlay">
                 <h3 className="event-title">{event.title}</h3>
@@ -411,6 +417,8 @@ const Gallery = () => {
                     alt={image.caption}
                     className="event-image"
                     loading="lazy"
+                    width="250"
+                    height="250"
                   />
                   <div className="event-image-overlay">
                     <p className="event-image-caption">{image.caption}</p>
@@ -436,6 +444,8 @@ const Gallery = () => {
               alt={selectedImage.caption}
               className="indmodal-image-gallery"
               loading="lazy"
+              width="800"
+              height="600"
             />
             <p className="modal-image-caption">{selectedImage.caption}</p>
           </div>

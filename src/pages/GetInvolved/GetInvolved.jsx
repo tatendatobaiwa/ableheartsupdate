@@ -55,16 +55,16 @@ const GetInvolved = () => {
     <div className="page-wrapper">
     <div className="get-involved-container">
       {/* Background blobs */}
-    <div className="background-blobs">
+    <div className="get-involved-background-blobs">
     {blobImages.map((blob, index) => (
         <img
           key={index}
           src={blob}
           alt={`Decorative blob ${index + 1}`}
-          className={`blobg blob-${index + 1}`}
+          className={`get-involved-blobg blob-${index + 1}`}
           loading="lazy"
-          width="800" /* Replace with actual blob image width */
-          height="auto" /* Replace with actual blob image height */
+          width="800" 
+          height="800" 
         />
       ))}
       </div>
@@ -118,8 +118,8 @@ const GetInvolved = () => {
               alt="AbleHearts UB"
               className="placeholder-image"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="300" /* Replace with actual image height */
+              width="500" 
+              height="300" 
             />
           </div>
         </div>
@@ -145,8 +145,8 @@ const GetInvolved = () => {
               alt="AbleHearts BIUST"
               className="placeholder-image"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="300" /* Replace with actual image height */
+              width="500" 
+              height="300" 
             />
           </div>
         </div>
@@ -155,7 +155,8 @@ const GetInvolved = () => {
         <div className="content-container1" style={{ backgroundColor: '#0066cc', marginBottom: '0' }}>
           <div className="contour-overlay">
             <img src={scribble} alt="Scribblebackground" style={{ height: '80rem' }} 
-            loading="lazy" width="1000" /* Replace with actual image width */ height="auto" /* Replace with actual image height */
+            loading="lazy" width="1000" 
+            height="1280" 
             />
           </div>
           <div className="left-contentP">
@@ -180,8 +181,8 @@ const GetInvolved = () => {
               className="placeholder-image"
               style={{ borderRadius: '0' }}
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="300" /* Replace with actual image height */
+              width="500" 
+              height="300" 
             />
           </div>
         </div>

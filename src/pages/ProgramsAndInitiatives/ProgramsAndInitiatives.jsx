@@ -47,16 +47,16 @@ const ProgramsAndInitiatives = () => {
     <div className="page-wrapper">
       <div className="programs-container">
         {/* Background blobs */}
-        <div className="background-blobs">
+        <div className="programs-background-blobs">
           {blobImages.map((blob, index) => (
             <img
               key={index}
               src={blob}
               alt={`Decorative blob ${index + 1}`}
-              className={`blobg blob-${index + 1}`}
+              className={`programs-blobg blob-${index + 1}`}
               loading="lazy"
-              width="800" /* Replace with actual blob image width */
-              height="auto" /* Replace with actual blob image height */
+              width="800"
+              height="800"
             />
           ))}
         </div>
@@ -75,8 +75,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/lephoi/garden.webp"
               alt="Able Hearts Garden"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
             <p className="program-description">
               Launched in 2020 at the Lephoi Centre for the Visually Impaired, the "Able Hearts Garden" is a sustainable initiative that provides therapeutic activities, teaches self-sufficiency, and enhances the environment. It is a symbol of growth, confidence, and creativity for the children, encouraging them to nurture both their personal and environmental growth.
@@ -95,8 +95,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/dynamictalent/talentshow.webp"
               alt="Dynamic Talent Show"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
           </div>
         </section>
@@ -109,8 +109,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/mochudi/mochud.webp"
               alt="Mochudi Resource Center Visits"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
             <p className="program-description">
               Our visits to the Mochudi Resource Center in 2020 and 2021 included fun-filled days of games, empowering messages, and donations of essential items. These visits aimed to build lasting relationships and provide continued support to children with disabilities, fostering a sense of belonging and joy.
@@ -129,8 +129,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/tsogangtrust/tsogangtrust.webp"
               alt="Tsogang Trust Support"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
           </div>
         </section>
@@ -143,8 +143,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/covid/covid.webp"
               alt="COVID-19 Food Hampers"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
             <p className="program-description">
               During the COVID-19 pandemic, Able Hearts distributed 40 food hampers to elderly residents of Gerald Estates. Partnering with MP Ignatius Moswaane, this initiative provided essential relief during a challenging and uncertain time, demonstrating a quick and compassionate response to community needs.
@@ -163,8 +163,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/lavender/lavender.webp"
               alt="Lavender High Tea"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
           </div>
         </section>
@@ -177,8 +177,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/kedia/kedia.webp"
               alt="School Donations"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
             <p className="program-description">
               From Shakawe JSS in 2021 to Kedia Primary School in 2024, our school donation drives have provided uniforms, shoes, and toiletries to underprivileged students. These efforts aim to remove barriers to education, promote dignity, and empower students to focus on their learning journeys without material concerns.
@@ -188,8 +188,8 @@ const ProgramsAndInitiatives = () => {
               src="/src/assets/fixed/shakawe/shakawedono.webp"
               alt="Shakawe JSS Donations"
               loading="lazy"
-              width="500" /* Replace with actual image width */
-              height="400" /* Replace with actual image height */
+              width="500"
+              height="400"
             />
           </div>
         </section>

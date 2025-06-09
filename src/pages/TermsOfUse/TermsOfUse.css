@@ -182,17 +182,19 @@
     color: #005bb5;
   }
 
-  .background-blobs {
-    position: absolute;
+.terms-background-blobs {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 0;
     overflow: hidden;
+    pointer-events: none;
+    background-color: #f9f9f9;
   }
   
-  .blobt {
+  .terms-blobg {
     position: absolute;
     width: 600px;
     height: auto;
@@ -200,25 +202,25 @@
     animation: float 20s infinite ease-in-out;
   }
   
-  .blobt.blob-1 {
+  .terms-blobg.blob-1 {
     top: 0%;
     left: -5%;
     animation: moveBlob1 20s infinite ease-in-out;
   }
   
-  .blobt.blob-2 {
+  .terms-blobg.blob-2 {
     top: 20%;
     right: -10%;
     animation: moveBlob2 20s infinite ease-in-out;
   }
   
-  .blobt.blob-3 {
+  .terms-blobg.blob-3 {
     bottom: -20%;
     left: 0%;
     animation: moveBlob3 20s infinite ease-in-out;
   }
   
-  .blobt.blob-4 {
+  .terms-blobg.blob-4 {
     bottom: -30%;
     right: -10%;
     animation: moveBlob4 20s infinite ease-in-out;

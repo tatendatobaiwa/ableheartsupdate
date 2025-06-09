@@ -144,7 +144,7 @@ body {
   min-height: 400px;
 }
 
-.background-blobs {
+.home-background-blobs {
   position: fixed; 
   top: 0;
   left: 0;
@@ -156,7 +156,7 @@ body {
   background-color: #f9f9f9;
 }
 
-.blobg {
+.home-blobg {
   position: absolute;
   width: 600px;
   height: auto;
@@ -164,25 +164,25 @@ body {
   animation: float 20s infinite ease-in-out;
 }
 
-.blobg.blob-1 {
+.home-blobg.blob-1 {
   top: 0%;
   left: 0%;
   animation: moveBlob1 20s infinite ease-in-out;
 }
 
-.blobg.blob-2 {
+.home-blobg.blob-2 {
   top: 25%;
   right: 5%;
   animation: moveBlob2 20s infinite ease-in-out;
 }
 
-.blobg.blob-3 {
+.home-blobg.blob-3 {
   bottom: 20%;
-  left: 0%;
+  left: 70%;
   animation: moveBlob3 20s infinite ease-in-out;
 }
 
-.blobg.blob-4 {
+.home-blobg.blob-4 {
   bottom: 0%;
   right: -10%;
   animation: moveBlob4 20s infinite ease-in-out;
@@ -449,24 +449,24 @@ body {
   
   .mission-container { padding: 2rem 1rem; }
   
-  .blobg { animation: none; }
+  .home-blobg { animation: none; }
   
-  .blobg.blob-1, .blobg.blob-2, .blobg.blob-3, .blobg.blob-4 {
+  .home-blobg.blob-1, .home-blobg.blob-2, .home-blobg.blob-3, .home-blobg.blob-4 {
     width: 450px;
     height: 515px;
   }
 
-  .blobg.blob-1 {
+  .home-blobg.blob-1 {
     top: -8rem;
   }
-  .blobg.blob-2 {
+  .home-blobg.blob-2 {
     top: 12rem;
   }
-  .blobg.blob-3 {
+  .home-blobg.blob-3 {
     top: 30rem;
     left: -10rem;
   }
-  .blobg.blob-4 {
+  .home-blobg.blob-4 {
     top: 22rem;
     left: 22rem;
   }
