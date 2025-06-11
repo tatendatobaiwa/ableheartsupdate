@@ -1,47 +1,25 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import scribble from '/src/assets/fixed/icons/scribblebackground.webp';
 import DonationForm from '/src/components/DonationForm.jsx';
-// import Footer from '../../components/Footer/Footer'; // Assuming Footer will be added later or is part of a layout component
+// import Footer from '../../components/Footer/Footer'; // Assuming Footer is used elsewhere or will be added
 
-const SCROLL_THRESHOLD_TOP_BTN = 300;
-const INTERSECTION_THRESHOLD = 0.1; // For earlier animation trigger
+import './GetInvolved.css';
 
-const blobImagePaths = [
+const blobImages = [
   '/src/assets/fixed/icons/blob1.webp',
   '/src/assets/fixed/icons/blob3.webp',
   '/src/assets/fixed/icons/blob4.webp',
   '/src/assets/fixed/icons/blob2.webp',
 ];
 
-const chapterData = [
-  {
-    id: 'ub',
-    title: 'AbleHearts UB',
-    description: 'Our AbleHearts chapter at UB fosters a vibrant community of students working together to make a difference in the lives of people with disabilities. Get involved to create a more inclusive world.',
-    imageSrc: '/src/assets/fixed/ubvolunteers.webp',
-    imageAlt: 'AbleHearts UB Volunteers',
-    buttonText: 'Become a Member',
-    navigateTo: '/ablehearts-ub',
-  },
-  {
-    id: 'biust',
-    title: 'AbleHearts BIUST',
-    description: 'At BIUST, our AbleHearts chapter champions inclusion and innovation to support individuals with disabilities. Join us in transforming campus life through collaboration and compassion.',
-    imageSrc: '/src/assets/fixed/biustvolunteers.webp',
-    imageAlt: 'AbleHearts BIUST Volunteers',
-    buttonText: 'Become a Member',
-    navigateTo: '/ablehearts-biust',
-  },
-];
-
 const GetInvolved = () => {
-  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollToTop(window.scrollY > SCROLL_THRESHOLD_TOP_BTN);
+      setIsScrolled(window.scrollY > 300);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -51,10 +29,9 @@ const GetInvolved = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Intersection Observer for animations
   useEffect(() => {
-    const elementsToAnimate = document.querySelectorAll('.pre-animate');
-    if (elementsToAnimate.length === 0) return;
-
+    const elements = document.querySelectorAll('.pre-animate');
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -64,129 +41,151 @@ const GetInvolved = () => {
           }
         });
       },
-      { threshold: INTERSECTION_THRESHOLD }
+      { threshold: 0.1 } // Adjusted threshold slightly for earlier trigger if needed
     );
 
-    elementsToAnimate.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
+    elements.forEach((element) => observer.observe(element));
 
-  const memoizedBlobImages = useMemo(() => blobImagePaths.map((blob, index) => (
-    <img
-      key={`blob-${index}`}
-      src={blob}
-      alt=""
-      className={`get-involved-blobg blob-${index + 1}`}
-      loading="lazy"
-      width="800"
-      height="800"
-      aria-hidden="true"
-    />
-  )), []);
+    return () => {
+      elements.forEach((element) => { // Ensure to unobserve all elements
+        if (element) {
+            observer.unobserve(element);
+        }
+      });
+      observer.disconnect();
+    };
+  }, []); // Rerun if component structure changes significantly, but usually fine
 
   return (
-    <div className="page-wrapper get-involved-page">
+    <div className="page-wrapper">
       <div className="get-involved-container">
-        <div className="get-involved-background-blobs" aria-hidden="true">
-          {memoizedBlobImages}
+        {/* Background blobs */}
+        <div className="get-involved-background-blobs">
+          {blobImages.map((blob, index) => (
+            <img
+              key={index}
+              src={blob}
+              alt={`Decorative blob ${index + 1}`}
+              className={`get-involved-blobg blob-${index + 1}`}
+              loading="lazy"
+              width="800"
+              height="800"
+            />
+          ))}
         </div>
 
-        <section className="hero-section pre-animate">
-          <div className="content-layout">
-            <div className="text-content card-style">
-              <h1>Get Involved</h1>
-              <p>
-                Join us in making a difference. Volunteer, donate, or partner with us to create meaningful change.
-              </p>
-            </div>
-            <div className="media-content">
-              <div className="video-wrapper">
-                <iframe
-                  src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/ableheartsfoundation/videos/1023655192465414"
-                  width="100%"
-                  height="100%" // Will be controlled by CSS aspect-ratio
-                  scrolling="no"
-                  frameBorder="0"
-                  allowFullScreen
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="Able Hearts Foundation Video" // Added title for accessibility
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* New Get Involved Header */}
+        <header className="get-involved-page-header pre-animate">
+          <h1>Get Involved</h1>
+          <p>
+            Join us in making a difference. Volunteer, donate, or partner with us to create meaningful change.
+          </p>
+        </header>
 
-        <section className="donation-form-section pre-animate">
+        {/* Donation Form Section */}
+        <div className="donation-form-section pre-animate">
           <DonationForm />
-        </section>
+        </div>
 
-        <section className="chapters-section pre-animate">
-          {chapterData.map((chapter, index) => (
-            <div key={chapter.id} className={`content-layout chapter-layout ${index % 2 !== 0 ? 'media-first' : ''}`}>
-              <div className="text-content card-style">
-                <h2>{chapter.title}</h2>
-                <p>{chapter.description}</p>
-                <button
-                  type="button"
-                  className="cta-button primary"
-                  onClick={() => navigate(chapter.navigateTo)}
-                >
-                  {chapter.buttonText}
-                </button>
-              </div>
-              <div className="media-content">
-                <img
-                  src={chapter.imageSrc}
-                  alt={chapter.imageAlt}
-                  className="content-image"
-                  loading="lazy"
-                  width="500"
-                  height="300"
-                />
-              </div>
-            </div>
-          ))}
-        </section>
-
-        <section className="partnerships-section pre-animate">
-          <div className="contour-overlay" aria-hidden="true">
-            <img src={scribble} alt="" loading="lazy" width="1000" height="1280" />
-          </div>
-          <div className="content-layout">
-            <div className="text-content">
-              <h2>Partnerships</h2>
+        {/* AbleHearts UB, BIUST, and Partnerships Sections */}
+        <div className="additional-section pre-animate"> {/* This div can also have pre-animate if you want the whole block to fade in */}
+          {/* AbleHearts UB Section */}
+          <div className="content-container pre-animate"> {/* Apply pre-animate to individual sections for staggered effect */}
+            <div className="left-content card">
+              <h2>AbleHearts UB</h2>
               <p>
-                Partner with us to amplify our efforts. Together, we can create impactful initiatives that empower
-                individuals with disabilities and drive community change.
+                Our AbleHearts chapter at UB fosters a vibrant community of students working together to make a difference
+                in the lives of people with disabilities. Get involved to create a more inclusive world.
               </p>
               <button
-                type="button"
-                className="cta-button secondary"
-                onClick={() => (window.location.href = 'mailto:ableheartsfoundation@gmail.com?subject=Partnership Inquiry')}
+                className="find-out-more-button"
+                onClick={() => navigate('/ablehearts-ub')}
               >
-                Send Us an Email
+                Become a Member
               </button>
             </div>
-            <div className="media-content">
+            <div className="right-content">
               <img
-                src="/src/assets/fixed/partner.webp"
-                alt="Partnership collaboration"
-                className="content-image no-border-radius"
+                src="/src/assets/fixed/ubvolunteers.webp"
+                alt="AbleHearts UB"
+                className="placeholder-image"
                 loading="lazy"
                 width="500"
                 height="300"
               />
             </div>
           </div>
-        </section>
 
-        {showScrollToTop && (
-          <button type="button" className="scroll-to-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
+          {/* AbleHearts BIUST Section */}
+          <div className="content-container pre-animate">
+            <div className="left-content card">
+              <h2>AbleHearts BIUST</h2>
+              <p>
+                At BIUST, our AbleHearts chapter champions inclusion and innovation to support individuals with
+                disabilities. Join us in transforming campus life through collaboration and compassion.
+              </p>
+              <button
+                className="find-out-more-button"
+                onClick={() => navigate('/ablehearts-biust')}
+              >
+                Become a Member
+              </button>
+            </div>
+            <div className="right-content">
+              <img
+                src="/src/assets/fixed/biustvolunteers.webp"
+                alt="AbleHearts BIUST"
+                className="placeholder-image"
+                loading="lazy"
+                width="500"
+                height="300"
+              />
+            </div>
+          </div>
+
+          {/* Partnerships Section */}
+          <div className="content-container1 pre-animate" style={{ backgroundColor: '#0066cc', marginBottom: '0' }}>
+            <div className="contour-overlay">
+              <img src={scribble} alt="Scribblebackground"
+                loading="lazy" width="1000"
+                height="1280"
+              />
+            </div>
+            <div className="partnership-left-content">
+              <h2 style={{ color: 'white' }}>Partnerships</h2>
+              <p style={{ color: 'white' }}>
+                Partner with us to amplify our efforts. Together, we can create impactful initiatives that empower
+                individuals with disabilities and drive community change.
+              </p>
+              <button
+                className="email-button"
+                onClick={() =>
+                  (window.location.href = 'mailto:ableheartsfoundation@gmail.com?subject=Partnership Inquiry')
+                }
+              >
+                Send Us an Email
+              </button>
+            </div>
+            <div className="right-content" style={{ padding: '0' }}>
+              <img
+                src="/src/assets/fixed/partner.webp"
+                alt="Partnerships"
+                className="placeholder-image"
+                style={{ borderRadius: '0' }}
+                loading="lazy"
+                width="500"
+                height="300"
+              />
+            </div>
+          </div>
+        </div>
+        {isScrolled && (
+          <button className="scroll-to-top-btn" onClick={scrollToTop}>
             ↑
           </button>
         )}
       </div>
-      {/* <Footer /> */}
+      {/* <Footer /> */} {/* If you have a Footer component, it would typically go outside .get-involved-container or at the end of .page-wrapper */}
     </div>
   );
 };

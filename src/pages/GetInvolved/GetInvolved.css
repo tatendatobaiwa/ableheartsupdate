@@ -1,51 +1,18 @@
+/* Define CSS Variables (Optional, but good practice like in the example) */
 :root {
-  --gi-font: Poppins, "sans-serif"; /* gi for GetInvolved */
-  --gi-primary-text: #043F70;
-  --gi-secondary-text: #333;
-  --gi-light-text-on-dark: #FFFFFF; /* For partnership section */
-  --gi-accent-color: #0066cc; /* Used for partnership bg and buttons */
-  --gi-cta-primary-bg: var(--gi-accent-color);
-  --gi-cta-primary-hover-bg: #004d99;
-  --gi-cta-secondary-bg: #FFFFFF;
-  --gi-cta-secondary-text: var(--gi-accent-color);
-  --gi-cta-secondary-hover-bg: #f0f0f0;
-  --gi-bg-light: white;
-  --gi-bg-blobs: #f9f9f9;
-  --gi-card-bg: #FFFFFF;
-  --gi-card-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
-  --gi-card-hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  --gi-card-border: 1px solid #e0e0e0;
-  --gi-base-padding: 2rem;
-  --gi-large-padding: 4rem;
-  --gi-section-margin: 4rem; /* Margin between sections */
+  --primary-text-color: #043F70;
+  --secondary-text-color: #333;
+  --button-cta-bg: #008CFF;
+  --button-cta-hover-bg: #004d99;
+  --section-padding: 2rem;
+  --card-padding: 2.5rem;
 }
 
-.get-involved-page.page-wrapper {
+.page-wrapper {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-}
-
-.get-involved-container {
-  position: relative;
-  padding: var(--gi-base-padding) 0; /* Top/bottom padding for container */
-  background-color: var(--gi-bg-light); /* Fallback */
-  overflow: hidden; /* Contains blobs */
-  z-index: 2;
-}
-
-.pre-animate {
-  opacity: 0;
-  transform: translateY(30px); /* Slightly more pronounced */
-}
-
-.fade-in {
-  animation: giFadeIn 1s ease-out forwards;
-}
-
-@keyframes giFadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  background-color: #ffffff; /* Added a light background to page-wrapper */
 }
 
 .get-involved-background-blobs {
@@ -57,268 +24,401 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background-color: var(--gi-bg-blobs);
 }
 
 .get-involved-blobg {
   position: absolute;
-  width: clamp(300px, 50vw, 700px);
+  width: 600px;
   height: auto;
-  filter: blur(8px);
-  opacity: 0.6;
-  animation: giFloat 25s infinite ease-in-out alternate;
+  filter: blur(5px);
+  animation: float 20s infinite ease-in-out;
 }
 
-.get-involved-blobg.blob-1 { top: -5%; left: -10%; animation-duration: 28s; animation-name: giMoveBlob1; }
-.get-involved-blobg.blob-2 { top: 20%; right: -5%; animation-duration: 32s; animation-name: giMoveBlob2; }
-.get-involved-blobg.blob-3 { bottom: -10%; left: 0%; animation-duration: 26s; animation-name: giMoveBlob3; }
-.get-involved-blobg.blob-4 { bottom: 0%; right: -15%; animation-duration: 30s; animation-name: giMoveBlob4; }
+.get-involved-blobg.blob-1 { top: 0%; left: 0%; animation: moveBlob1 20s infinite ease-in-out; }
+.get-involved-blobg.blob-2 { top: 25%; right: 5%; animation: moveBlob2 20s infinite ease-in-out; }
+.get-involved-blobg.blob-3 { bottom: 20%; left: 0%; animation: moveBlob3 20s infinite ease-in-out; }
+.get-involved-blobg.blob-4 { bottom: 0%; right: -10%; animation: moveBlob4 20s infinite ease-in-out; }
 
-@keyframes giFloat {
-  0% { transform: translateY(0px) translateX(0px); }
-  100% { transform: translateY(-20px) translateX(10px); }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }
-@keyframes giMoveBlob1 { /* Example specific movements */
-  0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(25px,15px) scale(1.1); }
+@keyframes moveBlob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 20px) scale(1.1); }
 }
-@keyframes giMoveBlob2 {
-  0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-15px,25px) scale(1.15); }
+@keyframes moveBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 30px) scale(1.15); }
 }
-@keyframes giMoveBlob3 {
-  0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-10px) scale(1.05); }
+@keyframes moveBlob3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
 }
-@keyframes giMoveBlob4 {
-  0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,-20px) scale(1.12); }
+@keyframes moveBlob4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-25px, -25px) scale(1.12); }
 }
 
-/* Section Layouts */
-.hero-section,
-.donation-form-section,
-.chapters-section,
-.partnerships-section {
-  padding: 0 var(--gi-large-padding); /* Horizontal padding for sections */
-  margin-bottom: var(--gi-section-margin);
-  position: relative; /* For z-index stacking if needed */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
+.pre-animate {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+.get-involved-container {
+  padding: var(--section-padding) 0; /* Use variable */
+  background-color: white; /* Main content area background */
+  overflow: hidden; /* Contains floats and positioned children */
+  padding-bottom: 0;
+  z-index: 2; /* Above blobs, below fixed header if any */
+  margin: 0 auto; /* Center container if max-width is set */
+  max-width: 1200px;
+}
+
+/* New Get Involved Page Header Styles */
+.get-involved-page-header {
+  background-color: transparent;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  padding: calc(var(--section-padding) * 1.5) var(--section-padding); /* More top/bottom padding */
+  margin-bottom: calc(var(--section-padding) * 1.5);
+  border-radius: 12px;
+}
+
+.get-involved-page-header   /* Space below header */
+  /* Space below header */
+  h1 {
+  font-family: Poppins, "sans-serif";
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--primary-text-color);
+  margin-bottom: 0.75rem;
+}
+
+.get-involved-page-header p {
+  font-family: Poppins, "sans-serif";
+  font-size: 1.25rem;
+  color: var(--secondary-text-color);
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto; /* Center paragraph and add bottom margin */
+  line-height: 1.6;
+  font-weight: 400;
+}
+
 .donation-form-section {
-  max-width: 800px; /* Constrain donation form width */
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0 var(--section-padding); /* Consistent horizontal padding */
+  margin-bottom: calc(var(--section-padding) * 2); /* Space below donation form */
 }
 
-.content-layout {
+.content-container {
   display: flex;
-  gap: var(--gi-large-padding);
-  align-items: center;
-  margin-bottom: var(--gi-section-margin); /* Space between chapter items */
-}
-.chapters-section .content-layout:last-child {
-  margin-bottom: 0; /* No bottom margin for the last chapter item */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; /* Vertically align items in a row */
+  margin: calc(var(--section-padding) * 2) 0; /* More vertical margin for sections */
+  gap: 4rem; /* Adjusted gap */
+  position: relative;
+  padding: 0 var(--section-padding);
+  z-index: 3; /* Above page background but below fixed elements if any */
 }
 
-.text-content {
-  flex: 1 1 50%; /* Default to 50% */
-  font-family: var(--gi-font);
+/* Content Container for Partnership section */
+.content-container1 {
+  padding: 0; /* Full width for background color */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+  margin-top: calc(var(--section-padding) * 2);
+  max-height: fit-content;
+  /* background-color is set inline */
 }
-.media-content {
-  flex: 1 1 50%; /* Default to 50% */
+
+/* Left Content (for UB, BIUST cards) */
+.left-content {
+  width: 48%; /* Slightly adjust for gap */
+  /* padding: 0 2rem; Removed, card will handle its padding */
+  text-align: left;
+}
+
+.left-content h2 { /* Specific to h2 in .left-content cards */
+  font-family: Poppins, "sans-serif";
+  font-weight: 600;
+  color: var(--primary-text-color);
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.left-content p { /* Specific to p in .left-content cards */
+  font-family: Poppins, "sans-serif";
+  line-height: 1.6;
+  color: var(--secondary-text-color);
+  font-size: 1.1rem; /* Slightly smaller for card content */
+  margin-bottom: 1.5rem; /* Adjusted margin */
+}
+
+/* Right Content (for UB, BIUST images) */
+.right-content {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 48%; /* Slightly adjust for gap */
+  /* padding: 0 2rem; Removed, image itself can have margin if needed */
+  z-index: 1; /* Below card text if overlapping, though flex gap should prevent */
+  min-height: auto; /* Let content define height */
 }
 
-.content-layout.media-first .text-content { order: 2; }
-.content-layout.media-first .media-content { order: 1; }
-
-.card-style {
-  background-color: var(--gi-card-bg);
-  border-radius: 12px;
-  box-shadow: var(--gi-card-shadow);
-  padding: var(--gi-large-padding);
-  border: var(--gi-card-border);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-style:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--gi-card-hover-shadow);
-}
-
-.text-content h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--gi-primary-text);
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-.text-content h2 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  color: var(--gi-primary-text);
-  margin-bottom: 1rem;
-  line-height: 1.3;
-}
-.text-content p {
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: var(--gi-secondary-text);
-  margin-bottom: 1.5rem;
-}
-
-.video-wrapper {
-  width: 100%;
-  aspect-ratio: 16 / 9; /* Maintain aspect ratio for video */
-  border-radius: 8px;
-  overflow: hidden; /* Clip iframe corners */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-.video-wrapper iframe {
-  width: 100%;
-  height: 100%;
-  border: none; /* Ensure no iframe border */
-}
-
-.content-image {
+.placeholder-image {
   width: 100%;
   height: auto;
-  max-height: 400px; /* Cap image height */
-  object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
   display: block;
 }
-.content-image.no-border-radius {
-  border-radius: 0;
+
+/* Partnership Section Specifics */
+.partnership-left-content {
+  width: 50%;
+  padding: var(--section-padding) calc(var(--section-padding) * 2); /* Generous padding for text */
+  text-align: left;
+  z-index: 5; /* Ensure text is above contour overlay */
 }
 
-.cta-button {
-  padding: 0.9rem 1.8rem;
-  font-family: var(--gi-font);
-  font-size: 1rem;
+.partnership-left-content h2 {
+  font-family: Poppins, "sans-serif";
   font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  display: inline-block; /* For proper margin/padding */
-  text-decoration: none; /* If used as a link */
-  text-align: center;
-}
-.cta-button.primary {
-  background-color: var(--gi-cta-primary-bg);
-  color: var(--gi-light-text-on-dark);
-}
-.cta-button.primary:hover {
-  background-color: var(--gi-cta-primary-hover-bg);
-  transform: translateY(-2px);
-}
-.cta-button.secondary {
-  background-color: var(--gi-cta-secondary-bg);
-  color: var(--gi-cta-secondary-text);
-  border: 2px solid var(--gi-cta-secondary-text); /* Add border for secondary */
-}
-.cta-button.secondary:hover {
-  background-color: var(--gi-cta-secondary-hover-bg);
-  transform: translateY(-2px);
+  /* color: white; Set inline */
+  margin-bottom: 1rem;
+  font-size: 2.2rem; /* Slightly larger for emphasis */
 }
 
-/* Partnerships Section Specifics */
-.partnerships-section {
-  background-color: var(--gi-accent-color);
-  color: var(--gi-light-text-on-dark);
-  padding-top: var(--gi-large-padding);
-  padding-bottom: var(--gi-large-padding);
-  margin-bottom: 0; /* Often the last section */
+.partnership-left-content p {
+  font-family: Poppins, "sans-serif";
+  line-height: 1.6;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
 }
-.partnerships-section .text-content h2,
-.partnerships-section .text-content p {
-  color: var(--gi-light-text-on-dark);
-}
-.partnerships-section .contour-overlay {
+
+.contour-overlay {
   position: absolute;
-  inset: 0;
-  opacity: 0.15; /* Adjust opacity for scribble on dark bg */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
-  overflow: hidden;
+  opacity: 0.3; /* Adjusted opacity */
+  z-index: 4; /* Below partnership text, above background */
 }
-.partnerships-section .contour-overlay img {
+
+.contour-overlay img {
+  max-height: 100%;
   width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 
-.scroll-to-top-btn { /* Copied from Programs page, ensure consistency or make global */
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--gi-accent-color);
-  color: var(--gi-light-text-on-dark);
+/* Buttons */
+.find-out-more-button,
+.email-button {
+  padding: 0.85rem 2.2rem; /* Slightly larger padding */
+  font-family: Poppins, "sans-serif";
+  font-size: 1rem;
+  font-weight: 500; /* Medium weight */
   border: none;
-  padding: 10px 15px;
-  font-size: 20px;
-  line-height: 1;
+  border-radius: 6px; /* Slightly more rounded */
   cursor: pointer;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  z-index: 100;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block; /* Ensure proper spacing and alignment */
+  text-decoration: none; /* For potential future use as <a> */
+}
+
+.find-out-more-button {
+  color: #ffffff;
+  background-color: #0066cc; /* Specific blue for these buttons */
+  margin-top: 1rem;
+}
+.find-out-more-button:hover {
+  background-color: #004d99;
+  transform: scale(1.03);
+}
+
+.email-button {
+  z-index: 5; /* Above overlay */
+  background-color: white;
+  color: #0066cc;
+  margin-top: 1rem; /* Added margin top */
+}
+.email-button:hover {
+  background-color: #f0f0f0; /* Lighter hover for white button */
+  color: #004d99;
+  transform: scale(1.03);
+}
+
+/* Card Style */
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); /* Softer shadow */
+  padding: var(--card-padding);
+  /* margin-bottom: 3rem; Removed, parent .content-container handles spacing */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e9e9e9; /* Lighter border */
+}
+.card:hover {
+  transform: translateY(-6px); /* Less aggressive lift */
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Scroll to Top Button */
+.scroll-to-top-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-text-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: background-color 0.3s, transform 0.3s;
 }
 .scroll-to-top-btn:hover {
-  background-color: var(--gi-primary-text);
-  transform: translateY(-2px);
+    background-color: var(--button-cta-hover-bg);
+    transform: scale(1.1);
 }
+
 
 /* Responsive Adjustments */
-@media (max-width: 992px) { /* Tablet */
-  .hero-section,
-  .donation-form-section,
-  .chapters-section,
-  .partnerships-section {
-    padding: 0 var(--gi-base-padding);
+@media (max-width: 992px) { /* Larger tablets */
+  .left-content, .right-content, .partnership-left-content {
+    width: 47%; /* Adjust for slightly smaller screens if needed */
   }
-  .content-layout {
-    gap: var(--gi-base-padding);
+  .content-container {
+    gap: 3rem;
   }
-  .text-content.card-style {
-    padding: var(--gi-base-padding);
-  }
-  .text-content h1 { font-size: 2.5rem; }
-  .text-content h2 { font-size: 1.8rem; }
-  .text-content p { font-size: 1.05rem; }
 }
 
-@media (max-width: 768px) { /* Mobile */
-  .content-layout {
+@media (max-width: 768px) { /* Tablets and mobiles */
+  .get-involved-page-header h1 {
+    font-size: 2.4rem; /* Responsive header font */
+  }
+  .get-involved-page-header p {
+    font-size: 1.15rem;
+  }
+
+  .content-container,
+  .content-container1 {
     flex-direction: column;
     text-align: center;
+    padding-left: var(--section-padding); /* Ensure padding is consistent */
+    padding-right: var(--section-padding);
+    gap: var(--section-padding); /* Reduce gap for stacked items */
   }
-  .content-layout.media-first .text-content,
-  .content-layout.media-first .media-content {
-    order: initial; /* Reset order for column layout */
-  }
-  .media-content {
-    width: 100%; /* Full width for stacked media */
-    margin-top: var(--gi-base-padding); /* Space when stacked */
-  }
-  .text-content {
+   .content-container1 {
+    padding: 0; /* Keep full-width for bg color, children handle padding */
+   }
+
+
+  .left-content,
+  .right-content,
+  .partnership-left-content {
     width: 100%;
+    text-align: center; /* Center content when stacked */
   }
-  .video-wrapper {
-    max-width: 500px; /* Limit video width on mobile */
+  .left-content.card { /* Card specific adjustments */
+    padding: calc(var(--card-padding) - 0.5rem);
+    text-align: left; /* Or center if preferred for card content */
+  }
+  .left-content.card h2, .left-content.card p {
+    text-align: center; /* Center text within cards on mobile */
+  }
+
+
+  .partnership-left-content {
+    padding: var(--section-padding); /* Adjust padding for stacked layout */
+  }
+  .partnership-left-content h2,
+  .partnership-left-content p {
+    text-align: center;
+  }
+  .right-content { /* For images in UB/BIUST */
+    margin-top: 1rem; /* Add some space above image when stacked */
+  }
+  .content-container1 .right-content { /* For partnership image */
+    padding: 0 var(--section-padding) var(--section-padding) var(--section-padding); /* Add padding around image */
+  }
+
+
+  .email-button {
+    margin: 1rem auto;
+    display: block; /* Make button block to take auto margins */
+  }
+
+  .left-content h2, .partnership-left-content h2 {
+    font-size: 1.8rem;
+  }
+  .left-content p, .partnership-left-content p {
+    font-size: 1rem;
+  }
+  .donation-form-section {
+    padding: 0 var(--section-padding);
+  }
+}
+
+@media (max-width: 540px) { /* Smaller Mobiles */
+  :root { /* Adjust base variables for smaller screens */
+    --section-padding: 1rem;
+    --card-padding: 1.5rem;
+  }
+  .get-involved-page-header h1 {
+    font-size: 2rem;
+  }
+  .get-involved-page-header p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .left-content.card {
+    padding: var(--card-padding);
+  }
+
+  .left-content h2, .partnership-left-content h2 {
+    font-size: 1.6rem;
+  }
+  .left-content p, .partnership-left-content p {
+    font-size: 0.95rem;
+  }
+
+  .find-out-more-button,
+  .email-button {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.9rem;
+    width: auto; /* Allow button to size to content or set to 100% if needed */
+    max-width: 280px; /* Prevent buttons from becoming too wide */
     margin-left: auto;
     margin-right: auto;
+    display: block;
   }
-  .content-image {
-    max-width: 450px; /* Limit image width on mobile */
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .cta-button {
-    width: 100%;
-    max-width: 280px; /* Max width for buttons on mobile */
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .partnerships-section .text-content {
-    margin-bottom: var(--gi-base-padding); /* Space before image on mobile */
+  .scroll-to-top-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    bottom: 15px;
+    right: 15px;
   }
 }

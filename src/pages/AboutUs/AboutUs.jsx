@@ -148,8 +148,8 @@ const AboutUs = () => {
             <p>Lives Touched</p>
           </div>
           <div className="impact-card">
-            <h3>7</h3>
-            <p>Active Programs</p>
+            <h3>9</h3>
+            <p>Initiated Programs</p>
           </div>
           <div className="impact-card">
             <h3>8+</h3>
@@ -176,7 +176,7 @@ const AboutUs = () => {
       </section>
       
       <section className="about-section team-section pre-animate">
-        <h2 className="section-title">Meet Our Branch Presidents\</h2>
+        <h2 className="section-title">Meet Our Branch Presidents</h2>
         <div className="team-branch">
           <img src={ubLogo} alt="UB Logo" className="branch-logo" width="60" height="60"/>
           <h3 className="branch-title">University of Botswana Branch</h3>

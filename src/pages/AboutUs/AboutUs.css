@@ -10,6 +10,7 @@
 
 /* Header */
 .about-header {
+  background-color: transparent; /* Let container bg show */
   text-align: center;
   padding: 2rem 0;
   margin-bottom: 2rem;
@@ -21,15 +22,16 @@
 .about-main-title {
   font-size: 3rem;
   font-weight: 700;
-  color: #043F70;
+  color: #005BB5;
   margin-bottom: 0.5rem;
 }
 
 .about-subtitle {
   font-size: 1.2rem;
-  color: #333;
+  color: #ffffff;
   max-width: 600px;
   margin: 0 auto;
+  font-weight: 400;
 }
 
 /* General Section Styling */
@@ -182,6 +184,7 @@
 
 .branch-logo {
   height: 60px;
+  width: auto;
   margin-bottom: 1rem;
 }
 

@@ -85,6 +85,8 @@
   max-width: 800px; /* Constrain width */
   margin: 0 auto 2rem auto; /* Center and add bottom margin */
   line-height: 1.7;
+  font-weight: 400;
+
 }
 
 .program {

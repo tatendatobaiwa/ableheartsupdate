@@ -1,233 +1,265 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { ShoppingCart, X, Plus, Minus } from 'lucide-react';
-import { db } from '/src/firebase/config';
+import { db } from '/src/firebase/config'; // Ensure this path is correct
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Shop.css';
-import Footer from '../../components/Footer/Footer';
+// import Footer from '../../components/Footer/Footer';
 
-const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-const blobImages = [
-  '/src/assets/fixed/icons/blob1.webp',
-  '/src/assets/fixed/icons/blob3.webp',
-  '/src/assets/fixed/icons/blob4.webp',
-  '/src/assets/fixed/icons/blob2.webp',
+// --- Direct Image Imports ---
+// Blob Images
+import blob1 from '/src/assets/fixed/icons/blob1.webp';
+import blob2 from '/src/assets/fixed/icons/blob2.webp';
+import blob3 from '/src/assets/fixed/icons/blob3.webp';
+import blob4 from '/src/assets/fixed/icons/blob4.webp';
+
+// Product Images
+import whiteTfront from '/src/assets/fixed/merch/whiteTfront.webp';
+import whiteTback from '/src/assets/fixed/merch/whiteTback.webp';
+import whitejersey1 from '/src/assets/fixed/merch/whitejersey1.webp';
+import whitejersey2 from '/src/assets/fixed/merch/whitejersey2.webp';
+import blackjerseyfront from '/src/assets/fixed/merch/blackjerseyfront.webp';
+import blackjerseyback from '/src/assets/fixed/merch/blackjerseyback.webp';
+// --- End Direct Image Imports ---
+
+
+const BLOB_IMAGE_IMPORTS = [blob1, blob3, blob4, blob2]; // Use imported variables
+const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+const SCROLL_THRESHOLD_TOP_BTN = 300;
+
+// Product data now uses the imported image variables
+const SHOP_PRODUCTS = [
+  {
+    id: 1,
+    name: 'Classic White T-Shirt',
+    price: 200.00,
+    images: [whiteTfront, whiteTback], // Use imported variables
+  },
+  {
+    id: 2,
+    name: '"EQUALITY" White Sports Jersey',
+    price: 250.00,
+    images: [whitejersey1, whitejersey2],
+  },
+  {
+    id: 3,
+    name: '"EQUALITY" Black Sports Jersey',
+    price: 300.00,
+    images: [blackjerseyfront, blackjerseyback],
+  },
 ];
+
+// Memoized ProductCard (can be in its own file)
+const ProductCard = memo(({ product, onOpenModal }) => (
+  <div
+    className="product-card-shop"
+    onClick={() => onOpenModal(product)}
+    role="button"
+    tabIndex={0}
+    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onOpenModal(product)}
+    aria-label={`View details for ${product.name}`}
+  >
+    <img
+      src={product.images[0]} // This is now an imported image variable
+      alt={product.name}
+      className="product-image-shop"
+      loading="lazy"
+      width="300"
+      height="300"
+    />
+    <h2 className="product-title-shop">{product.name}</h2>
+    <p className="product-price-shop">P{product.price.toFixed(2)}</p>
+  </div>
+));
+ProductCard.displayName = 'ProductCard';
 
 const Shop = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [enlargedImage, setEnlargedImage] = useState(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [contactDetails, setContactDetails] = useState({
-    email: '',
-    phone: ''
-  });
+  const [contactDetails, setContactDetails] = useState({ email: '', phone: '' });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
-    setIsLoaded(true);
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 300);
-    };
-    window.addEventListener('scroll', handleScroll);
+    setIsContentLoaded(true);
+    const handleScroll = () => setShowScrollToTop(window.scrollY > SCROLL_THRESHOLD_TOP_BTN);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const products = [
-    {
-      id: 1,
-      name: 'Classic White T-Shirt',
-      price: 20.0,
-      images: ['/src/assets/fixed/merch/whiteTfront.webp', '/src/assets/fixed/merch/whiteTback.webp'],
-    },
-    {
-      id: 2,
-      name: '"EQUALITY" White Sports Jersey',
-      price: 25.0,
-      images: ['/src/assets/fixed/merch/whitejersey1.webp', '/src/assets/fixed/merch/whitejersey2.webp'],
-    },
-    {
-      id: 3,
-      name: '"EQUALITY" Black Sports Jersey',
-      price: 30.0,
-      images: ['/src/assets/fixed/merch/blackjerseyfront.webp', '/src/assets/fixed/merch/blackjerseyback.webp'],
-    },
-  ];
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const addToCart = () => {
+  const openModal = useCallback((product) => {
+    setSelectedProduct(product);
+    setSelectedSize(product.defaultSize || 'M');
+    setQuantity(1);
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setSelectedProduct(null);
+    setEnlargedImage(null);
+    document.body.style.overflow = '';
+  }, []);
+
+  const handleImageClick = useCallback((image) => setEnlargedImage(image), []);
+  const closeEnlargedImage = useCallback(() => setEnlargedImage(null), []);
+
+  const addToCart = useCallback(() => {
     if (!selectedProduct) return;
-
     const cartItem = {
-      id: Date.now(),
+      id: `${selectedProduct.id}-${selectedSize}-${Date.now()}`,
       productId: selectedProduct.id,
       name: selectedProduct.name,
       price: selectedProduct.price,
       size: selectedSize,
       quantity: quantity,
-      image: selectedProduct.images[0],
+      image: selectedProduct.images[0], // This is an imported image variable
       timestamp: new Date().toLocaleString(),
     };
-
-    setCart([...cart, cartItem]);
+    setCart(prevCart => [...prevCart, cartItem]);
     setIsCartOpen(true);
     closeModal();
-    setQuantity(1);
-  };
+  }, [selectedProduct, selectedSize, quantity, closeModal]);
 
-  const removeFromCart = (itemId) => {
-    setCart(cart.filter(item => item.id !== itemId));
-  };
+  const removeFromCart = useCallback((itemId) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== itemId));
+  }, []);
 
-  const getTotalPrice = () => {
+  const getTotalPrice = useMemo(() => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
+  }, [cart]);
+
+  const handleContactChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setContactDetails(prev => ({ ...prev, [name]: value }));
+  }, []);
 
   const handleSubmitOrder = async () => {
-    if (cart.length === 0 || isSubmitting) return;
-  
-    // Validate email
+    setFormError('');
+    if (cart.length === 0) {
+      setFormError('Your cart is empty.');
+      return;
+    }
+    if (isSubmitting) return;
+
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!contactDetails.email || !emailRegex.test(contactDetails.email)) {
-      alert('Please enter a valid email address.');
+      setFormError('Please enter a valid email address.');
       return;
     }
-  
-    // Validate phone number
-    const phoneRegex = /^(?:\+267)?[0-9]{8}$/;
-    if (!contactDetails.phone || !phoneRegex.test(contactDetails.phone)) {
-      alert('Please enter a valid phone number.');
-      return;
+    const phoneRegex = /^(?:\+267|0)?\d{7,8}$/; // Adjusted for 7 or 8 digits after prefix
+    if (!contactDetails.phone || !phoneRegex.test(contactDetails.phone.replace(/\s+/g, ''))) {
+        setFormError('Please enter a valid Botswana phone number (e.g., +26771234567 or 71234567).');
+        return;
     }
-  
+
+    setIsSubmitting(true);
     try {
-      setIsSubmitting(true);
-  
       const orderData = {
         items: cart.map(item => ({
-          productId: item.productId,
-          name: item.name,
-          price: item.price,
-          size: item.size,
-          quantity: item.quantity,
+          productId: item.productId, name: item.name, price: item.price,
+          size: item.size, quantity: item.quantity,
         })),
-        totalAmount: getTotalPrice(),
+        totalAmount: getTotalPrice,
         contact: contactDetails,
-        status: 'pending',
+        status: 'pending_pre-order',
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       };
-  
-      // Add order to Firestore
-      const docRef = await addDoc(collection(db, 'orders'), orderData);
-  
-      // Show custom success modal
-      setSuccessModal(true);
-      setCart([]);  // Clear the cart
-      setIsCartOpen(false);  // Close the cart
+      await addDoc(collection(db, 'pre-orders'), orderData);
+      setShowSuccessModal(true);
+      setCart([]);
+      setIsCartOpen(false);
+      setContactDetails({ email: '', phone: '' });
     } catch (error) {
       console.error('Error submitting order:', error);
-      alert('Failed to place order. Please try again.');
+      setFormError('Failed to place pre-order. Please try again or contact support.');
     } finally {
       setIsSubmitting(false);
     }
-  };  
-
-  const openModal = (product) => {
-    setSelectedProduct(product);
-    setSelectedSize('M');
-    setQuantity(1);
   };
 
-  const closeModal = () => {
-    setSelectedProduct(null);
-  };
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        if (enlargedImage) closeEnlargedImage();
+        else if (selectedProduct) closeModal();
+        else if (isCartOpen) setIsCartOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [enlargedImage, selectedProduct, isCartOpen, closeEnlargedImage, closeModal]);
 
-  const handleImageClick = (image) => {
-    setEnlargedImage(image);
-  };
-
-  const closeEnlargedImage = () => {
-    setEnlargedImage(null);
-  };
-
-  const [successModal, setSuccessModal] = useState(false);
-
+  const memoizedBlobComponents = useMemo(() => BLOB_IMAGE_IMPORTS.map((blobSrc, index) => (
+    <img // Using standard img tag for blobs as MemoizedImage is for product images
+      key={`blob-${index}`}
+      src={blobSrc} // blobSrc is the imported variable
+      alt=""
+      className={`shop-blobg blob-${index + 1}`}
+      loading="lazy"
+      width="600"
+      height="600"
+      aria-hidden="true"
+    />
+  )), []);
 
   return (
-    <div className={`container-shop ${isLoaded ? 'content-loaded' : ''}`}>
-      <div className="shop-background-blobs">
-        {blobImages.map((blob, index) => (
-          <img
-            key={index}
-            src={blob}
-            alt={`Decorative blob ${index + 1}`}
-            className={`shop-blobg blob-${index + 1}`}
-          />
-        ))}
+    <div className={`shop-page-wrapper ${isContentLoaded ? 'content-loaded' : ''}`}>
+      <div className="shop-background-blobs" aria-hidden="true">
+        {memoizedBlobComponents}
       </div>
-      <header className={`shophead pre-animate ${isLoaded ? 'fade-in' : ''}`}>
-        <h1 className="title-shop">Shop with a Purpose</h1>
-        <p className="subtitle-shop">
+      <header className={`shop-header ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
+        <h1 className="shop-title-main">Shop with a Purpose</h1>
+        <p className="shop-subtitle">
           Support our mission by purchasing items from our shop. Every purchase helps fund our initiatives.
         </p>
       </header>
-      <div className={`main-shop pre-animate ${isLoaded ? 'fade-in' : ''}`}>
+      <main className={`shop-main-content ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
         <div className="product-grid-shop">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="product-card-shop"
-              onClick={() => openModal(product)}
-            >
-              <img
-                src={product.images[0]}
-                alt={product.name}
-                className="product-image-shop"
-                loading="lazy"
-                width="300"
-                height="300"
-              />
-              <h2 className="product-title-shop">{product.name}</h2>
-              <p className="product-price-shop">${product.price.toFixed(2)}</p>
-            </div>
+          {SHOP_PRODUCTS.map((product) => (
+            <ProductCard key={product.id} product={product} onOpenModal={openModal} />
           ))}
         </div>
-      </div>
+      </main>
 
-      {/* Product Modal */}
       {selectedProduct && (
-        <div className="modal-overlay-shop" onClick={closeModal}>
+        <div className="modal-overlay-shop" onClick={closeModal} role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
           <div className="modal-content-shop" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button-shop" onClick={closeModal}>
+            <button className="modal-close-button shop-modal-close" onClick={closeModal} aria-label="Close product details">
               <X size={24} />
             </button>
-            <div className="modal-head-shop">
-              <div className="modal-images">
-                {selectedProduct.images.map((image, index) => (
+            <div className="modal-product-header">
+              <div className="modal-images-container">
+                {selectedProduct.images.map((imageSrc, index) => ( // imageSrc is the imported variable
                   <img
                     key={index}
-                    src={image}
-                    alt={selectedProduct.name}
-                    className="modal-image-shop zoomable"
-                    onClick={() => handleImageClick(image)}
+                    src={imageSrc}
+                    alt={`${selectedProduct.name} - view ${index + 1}`}
+                    className="modal-product-image-thumbnail zoomable"
+                    onClick={() => handleImageClick(imageSrc)}
                     width="100"
                     height="100"
                   />
                 ))}
               </div>
-              <h2 className="modal-title-shop">{selectedProduct.name}</h2>
-              <p className="modal-price-shop">${selectedProduct.price.toFixed(2)}</p>
+              <h2 id="product-modal-title" className="modal-product-title">{selectedProduct.name}</h2>
+              <p className="modal-product-price">P{selectedProduct.price.toFixed(2)}</p>
               
               <div className="size-selector">
-                <p className="text-sm mb-2">Select Size:</p>
-                <div className="flex gap-2 justify-center">
-                  {sizes.map((size) => (
+                <p>Select Size:</p>
+                <div className="size-buttons-container">
+                  {SIZES.map((size) => (
                     <button
                       key={size}
+                      type="button"
                       className={`size-btn ${selectedSize === size ? 'selected' : ''}`}
                       onClick={() => setSelectedSize(size)}
                     >
@@ -237,33 +269,25 @@ const Shop = () => {
                 </div>
               </div>
               <div className="quantity-selector">
-                <p className="text-sm mb-2">Quantity:</p>
-                <div className="quantity-input-container">
-                  <button
-                    className="quantity-btn"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  >
+                <p>Quantity:</p>
+                <div className="quantity-input-controls">
+                  <button type="button" className="quantity-btn" onClick={() => setQuantity(Math.max(1, quantity - 1))} aria-label="Decrease quantity">
                     <Minus size={16} />
                   </button>
                   <input
                     type="number"
                     min="1"
-                    className="quantity-input"
+                    className="quantity-input-field"
                     value={quantity}
-                    onChange={(e) => {
-                      const value = Math.max(1, parseInt(e.target.value) || 1);
-                      setQuantity(value);
-                    }}
+                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                    aria-label="Current quantity"
                   />
-                  <button
-                    className="quantity-btn"
-                    onClick={() => setQuantity(quantity + 1)}
-                  >
+                  <button type="button" className="quantity-btn" onClick={() => setQuantity(quantity + 1)} aria-label="Increase quantity">
                     <Plus size={16} />
                   </button>
                 </div>
               </div>
-              <button className="add-to-cart-button" onClick={addToCart}>
+              <button type="button" className="cta-button add-to-cart-main" onClick={addToCart}>
                 Add to Cart
               </button>
             </div>
@@ -271,107 +295,86 @@ const Shop = () => {
         </div>
       )}
 
-      {/* Mini Cart */}
-      <div className={`mini-cart ${isCartOpen ? 'open' : ''}`}>
+      <div className={`mini-cart ${isCartOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-labelledby="cart-title">
         <div className="mini-cart-header">
-          <h3>Your Cart</h3>
-          <button className="close-button-shop2" onClick={() => setIsCartOpen(false)}><X size={20} /></button>
+          <h3 id="cart-title">Your Cart</h3>
+          <button className="mini-cart-close-btn" onClick={() => setIsCartOpen(false)} aria-label="Close cart"><X size={20} /></button>
         </div>
         
-        <div className="mini-cart-items">
-          {cart.map((item) => (
-            <div key={item.id} className="cart-item">
-              <img src={item.image} alt={item.name} className="cart-item-image" />
-              <div className="cart-item-details">
-                <h4>{item.name}</h4>
-                <p>Size: {item.size}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>${(item.price * item.quantity).toFixed(2)}</p>
-                <small>{item.timestamp}</small>
+        <div className="mini-cart-items-container">
+          {cart.length === 0 ? (
+            <p className="empty-cart-message">Your cart is empty.</p>
+          ) : (
+            cart.map((item) => (
+              <div key={item.id} className="cart-item">
+                <img src={item.image} alt={item.name} className="cart-item-image" /> {/* item.image is imported variable */}
+                <div className="cart-item-details">
+                  <h4>{item.name}</h4>
+                  <p>Size: {item.size}, Qty: {item.quantity}</p>
+                  <p>P{(item.price * item.quantity).toFixed(2)}</p>
+                </div>
+                <button className="remove-item-btn" onClick={() => removeFromCart(item.id)} aria-label={`Remove ${item.name} from cart`}>
+                  <X size={16} />
+                </button>
               </div>
-              <button 
-                className="remove-item-btn"
-                onClick={() => removeFromCart(item.id)}
-              >
-                <X size={16} />
+            ))
+          )}
+        </div>
+
+        {cart.length > 0 && (
+          <>
+            <div className="contact-details-form">
+              <h4>Contact for Pre-order</h4>
+              {formError && <p className="form-error-message">{formError}</p>}
+              <div>
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" name="email" value={contactDetails.email} onChange={handleContactChange} placeholder="your.email@example.com" required />
+              </div>
+              <div>
+                <label htmlFor="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" value={contactDetails.phone} onChange={handleContactChange} placeholder="+267 71234567" required />
+              </div>
+            </div>
+            <div className="mini-cart-footer">
+              <p className="cart-total-price">Total: P{getTotalPrice.toFixed(2)}</p>
+              <button type="button" className="cta-button checkout-action" onClick={handleSubmitOrder} disabled={isSubmitting}>
+                {isSubmitting ? 'Placing Pre-order...' : 'Place Pre-order'}
               </button>
             </div>
-          ))}
-        </div>
-
-        {/* Contact Details Input */}
-        <div className="contact-details">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={contactDetails.email}
-            onChange={(e) => setContactDetails({ ...contactDetails, email: e.target.value })}
-            placeholder="Enter your email"
-          />
-          <label htmlFor="phone">Phone:</label>
-          <input
-            type="tel"
-            id="phone"
-            value={contactDetails.phone}
-            onChange={(e) => setContactDetails({ ...contactDetails, phone: e.target.value })}
-            placeholder="Enter your phone number"
-          />
-        </div>
-
-        {cart.length > 0 ? (
-          <div className="mini-cart-footer">
-            <p className="total">Total: ${getTotalPrice().toFixed(2)}</p>
-            <button 
-              className="checkout-button" 
-              onClick={handleSubmitOrder}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Placing Order...' : 'Place Pre-order'}
-            </button>
-          </div>
-        ) : (
-          <p className="empty-cart-message">Your cart is empty</p>
+          </>
         )}
       </div>
       
-      {/* Cart Toggle Button */}
-      <button 
-        className="cart-toggle-btn"
-        onClick={() => setIsCartOpen(!isCartOpen)}
-      >
+      <button type="button" className="cart-toggle-btn" onClick={() => setIsCartOpen(!isCartOpen)} aria-label="Toggle cart visibility">
         <ShoppingCart size={24} />
-        {cart.length > 0 && (
-          <span className="cart-count">{cart.length}</span>
-        )}
+        {cart.length > 0 && <span className="cart-item-count">{cart.length}</span>}
       </button>
 
-      {/* Enlarged Image Modal */}
       {enlargedImage && (
-        <div className="enlarged-image-overlay" onClick={closeEnlargedImage}>
-          <img src={enlargedImage} alt="Enlarged" className="enlarged-image" />
+        <div className="enlarged-image-overlay" onClick={closeEnlargedImage} role="dialog" aria-modal="true">
+          <img src={enlargedImage} alt="Enlarged product view" className="enlarged-image-content" /> {/* enlargedImage is imported variable */}
+          <button className="modal-close-button enlarged-image-close-btn" onClick={closeEnlargedImage} aria-label="Close enlarged image"><X size={28}/></button>
         </div>
       )}
-        {successModal && (
-          <div className="success-modal-overlay">
-            <div className="success-modal">
-              <h3>Order Placed Successfully!</h3>
-              <p>Your pre-order has been successfully placed. We will update you regarding the progress of you Order!</p>
-              <button onClick={() => setSuccessModal(false)}>Close</button>
-            </div>
+
+      {showSuccessModal && (
+        <div className="success-modal-overlay" role="alertdialog" aria-modal="true" aria-labelledby="success-modal-title">
+          <div className="success-modal-content">
+            <h3 id="success-modal-title">Pre-order Placed!</h3>
+            <p>Your pre-order has been successfully placed. We will contact you regarding the progress of your Order!</p>
+            <button type="button" className="cta-button" onClick={() => setShowSuccessModal(false)}>Close</button>
           </div>
-        )}
-      {/* Scroll to Top Button */}
-      {isScrolled && (
-        <button 
-          className="scroll-to-top-btn" 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
+        </div>
+      )}
+
+      {showScrollToTop && (
+        <button type="button" className="scroll-to-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
           ↑
         </button>
       )}
+      {/* <Footer /> */}
     </div>
   );
 };
 
-export default Shop;
+export default memo(Shop);

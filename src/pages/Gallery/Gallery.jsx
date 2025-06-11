@@ -1,12 +1,16 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import './Gallery.css';
-import Footer from '../../components/Footer/Footer';
+// import Footer from '../../components/Footer/Footer';
 
+// --- Direct Image Imports ---
+
+// Blob Images
 import blob1 from '../../assets/fixed/icons/blob1.webp';
 import blob2 from '../../assets/fixed/icons/blob2.webp';
 import blob3 from '../../assets/fixed/icons/blob3.webp';
 import blob4 from '../../assets/fixed/icons/blob4.webp';
 
+// Kedia Event
 import kediaCover from '../../assets/fixed/kedia/kedia.webp';
 import kedia1 from '../../assets/fixed/kedia/K1.webp';
 import kedia2 from '../../assets/fixed/kedia/K2.webp';
@@ -15,26 +19,31 @@ import kedia4 from '../../assets/fixed/kedia/K4.webp';
 import kedia5 from '../../assets/fixed/kedia/K5.webp';
 import kedia6 from '../../assets/fixed/kedia/K6.webp';
 
+// Shakawe Event
 import shakaweCover from '../../assets/fixed/shakawe/shakawedono.webp';
 import shakawe1 from '../../assets/fixed/shakawe/S1.webp';
 import shakawe2 from '../../assets/fixed/shakawe/S2.webp';
 
+// Lavender High Tea Event
 import lavenderCover from '../../assets/fixed/lavender/lavender.webp';
 import lavender1 from '../../assets/fixed/lavender/L1.webp';
 import lavender2 from '../../assets/fixed/lavender/L2.webp';
 import lavender3 from '../../assets/fixed/lavender/L3.webp';
 
+// Covid Relief Event
 import covidCover from '../../assets/fixed/covid/covid.webp';
 import covid1 from '../../assets/fixed/covid/C1.webp';
 import covid2 from '../../assets/fixed/covid/C2.webp';
 import covid3 from '../../assets/fixed/covid/C3.webp';
 import covid4 from '../../assets/fixed/covid/C4.webp';
 
+// Tsogang Trust Event
 import tsogangCover from '../../assets/fixed/tsogangtrust/tsogangtrust.webp';
 import tsogang1 from '../../assets/fixed/tsogangtrust/T1.webp';
 import tsogang2 from '../../assets/fixed/tsogangtrust/T2.webp';
 import tsogang3 from '../../assets/fixed/tsogangtrust/T3.webp';
 
+// Mochudi Center Event
 import mochudiCover from '../../assets/fixed/mochudi/mochud.webp';
 import mochudi1 from '../../assets/fixed/mochudi/M1.webp';
 import mochudi2 from '../../assets/fixed/mochudi/M2.webp';
@@ -43,6 +52,7 @@ import mochudi4 from '../../assets/fixed/mochudi/M4.webp';
 import mochudi5 from '../../assets/fixed/mochudi/M5.webp';
 import mochudi6 from '../../assets/fixed/mochudi/M6.webp';
 
+// Dynamic Talent Show Event
 import dynamicTalentCover from '../../assets/fixed/dynamictalent/talentshow.webp';
 import dynamicTalent1 from '../../assets/fixed/dynamictalent/DT1.webp';
 import dynamicTalent2 from '../../assets/fixed/dynamictalent/DT2.webp';
@@ -56,8 +66,9 @@ import dynamicTalent9 from '../../assets/fixed/dynamictalent/DT9.webp';
 import dynamicTalent10 from '../../assets/fixed/dynamictalent/DT10.webp';
 import dynamicTalent11 from '../../assets/fixed/dynamictalent/DT11.webp';
 import dynamicTalent12 from '../../assets/fixed/dynamictalent/DT12.webp';
-import dynamicTalent14 from '../../assets/fixed/dynamictalent/DT14.webp';
+import dynamicTalent14 from '../../assets/fixed/dynamictalent/DT14.webp'; // Assuming DT13 was intentionally skipped
 
+// Lephoi Garden Event
 import lephoiGardenCover from '../../assets/fixed/lephoi/garden.webp';
 import lephoiGarden1 from '../../assets/fixed/lephoi/LG1.webp';
 import lephoiGarden2 from '../../assets/fixed/lephoi/LG2.webp';
@@ -67,362 +78,404 @@ import lephoiGarden5 from '../../assets/fixed/lephoi/LG5.webp';
 import lephoiGarden6 from '../../assets/fixed/lephoi/LG6.webp';
 import lephoiGarden7 from '../../assets/fixed/lephoi/LG7.webp';
 
+// News Articles Event
 import newspaperCover from '../../assets/fixed/newspaper/NP1.webp';
 import newspaper2 from '../../assets/fixed/newspaper/NP2.webp';
 import newspaper3 from '../../assets/fixed/newspaper/NP3.webp';
 import newspaper4 from '../../assets/fixed/newspaper/NP4.webp';
 import newspaper5 from '../../assets/fixed/newspaper/NP5.webp';
 
+// First Event
 import firstEventCover from '../../assets/fixed/firstevent/FE1.webp';
 import firstEvent2 from '../../assets/fixed/firstevent/FE2.webp';
 import firstEvent3 from '../../assets/fixed/firstevent/FE3.webp';
 import firstEvent4 from '../../assets/fixed/firstevent/FE4.webp';
 
-import ind1 from '../../assets/fixed/IND1.webp';
-
+// Cheshire Foundation Event
 import cheshirefoundationCover from '../../assets/fixed/chesirefoundation/chescover.webp';
 import cheshirefoundation1 from '../../assets/fixed/chesirefoundation/ches1.webp';
 import cheshirefoundation2 from '../../assets/fixed/chesirefoundation/ches2.webp';
 import cheshirefoundation3 from '../../assets/fixed/chesirefoundation/ches3.webp';
 
+// Tlokweng Family Visit Event
 import tlokwengCover from '../../assets/fixed/tlokwengfamily/tlok2.webp';
 import tlokweng1 from '../../assets/fixed/tlokwengfamily/tlok1.webp';
-import tlokweng2 from '../../assets/fixed/tlokwengfamily/tlok3.webp';
+import tlokweng2 from '../../assets/fixed/tlokwengfamily/tlok3.webp'; // Assuming tlok3 is correct
 
-const blobImages = [
-  blob1,
-  blob3,
-  blob4,
-  blob2,
-];
-
-const Gallery = () => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    // Set loaded state after initial render
-    setIsLoaded(true);
-    
-    // fixed scroll handler with debounce
-    let scrollTimeout;
-    const handleScroll = () => {
-      if (scrollTimeout) {
-        window.cancelAnimationFrame(scrollTimeout);
-      }
-      
-      scrollTimeout = window.requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 300);
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollTimeout) {
-        window.cancelAnimationFrame(scrollTimeout);
-      }
-    };
-  }, []);
+// --- End Direct Image Imports ---
 
 
-  // Event data structure with sub-images
-  const events = [
+const blobImagePaths = [blob1, blob3, blob4, blob2];
+const SCROLL_THRESHOLD_TOP_BTN = 300;
+
+// Helper to create image objects, now taking imported image variables
+const createImageData = (id, importedUrl, caption, width = 800, height = 600) => ({
+  id,
+  url: importedUrl, // The imported image variable is the URL
+  caption,
+  width,
+  height,
+});
+
+// Define galleryEventsData within the component or scope if it uses imported variables
+// This needs to be defined *after* all image imports
+const galleryEventsData = [
     {
-      id: 1,
+      id: 'kedia',
       title: 'Kedia Primary Donation',
       coverImage: kediaCover,
       description: 'A heartfelt initiative to provide essential resources and support to Kedia Primary School.',
       date: 'July 6, 2024',
       images: [
-        { id: 1, url: kediaCover, caption: 'Setting the stage: Organizing shoes and supplies for distribution.', width: 800, height: 600},
-        { id: 2, url: kedia1, caption: 'A display of hope: New shoes lined up for eager young feet.', width: 800, height: 600},
-        { id: 3, url: kedia2, caption: 'Smiles of gratitude: A moment shared with the students and volunteers.', width: 800, height: 600},
-        { id: 4, url: kedia3, caption: 'Joy in unity: Students celebrating the generous donations.', width: 800, height: 600},
-        { id: 5, url: kedia4, caption: 'Grateful hearts: Capturing the spirit of the event with a selfie.', width: 800, height: 600},
-        { id: 6, url: kedia5, caption: 'Sharing knowledge: A group of volunteers engaging with the community.', width: 800, height: 600},
-        { id: 7, url: kedia6, caption: 'Bundles of care: Essential supplies ready for distribution to those in need.', width: 800, height: 600}
+        createImageData('k1', kediaCover, 'Setting the stage: Organizing shoes and supplies for distribution.'),
+        createImageData('k2', kedia1, 'A display of hope: New shoes lined up for eager young feet.'),
+        createImageData('k3', kedia2, 'Smiles of gratitude: A moment shared with the students and volunteers.'),
+        createImageData('k4', kedia3, 'Joy in unity: Students celebrating the generous donations.'),
+        createImageData('k5', kedia4, 'Grateful hearts: Capturing the spirit of the event with a selfie.'),
+        createImageData('k6', kedia5, 'Sharing knowledge: A group of volunteers engaging with the community.'),
+        createImageData('k7', kedia6, 'Bundles of care: Essential supplies ready for distribution to those in need.')
       ]
     },
     {
-      id: 2,
+      id: 'shakawe',
       title: 'Shakawe JSS Donation',
       coverImage: shakaweCover,
       description: 'A generous contribution aimed at enhancing the learning environment for students at Shakawe Junior Secondary School.',
       date: 'April 29, 2021',
       images: [
-        { id: 1, url: shakaweCover, caption: 'Collaborative efforts: Volunteers working together to organize donations for Shakawe JSS.', width: 800, height: 600},
-        { id: 2, url: shakawe1, caption: 'Prepared with care: A set of new uniforms ready to bring smiles to students in need.', width: 800, height: 600},
-        { id: 3, url: shakawe2, caption: 'Making a difference: Reception of donation boxes from Able Hearts.', width: 800, height: 600}      
+        createImageData('s1', shakaweCover, 'Collaborative efforts: Volunteers working together to organize donations for Shakawe JSS.'),
+        createImageData('s2', shakawe1, 'Prepared with care: A set of new uniforms ready to bring smiles to students in need.'),
+        createImageData('s3', shakawe2, 'Making a difference: Reception of donation boxes from Able Hearts.')
       ]
     },
     {
-      id: 3,
+      id: 'lavenderTea',
       title: 'Lavender High Tea',
       coverImage: lavenderCover,
       description: 'A delightful gathering to raise funds and awareness for community development projects.',
       date: 'August 9, 2020',
       images: [
-        { id: 1, url: lavenderCover, caption: 'Elegance and purpose: Guests enjoy the Lavender High Tea in their stunning attire.', width: 800, height: 600},
-        { id: 2, url: lavender1, caption: 'Moments of connection: Sharing laughter and inspiration at the Lavender High Tea.', width: 800, height: 600},
-        { id: 3, url: lavender2, caption: 'Words of empowerment: A speaker addressing attendees about community impact.', width: 800, height: 600},
-        { id: 4, url: lavender3, caption: 'A picture-perfect day: The vibrant Lavender High Tea setup, blending charm and philanthropy', width: 800, height: 600}      
+          createImageData('lt1', lavenderCover, 'Elegance and purpose: Guests enjoy the Lavender High Tea in their stunning attire.'),
+          createImageData('lt2', lavender1, 'Moments of connection: Sharing laughter and inspiration at the Lavender High Tea.'),
+          createImageData('lt3', lavender2, 'Words of empowerment: A speaker addressing attendees about community impact.'),
+          createImageData('lt4', lavender3, 'A picture-perfect day: The vibrant Lavender High Tea setup, blending charm and philanthropy.')
       ]
     },
     {
-      id: 4,
+      id: 'covidRelief',
       title: 'Covid-19 Community Relief Packages',
       coverImage: covidCover,
       description: 'A dedicated effort to distribute essential supplies to communities affected by the pandemic.',
       date: '2020',
       images: [
-        { id: 1, url: covidCover, caption: 'A heartwarming moment: Able Hearts Foundation spreading hope with COVID relief packages to the elderly, blending compassion and community support.', width: 800, height: 600},
-        { id: 2, url: covid1, caption: 'A closer look: The thoughtful contents of an Able Hearts COVID relief package, filled with essentials to brighten the lives of the elderly.', width: 800, height: 600},
-        { id: 3, url: covid2, caption: 'A closer look: The thoughtful contents of an Able Hearts COVID relief package, filled with essentials to brighten the lives of the elderly.', width: 800, height: 600},
-        { id: 4, url: covid3, caption: 'A moment of unity: The Able Hearts team with Honourable Member of Parliament, Mr. Ignatius Moswaane, working together to support our community.', width: 800, height: 600},
-        { id: 5, url: covid4, caption: 'A heartwarming moment: Able Hearts Foundation spreading hope with COVID relief packages to the elderly, blending compassion and community support.', width: 800, height: 600}
+          createImageData('cr1', covidCover, 'A heartwarming moment: Able Hearts Foundation spreading hope with COVID relief packages to the elderly.'),
+          createImageData('cr2', covid1, 'A closer look: The thoughtful contents of an Able Hearts COVID relief package.'),
+          createImageData('cr3', covid2, 'Essentials for the elderly during COVID.'),
+          createImageData('cr4', covid3, 'Able Hearts team with Hon. Ignatius Moswaane supporting the community.'),
+          createImageData('cr5', covid4, 'Spreading hope with COVID relief packages.')
       ]
     },
     {
-      id: 5,
+      id: 'tsogangTrust',
       title: 'Tsogang Trust',
       coverImage: tsogangCover,
       description: 'Collaboration with Tsogang Trust to empower local communities through education and skill development.',
       date: 'October 27, 2022',
       images: [
-        { id: 1, url: tsogangCover, caption: 'A generous gesture: Senn Foods providing essential foodstuffs and supplies to Tsogang Trust, fueling hope and community support.', width: 800, height: 600},
-        { id: 2, url: tsogang1, caption: 'Our Selfless Leader: Ms. Sakshi Bhargava, our visionary founder, leading with compassion and dedication.', width: 800, height: 600},      
-        { id: 3, url: tsogang2, caption: 'A heartwarming connection: Ms. Sakshi Bhargava with one of the bright young minds at Tsogang Trust, inspiring the next generation with care and compassion.', width: 800, height: 600},
-        { id: 4, url: tsogang3, caption: 'A generous gesture: Senn Foods providing essential foodstuffs and supplies to Tsogang Trust, fueling hope and community support.', width: 800, height: 600}
+          createImageData('tt1', tsogangCover, 'Senn Foods providing essential supplies to Tsogang Trust.'),
+          createImageData('tt2', tsogang1, 'Ms. Sakshi Bhargava, our visionary founder.'),
+          createImageData('tt3', tsogang2, 'Ms. Sakshi Bhargava with a young mind at Tsogang Trust.'),
+          createImageData('tt4', tsogang3, 'Senn Foods donation fueling hope and community support.')
       ]
     },
     {
-      id: 6,
+      id: 'mochudiCenter',
       title: 'Mochudi Resource Center',
       coverImage: mochudiCover,
       description: 'An initiative to equip the Mochudi Resource Center with vital resources to foster community engagement.',
       date: 'April 22, 2021',
       images: [
-        { id: 1, url: mochudiCover, caption: 'A moment of impact: The Able Hearts team delivering essential supplies to the Mochudi Resource Center, strengthening support for the community.', width: 800, height: 600},
-        { id: 2, url: mochudi1, caption: 'A touch of kindness: Ms. Sakshi Bhargava sharing a special moment with the little ones, spreading love and encouragement at Tsogang Trust.', width: 800, height: 600},
-        { id: 3, url: mochudi2, caption: 'On the ground: The Able Hearts team sorting packages on-site at Mochudi Resource Center, ensuring every child receives the support they need.', width: 800, height: 600},
-        { id: 4, url: mochudi3, caption: 'A moment of impact: The Able Hearts team delivering essential supplies to the Mochudi Resource Center, strengthening support for the community.', width: 800, height: 600},
-        { id: 5, url: mochudi4, caption: 'A closer look: The thoughtful contents of an Able Hearts Mochudi Resource Center package, filled with essentials to brighten the lives of the Children.', width: 800, height: 600},
-        { id: 6, url: mochudi5, caption: 'Sharing knowledge: The crew engaging with the Children through fun and learning.', width: 800, height: 600},
-        { id: 7, url: mochudi6, caption: 'A moment of giving: The Able Hearts team proudly presenting the carefully prepared packages, bringing hope and support to those in need.', width: 800, height: 600}
+          createImageData('mc1', mochudiCover, 'Able Hearts team delivering supplies to Mochudi Resource Center.'),
+          createImageData('mc2', mochudi1, 'Ms. Sakshi Bhargava sharing a special moment with children.'),
+          createImageData('mc3', mochudi2, 'Able Hearts team sorting packages at Mochudi Resource Center.'),
+          createImageData('mc4', mochudi3, 'Strengthening community support at Mochudi.'),
+          createImageData('mc5', mochudi4, 'Thoughtful contents of an Able Hearts package for children.'),
+          createImageData('mc6', mochudi5, 'Engaging with children through fun and learning.'),
+          createImageData('mc7', mochudi6, 'Able Hearts team presenting packages, bringing hope.')
       ]
     },
     {
-      id: 7,
+      id: 'dynamicTalent',
       title: 'Dynamic Talent Show',
       coverImage: dynamicTalentCover,
       description: 'A showcase of vibrant talents aimed at celebrating creativity and diversity.',
       date: 'August 20, 2023',
       images: [
-        { id: 1, url: dynamicTalentCover, caption: '', width: 800, height: 600},
-        { id: 2, url: dynamicTalent1, caption: '', width: 800, height: 600},
-        { id: 3, url: dynamicTalent2, caption: '', width: 800, height: 600},
-        { id: 4, url: dynamicTalent3, caption: '', width: 800, height: 600},
-        { id: 5, url: dynamicTalent4, caption: '', width: 800, height: 600},
-        { id: 6, url: dynamicTalent5, caption: '', width: 800, height: 600},
-        { id: 7, url: dynamicTalent6, caption: '', width: 800, height: 600},
-        { id: 8, url: dynamicTalent7, caption: '', width: 800, height: 600},
-        { id: 9, url: dynamicTalent8, caption: '', width: 800, height: 600},
-        { id: 10, url: dynamicTalent9, caption: '', width: 800, height: 600},
-        { id: 11, url: dynamicTalent10, caption: '', width: 800, height: 600},
-        { id: 12, url: dynamicTalent11, caption: '', width: 800, height: 600},
-        { id: 13, url: dynamicTalent12, caption: '', width: 800, height: 600},
-        { id: 15, url: dynamicTalent14, caption: '', width: 800, height: 600}
+          createImageData('dt1', dynamicTalentCover, 'Dynamic Talent Show Stage'),
+          createImageData('dt2', dynamicTalent1, 'Performance at Dynamic Talent Show'),
+          createImageData('dt3', dynamicTalent2, 'Audience at Dynamic Talent Show'),
+          createImageData('dt4', dynamicTalent3, 'Young talent performing'),
+          createImageData('dt5', dynamicTalent4, 'Celebrating talent'),
+          createImageData('dt6', dynamicTalent5, 'Group performance'),
+          createImageData('dt7', dynamicTalent6, 'Energetic dance'),
+          createImageData('dt8', dynamicTalent7, 'Creative showcase'),
+          createImageData('dt9', dynamicTalent8, 'Joyful participants'),
+          createImageData('dt10', dynamicTalent9, 'Talent show highlight'),
+          createImageData('dt11', dynamicTalent10, 'Memorable moment'),
+          createImageData('dt12', dynamicTalent11, 'Artistic expression'),
+          createImageData('dt13', dynamicTalent12, 'Community gathering'),
+          createImageData('dt14', dynamicTalent14, 'Final applause')
       ]
     },
     {
-      id: 8,
+      id: 'lephoiGarden',
       title: 'Lephoi Able Hearts Garden and Fun Day',
       coverImage: lephoiGardenCover,
       description: 'A fun-filled day celebrating community spirit and sustainable gardening initiatives.',
       date: 'August 15, 2020',
       images: [
-        { id: 1, url: lephoiGardenCover, caption: 'Able Hearts Garden Grand Opening: The Grand Opening!', width: 800, height: 600},
-        { id: 2, url: lephoiGarden1, caption: 'Our Selfless Leader: Ms. Sakshi Bhargava, our visionary founder, leading with compassion and dedication.', width: 800, height: 600},
-        { id: 3, url: lephoiGarden2, caption: 'Creative Moments: The kids had an amazing time unleashing their creativity and making beautiful beads during the fun day!', width: 800, height: 600},
-        { id: 4, url: lephoiGarden3, caption: 'Creative Moments: The kids had an amazing time unleashing their creativity and making beautiful beads during the fun day!', width: 800, height: 600},
-        { id: 5, url: lephoiGarden4, caption: 'Leading with Love: Our founder, Ms. Sakshi Bhargava, guiding the kids as they create their beautiful beadwork—turning moments into memories.', width: 800, height: 600},
-        { id: 6, url: lephoiGarden5, caption: 'Spreading love and hope: Able Hearts at the Lephoi Centre, delivering essential donations to those in need.', width: 800, height: 600},
-        { id: 7, url: lephoiGarden6, caption: 'Together for a cause: The Able Hearts crew, united in service and compassion.', width: 800, height: 600},
-        { id: 8, url: lephoiGarden7, caption: 'UCCSA Lephoi Centre: For Learners with Visual Impairment', width: 800, height: 600}
+          createImageData('lg1', lephoiGardenCover, 'Able Hearts Garden Grand Opening!'),
+          createImageData('lg2', lephoiGarden1, 'Our founder, Ms. Sakshi Bhargava, leading with compassion.'),
+          createImageData('lg3', lephoiGarden2, 'Kids unleashing creativity with beads during the fun day!'),
+          createImageData('lg4', lephoiGarden3, 'More creative moments with bead making.'),
+          createImageData('lg5', lephoiGarden4, 'Ms. Sakshi Bhargava guiding kids in beadwork.'),
+          createImageData('lg6', lephoiGarden5, 'Able Hearts delivering essential donations at Lephoi Centre.'),
+          createImageData('lg7', lephoiGarden6, 'The Able Hearts crew, united in service.'),
+          createImageData('lg8', lephoiGarden7, 'UCCSA Lephoi Centre for Learners with Visual Impairment.')
       ]
     },
     {
-      id: 9,
+      id: 'newsArticles',
       title: 'News Articles',
       coverImage: newspaperCover,
       description: 'A collection of impactful news articles highlighting community achievements and milestones.',
       date: '',
       images: [
-        { id: 1, url: newspaperCover, caption: 'Celebrating Milestones: Huge thanks to our media supporters for featuring the Able Hearts garden handover—your coverage helps us inspire more change!', width: 800, height: 600},
-        { id: 2, url: newspaper2, caption: 'A Musical Moment: Special appreciation to Kgosi Moagi for performing a beautiful song during the Able Hearts garden handover ceremony at the Lephoi Centre. Your talent added so much meaning to the day!', width: 800, height: 600},
-        { id: 3, url: newspaper3, caption: 'Grateful for the Spotlight: A heartfelt thank you to The Voice Newspaper Botswana and @themonitor for sharing our story and amplifying our mission!', width: 800, height: 600},
-        { id: 4, url: newspaper4, caption: 'Making Waves: Thank you to The Voice Newspaper Botswana and @themonitor for showcasing our journey of giving back and supporting vulnerable communities. Together, we make a difference!', width: 800, height: 600},
-        { id: 4, url: newspaper5, caption: 'Amplifying Impact: Thank you @therealyaronafm for giving us a platform to share our mission and reach the hearts of so many. Your support helps us make a greater difference in the lives of vulnerable communities!', width: 800, height: 600}
+          createImageData('na1', newspaperCover, 'Media supporters featuring the Able Hearts garden handover.'),
+          createImageData('na2', newspaper2, 'Kgosi Moagi performing during the garden handover ceremony.'),
+          createImageData('na3', newspaper3, 'Thank you to The Voice Newspaper Botswana and The Monitor.'),
+          createImageData('na4', newspaper4, 'Showcasing our journey of giving back.'),
+          createImageData('na5', newspaper5, 'Thank you Yarona FM for giving us a platform.')
       ]
     },
     {
-      id: 10,
+      id: 'firstEvent',
       title: 'First Ever Event',
       coverImage: firstEventCover,
       description: 'The landmark event that marked the beginning of our journey in making a difference.',
       date: 'August 25, 2017',
       images: [
-        { id: 1, url: firstEventCover, caption: 'A Moment of Unity: Students gather to celebrate the first Able Hearts event, fostering inclusion and hope.', width: 800, height: 600},
-        { id: 2, url: firstEvent2, caption: 'Spreading Smiles: Engaging with the youth through fun and learning.', width: 800, height: 600},
-        { id: 3, url: firstEvent3, caption: 'Empowering Through Giving: Distributing clothes, books, and toys to ensure brighter tomorrows for the children.', width: 800, height: 600},
-        { id: 4, url: firstEvent4, caption: 'Bridging Gaps: Smiles abound as donations of school shoes bring joy and opportunity.', width: 800, height: 600}
+          createImageData('fe1', firstEventCover, 'Students gather to celebrate the first Able Hearts event.'),
+          createImageData('fe2', firstEvent2, 'Spreading smiles through fun and learning.'),
+          createImageData('fe3', firstEvent3, 'Distributing clothes, books, and toys for brighter tomorrows.'),
+          createImageData('fe4', firstEvent4, 'Donations of school shoes bring joy and opportunity.')
       ]
     },
     {
-      id: 11,
+      id: 'cheshireFoundation',
       title: 'Cheshire Foundation',
       coverImage: cheshirefoundationCover,
-      description: 'A collaboration with Cheshire Foundation to provide essential resources to vulnerable communities by the BIUST branch.',
+      description: 'A collaboration with Cheshire Foundation to provide essential resources by the BIUST branch.',
       date: 'May 15, 2025',
       images: [
-        { id: 1, url: cheshirefoundationCover, caption: 'Members of Ablehearts BIUST branch and staff from the Cheshire Foundation.', width: 800, height: 600},
-        { id: 2, url: cheshirefoundation1, caption: 'Ablehearts BIUST branch delivering food and clothing donations to the Cheshire Foundation.', width: 800, height: 600},
-        { id: 3, url: cheshirefoundation2, caption: 'The Cheshire Foundation of Botswana, Palapye Regional Office, recipient of the donations.', width: 800, height: 600},
-        { id: 4, url: cheshirefoundation3, caption: 'Ablehearts BIUST members with a Cheshire Foundation vehicle during their donation visit.', width: 800, height: 600}
+          createImageData('cf1', cheshirefoundationCover, 'Members of Ablehearts BIUST and Cheshire Foundation staff.'),
+          createImageData('cf2', cheshirefoundation1, 'Ablehearts BIUST delivering donations to Cheshire Foundation.'),
+          createImageData('cf3', cheshirefoundation2, 'Cheshire Foundation of Botswana, Palapye Regional Office.'),
+          createImageData('cf4', cheshirefoundation3, 'Ablehearts BIUST members with a Cheshire Foundation vehicle.')
       ]
     },
     {
-      id: 12,
+      id: 'tlokwengFamily',
       title: 'Tlokweng Family Visit',
       coverImage: tlokwengCover,
       description: 'AbleHearts UB branch travelled to Tlokweng, Botswana to provide essential resources to a chosen family.',
       date: 'May 8, 2025',
       images: [
-        { id: 1, url: tlokwengCover, caption: 'Ablehearts UB delivering food and clothing donations to a family in Tlokweng, Botswana.', width: 800, height: 600},
-        { id: 2, url: tlokweng1, caption: 'Ablehearts UB members spreading love during their donation drive in Tlokweng.', width: 800, height: 600},
-        { id: 3, url: tlokweng2, caption: 'Members of the Ablehearts UB branch during their community outreach in Tlokweng.', width: 800, height: 600}
+          createImageData('tf1', tlokwengCover, 'Ablehearts UB delivering donations in Tlokweng.'),
+          createImageData('tf2', tlokweng1, 'Ablehearts UB members spreading love in Tlokweng.'),
+          createImageData('tf3', tlokweng2, 'Ablehearts UB branch during community outreach in Tlokweng.')
       ]
     }
   ].sort((a, b) => {
-    // Handle cases where date might be an empty string
-    if (!a.date && !b.date) return 0;
-    if (!a.date) return 1; // Empty date goes to the end
-    if (!b.date) return -1; // Empty date goes to the end
-
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    return dateB - dateA; // Latest date first
+      if (!a.date && !b.date) return 0;
+      if (!a.date) return 1;
+      if (!b.date) return -1;
+      try {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        if (isNaN(dateA.valueOf()) && isNaN(dateB.valueOf())) return 0;
+        if (isNaN(dateA.valueOf())) return 1;
+        if (isNaN(dateB.valueOf())) return -1;
+        return dateB - dateA;
+      } catch (e) { return 0; }
   });
 
-  const handleEventClick = React.useCallback((event) => {
-    setSelectedEvent(event);
-    setSelectedImage(null);
+
+const MemoizedImage = memo(({ src, alt, className, onClick, width, height, loading = "lazy" }) => (
+  <img
+    src={src} // This will be the imported image variable
+    alt={alt}
+    className={className}
+    onClick={onClick}
+    loading={loading}
+    width={width}
+    height={height}
+  />
+));
+MemoizedImage.displayName = 'MemoizedImage';
+
+const Gallery = () => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsContentLoaded(true);
+
+    let scrollTimeout;
+    const handleScroll = () => {
+      if (scrollTimeout) window.cancelAnimationFrame(scrollTimeout);
+      scrollTimeout = window.requestAnimationFrame(() => {
+        setShowScrollToTop(window.scrollY > SCROLL_THRESHOLD_TOP_BTN);
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) window.cancelAnimationFrame(scrollTimeout);
+    };
   }, []);
 
-  const handleImageClick = React.useCallback((image) => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleEventClick = useCallback((event) => {
+    setSelectedEvent(event);
+    setSelectedImage(null);
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const handleImageClick = useCallback((image) => {
     setSelectedImage(image);
   }, []);
 
-  const closeEventModal = React.useCallback(() => setSelectedEvent(null), []);
-  const closeImageModal = React.useCallback(() => setSelectedImage(null), []);
+  const closeEventModal = useCallback(() => {
+    setSelectedEvent(null);
+    document.body.style.overflow = '';
+  }, []);
+
+  const closeImageModal = useCallback(() => {
+    setSelectedImage(null);
+  }, []);
   
-  const FixedImage = memo(({ src, alt, className, onClick, width, height }) => (
-    <img
-      src={src}
-      alt={alt}
-      className={className}
-      onClick={onClick}
-      loading="lazy"
-      width={width}
-      height={height}
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        if (selectedImage) {
+          closeImageModal();
+        } else if (selectedEvent) {
+          closeEventModal();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, selectedEvent, closeImageModal, closeEventModal]);
+
+  const memoizedBlobComponents = useMemo(() => blobImagePaths.map((blobSrc, index) => (
+    <MemoizedImage
+      key={`blob-${index}`}
+      src={blobSrc} // blobSrc is already the imported variable
+      alt=""
+      className={`gallery-blobg blob-${index + 1}`}
+      width="600"
+      height="600"
+      aria-hidden="true"
     />
-  ));
-  FixedImage.displayName = 'FixedImage';
+  )), []);
 
   return (
-    <div className={`container-gallery ${isLoaded ? 'content-loaded' : ''}`}>
-      {/* Blobs section - kept intact */}
-      <div className="gallery-background-blobs">
-        {blobImages.map((blob, index) => (
-          <FixedImage
-            key={index}
-            src={blob}
-            alt={`Decorative blob ${index + 1}`}
-            className={`gallery-blobg blob-${index + 1}`}
-            width="800"
-            height="800"
-          />
-        ))}
+    <div className={`gallery-page-wrapper ${isContentLoaded ? 'content-loaded' : ''}`}>
+      <div className="gallery-background-blobs" aria-hidden="true">
+        {memoizedBlobComponents}
       </div>
 
-      <header className={`header-gallery pre-animate-gallery ${isLoaded ? 'fade-in-gallery' : ''}`}>
-        <h1 className="title-gallery">Event Gallery</h1>
-        <p className="subtitle-gallery">
-          Explore our events and the moments that make them special.
-        </p>
+      <header className={`gallery-header ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
+        <h1>Event Gallery</h1>
+        <p>Explore our events and the moments that make them special.</p>
       </header>
 
-      <div className={`main-gallery pre-animate-gallery ${isLoaded ? 'fade-in-gallery' : ''}`}>
+      <main className={`gallery-main-content ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
         <div className="events-grid">
-          {events.map((event) => (
+          {galleryEventsData.map((event) => (
             <div
               key={event.id}
               className="event-card"
               onClick={() => handleEventClick(event)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleEventClick(event)}
+              aria-label={`View details for ${event.title}`}
             >
-              <FixedImage
-                src={event.coverImage}
-                alt={event.title}
+              <MemoizedImage
+                src={event.coverImage} // This is now an imported image variable
+                alt={`Cover image for ${event.title}`}
                 className="event-cover-image"
-                width="300"
-                height="225"
+                width={400} 
+                height={300}
               />
               <div className="event-card-overlay">
-                <h3 className="event-title">{event.title}</h3>
-                <p className="event-date">{event.date}</p>
+                <h3 className="event-card-title">{event.title}</h3>
+                {event.date && <p className="event-card-date">{event.date}</p>}
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </main>
 
-      {/* Modals - kept intact but with fixed image rendering */}
       {selectedEvent && (
-        <div className="modal-overlay-gallery" onClick={closeEventModal}>
-          <div
-            className="modal-content-gallery event-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="close-button-gallery" onClick={closeEventModal}>
-              &times;
+        <div 
+          className="modal-overlay" 
+          onClick={closeEventModal} 
+          role="dialog" 
+          aria-modal="true" 
+          aria-labelledby="event-modal-title-text"
+          aria-describedby="event-modal-description-text"
+        >
+          <div className="modal-content event-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-button" onClick={closeEventModal} aria-label="Close event details">
+              ×
             </button>
             <div className="event-modal-header">
-              <h2 className="event-modal-title">{selectedEvent.title}</h2>
-              <p className="event-modal-date">{selectedEvent.date}</p>
-              <p className="event-modal-description">{selectedEvent.description}</p>
+              <h2 id="event-modal-title-text" className="event-modal-title-text">{selectedEvent.title}</h2>
+              {selectedEvent.date && <p className="event-modal-date-text">{selectedEvent.date}</p>}
+              <p id="event-modal-description-text" className="event-modal-description-text">{selectedEvent.description}</p>
             </div>
-
             <div className="event-images-grid">
               {selectedEvent.images.map((image) => (
                 <div
                   key={image.id}
                   className="event-image-card"
                   onClick={() => handleImageClick(image)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleImageClick(image)}
+                  aria-label={`View image: ${image.caption || 'Event image'}`}
                 >
-                  <FixedImage
-                    src={image.url}
-                    alt={image.caption}
-                    className="event-image"
-                    loading="lazy"
-                    width="250"
-                    height="250"
+                  <MemoizedImage
+                    src={image.url} // This is now an imported image variable
+                    alt={image.caption || `Image from ${selectedEvent.title}`}
+                    className="event-image-item"
+                    width={image.width}
+                    height={image.height}
                   />
-                  <div className="event-image-overlay">
-                    <p className="event-image-caption">{image.caption}</p>
-                  </div>
+                  {image.caption && (
+                    <div className="event-image-overlay">
+                      <p className="event-image-caption-text">{image.caption}</p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -431,26 +484,36 @@ const Gallery = () => {
       )}
 
       {selectedImage && (
-        <div className="indmodal-overlay-gallery" onClick={closeImageModal}>
-          <div
-            className="indmodal-content-gallery image-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="indclose-button-gallery" onClick={closeImageModal}>
-              &times;
+        <div 
+          className="modal-overlay image-modal-overlay" 
+          onClick={closeImageModal} 
+          role="dialog" 
+          aria-modal="true" 
+          aria-labelledby="image-modal-caption-text"
+        >
+          <div className="modal-content image-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-button image-modal-close-button" onClick={closeImageModal} aria-label="Close image viewer">
+              ×
             </button>
-            <FixedImage
-              src={selectedImage.url}
-              alt={selectedImage.caption}
-              className="indmodal-image-gallery"
-              loading="lazy"
-              width="800"
-              height="600"
+            <MemoizedImage
+              src={selectedImage.url} // This is now an imported image variable
+              alt={selectedImage.caption || 'Enlarged gallery image'}
+              className="enlarged-modal-image"
+              width={selectedImage.width}
+              height={selectedImage.height}
+              loading="eager"
             />
-            <p className="modal-image-caption">{selectedImage.caption}</p>
+            {selectedImage.caption && <p id="image-modal-caption-text" className="enlarged-modal-caption-text">{selectedImage.caption}</p>}
           </div>
         </div>
       )}
+
+      {showScrollToTop && (
+        <button type="button" className="scroll-to-top-btn-gallery" onClick={scrollToTop} aria-label="Scroll to top">
+          ↑
+        </button>
+      )}
+      {/* <Footer /> */}
     </div>
   );
 };
