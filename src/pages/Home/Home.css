@@ -1,20 +1,40 @@
-/* Global Layout */
+:root {
+  --primary-font: Poppins, "sans-serif";
+  --secondary-font: "Cedarville Cursive", serif;
+  --primary-text-color: #043F70;
+  --highlight-color: #004d99;
+  --accent-color-gold: #CC9917;
+  --accent-color-gold-dark: #A37A12; /* Added for button hover */
+  --accent-color-yellow: #F4BC2A;
+  --background-color-light: white;
+  --background-color-medium: #f9f9f9;
+  --background-color-dark: #0066cc;
+  --text-color-light: white;
+  --carousel-overlay-start: rgba(0, 0, 0, 0);
+  --carousel-overlay-end: rgba(0, 0, 0, 0.7);
+  --button-hover-bg: rgba(0, 0, 0, 0.9);
+  --base-padding: 1rem;
+  --large-padding: 2rem;
+  --body-padding-top: 80px;
+  --body-padding-top-small: 60px;
+  --input-border-color: #ccc;
+}
+
 body {
   max-width: 100%;
-  padding-top: 80px;
+  padding-top: var(--body-padding-top);
   overflow-x: hidden;
-  font-family: Poppins, "sans-serif";
+  font-family: var(--primary-font);
 }
 
 .body-container {
   flex: 1 0 auto;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: var(--large-padding) var(--base-padding);
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Carousel Styling */
 .carousel-container {
   height: 80vh;
   position: relative;
@@ -58,18 +78,17 @@ body {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.7) 100%
+    var(--carousel-overlay-start) 0%,
+    var(--carousel-overlay-end) 100%
   );
 }
 
-/* Slide Content */
 .slide-content {
   position: absolute;
-  bottom: 1rem;
+  bottom: var(--base-padding);
   inset-inline: 0;
-  padding: 0 1rem;
-  color: white;
+  padding: 0 var(--base-padding);
+  color: var(--text-color-light);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -83,10 +102,9 @@ body {
   transform: translateY(0);
 }
 
-/* Carousel Indicators */
 .carousel-indicators {
   display: flex;
-  gap: 1rem;
+  gap: var(--base-padding);
 }
 
 .indicator {
@@ -94,15 +112,15 @@ body {
   height: 20px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.7);
+  border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .indicator.active {
-  background-color: #CC9917;
+  background-color: var(--accent-color-gold);
 }
 
-/* Event Details */
 .event-details-row {
   display: flex;
   align-items: center;
@@ -114,7 +132,7 @@ body {
 
 .event-details h2,
 .event-details p {
-  font-family: "Cedarville Cursive", serif;
+  font-family: var(--secondary-font);
   margin: 0;
 }
 
@@ -123,7 +141,7 @@ body {
 }
 
 .event-details p {
-  color: #F4BC2A;
+  color: var(--accent-color-yellow);
   font-size: 1.2rem;
 }
 
@@ -133,11 +151,10 @@ body {
   margin: 0 15px 0.25rem 0;
 }
 
-/* Mission Section */
 .mission-container {
-  position: relative; 
-  padding: 2rem 1rem;
-  background-color: white;
+  position: relative;
+  padding: var(--large-padding) var(--base-padding);
+  background-color: var(--background-color-light);
   text-align: center;
   z-index: 1;
   overflow: hidden;
@@ -145,7 +162,7 @@ body {
 }
 
 .home-background-blobs {
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -153,48 +170,217 @@ body {
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background-color: #f9f9f9;
+  background-color: var(--background-color-medium);
 }
 
 .home-blobg {
   position: absolute;
   width: 600px;
   height: auto;
-  filter: blur(5px); 
+  filter: blur(5px);
   animation: float 20s infinite ease-in-out;
 }
 
-.home-blobg.blob-1 {
-  top: 0%;
-  left: 0%;
-  animation: moveBlob1 20s infinite ease-in-out;
+.home-blobg.blob-1 { top: -15%; left: -10%; animation-name: moveBlob1; }
+.home-blobg.blob-2 { top: 25%; left: 35%; animation-name: moveBlob2; }
+.home-blobg.blob-3 { bottom: 20%; left: 70%; animation-name: moveBlob3; }
+.home-blobg.blob-4 { bottom: 0%; right: -10%; animation-name: moveBlob4; }
+
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
 }
 
-.home-blobg.blob-2 {
-  top: 25%;
-  right: 5%;
-  animation: moveBlob2 20s infinite ease-in-out;
+.mission-container h2,
+.mission-container p {
+  color: var(--primary-text-color);
+  position: relative;
+  z-index: 2;
 }
 
-.home-blobg.blob-3 {
-  bottom: 20%;
-  left: 70%;
-  animation: moveBlob3 20s infinite ease-in-out;
+.highlight {
+  color: var(--highlight-color);
+  font-weight: 700;
 }
 
-.home-blobg.blob-4 {
-  bottom: 0%;
-  right: -10%;
-  animation: moveBlob4 20s infinite ease-in-out;
+.mission-container h2 {
+  font-weight: 600;
+  font-size: 3.5rem;
+  margin-bottom: var(--base-padding);
 }
 
+.mission-container p {
+  line-height: 1.6;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Newsletter Section --- */
+.newsletter-container {
+  display: flex;
+  align-items: center;
+  padding: var(--large-padding);
+  background-color: var(--background-color-dark);
+  gap: var(--large-padding);
+  overflow: hidden;
+  position: relative;
+}
+
+.contour-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.contour-overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+}
+
+.newsletter-container > :nth-child(2), /* NewsletterSignup component */
+.newsletter-container > .newsletter-image {
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter-container > :nth-child(2) { /* NewsletterSignup component */
+  flex-grow: 1;
+}
+
+.newsletter-text h3,
+.newsletter-text p {
+  color: var(--text-color-light);
+  margin-bottom: var(--base-padding);
+}
+
+.newsletter-text h3 {
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.newsletter-text p {
+  font-size: 1.3rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: var(--base-padding);
+  margin-top: var(--large-padding);
+}
+
+.newsletter-input {
+  padding: 0.75rem;
+  flex-grow: 1;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
+  font-family: var(--primary-font);
+  font-size: 1rem;
+}
+
+.newsletter-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent-color-gold);
+  color: var(--primary-text-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--primary-font);
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-button:hover {
+  background-color: var(--accent-color-gold-dark);
+}
+/* End of styles for content by NewsletterSignup.jsx */
+
+.newsletter-image { /* This is the direct child div in Home.jsx */
+  width: 33%;
+  max-width: 400px;
+  flex-shrink: 0;
+}
+
+.newsletter-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+
+}
+
+/* --- Collaborators Section --- */
+.collaborators-container {
+  text-align: center;
+  background-color: var(--background-color-light);
+  overflow: hidden;
+  padding-bottom: 4rem;
+}
+
+.collaborators-container h3 {
+  color: var(--primary-text-color);
+  font-weight: 600;
+  font-size: 2.5rem;
+  margin-bottom: var(--large-padding);
+}
+
+.logo-bar {
+  overflow: hidden;
+}
+
+.logo-slider {
+  display: flex;
+  white-space: nowrap;
+  animation: slide 40s linear infinite;
+  gap: var(--large-padding);
+}
+
+.logo-slider img {
+  flex-shrink: 0;
+  height: 100px;
+  width: auto;
+  margin: 0 var(--base-padding);
+}
+
+/* --- Carousel Buttons --- */
+.prev-button,
+.next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--text-color-light);
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  z-index: 3;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.prev-button { left: 10px; }
+.next-button { right: 10px; }
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: var(--button-hover-bg);
+  color: var(--accent-color-yellow);
+}
+
+/* --- Animations --- */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }
 
 @keyframes moveBlob1 {
@@ -217,191 +403,14 @@ body {
   50% { transform: translate(-25px, -25px) scale(1.12); }
 }
 
-.page-wrapper {
-  position: relative; /* Establishes a stacking context */
-  z-index: 1; /* Base layer for content */
-  min-height: 100vh;
-}
-
-.mission-container h2,
-.mission-container p {
-  font-family: Poppins, "sans-serif";
-  color: #333;
-  position: relative;
-  z-index: 2;
-}
-
-.highlight {
-  color: #004d99;
-  font-weight: 700;
-}
-
-.mission-container h2 {
-  font-weight: 600;
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-}
-
-.mission-container p {
-  line-height: 1.6;
-  font-size: 1.5rem;
-  margin-bottom: 3rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Newsletter Section */
-.newsletter-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0;
-  background-color: #0066cc;
-  gap: 2rem;
-  overflow: hidden;
-  position: relative;
-}
-
-.newsletter-text {
-  padding: 0 2rem;
-  width: 66%;
-  position: relative;
-  z-index: 1;
-}
-
-.newsletter-text h3,
-.newsletter-text p {
-  font-family: Poppins, 'sans-serif';
-  color: #FFFFFF;
-}
-
-.newsletter-text h3 {
-  margin-top: 0;
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.newsletter-text p {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-}
-
-.newsletter-form {
-  display: flex;
-  gap: 1rem;
-}
-
-.newsletter-input {
-  padding: 0.75rem;
-  width: 70%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.newsletter-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #CC9917;
-  color: #043F70;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.newsletter-button:hover {
-  background-color: #A37A12;
-}
-
-.newsletter-image {
-  width: 33%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-}
-
-.newsletter-image img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-/* Collaborators Section */
-.collaborators-container {
-  padding: 4rem 2rem;
-  text-align: center;
-  background-color: white;
-  overflow: hidden;
-}
-
-.collaborators-container h3 {
-  font-family: Poppins, "sans-serif";
-  color: #333;
-  font-weight: 600;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-}
-
-.logo-bar {
-  overflow: hidden; /* Hide overflowing parts of the slider */
-}
-
-.logo-slider {
-  display: flex;
-  white-space: nowrap;
-  animation: slide 40s linear infinite;
-  gap: 2rem; /* Consistent gap between logos */
-}
-
-.logo-slider img {
-  flex-shrink: 0; /* Prevent images from shrinking below their intrinsic size */
-  height: 100px; /* Ensure a consistent height */
-  width: auto; /* Maintain aspect ratio */
-  margin: 0 1rem; /* Adjust spacing between logos */
-}
-
-/* Button Styling (Prev/Next for Carousel) */
-.prev-button,
-.next-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 1.5rem;
-  border-radius: 5px;
-  z-index: 3;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.prev-button { left: 10px; }
-.next-button { right: 10px; }
-
-.prev-button:hover,
-.next-button:hover {
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #F4BC2A;
-}
-
-/* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slide {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* Half of the full duplicated set */
+  100% { transform: translateX(-50%); }
 }
 
 .pre-animate {
@@ -418,206 +427,126 @@ body {
   animation-delay: 0.5s;
 }
 
-/* Responsive Styles */
-@media (min-width: 854px) and (max-width: 1024px) {
-  .newsletter-container { padding: 2rem 0; }
-
-  .newsletter-text p { padding: 0;}
-
+/* --- Responsive Styles --- */
+@media (max-width: 1024px) {
+  .logo-slider { gap: var(--large-padding); }
 }
 
-@media (min-width: 768px) and (max-width: 853px) {
-  .newsletter-container { padding: 2rem 0; }
+/* No specific tablet overrides for newsletter needed here if base + mobile is enough */
+/* @media (min-width: 768px) and (max-width: 1024px) {} */
 
-  .newsletter-text p { padding: 0;}
+@media (max-width: 767px) {
+  /* Newsletter container layout adjustments */
+  .newsletter-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--large-padding) var(--base-padding);
+  }
+
+  .contour-overlay img {
+    opacity: 0.05;
+  }
+
+  .newsletter-container > :nth-child(2) { /* NewsletterSignup component */
+    width: 100%;
+    max-width: 500px; /* Max width for the content block */
+    order: 1; /* Content first */
+  }
+
+  /* Responsive adjustments for the form elements inside NewsletterSignup */
+  .newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .newsletter-input,
+  .newsletter-button {
+    width: 100%;
+  }
+  /* End responsive for form */
+
+  .newsletter-image { /* The direct child div in Home.jsx */
+    width: 80%;
+    max-width: 300px;
+    order: 2; /* Image after content */
+    margin-top: var(--large-padding);
+  }
 }
 
 @media (max-width: 576px) {
-  body { padding-top: 60px; }
-  
+  body { padding-top: var(--body-padding-top-small); }
   .carousel-container { height: 40vh; }
-  
   .carousel-indicators { gap: 0.5rem; }
-  
-  .indicator {
-    width: 10px;
-    height: 10px;
-  }
-  
+  .indicator { width: 10px; height: 10px; }
   .event-logo { display: none; }
-  
-  .event-details-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
+  .event-details-row { flex-direction: column; align-items: flex-start; }
   .event-details h2 { font-size: 1rem; }
   .event-details p { font-size: 0.8rem; padding: 0; }
-  
-  .mission-container { padding: 2rem 1rem; }
-  
+  .mission-container { padding: var(--large-padding) var(--base-padding); }
   .home-blobg { animation: none; }
-  
   .home-blobg.blob-1, .home-blobg.blob-2, .home-blobg.blob-3, .home-blobg.blob-4 {
-    width: 450px;
-    height: 515px;
+    width: 450px; height: 515px;
   }
-
-  .home-blobg.blob-1 {
-    top: -8rem;
-  }
-  .home-blobg.blob-2 {
-    top: 12rem;
-  }
-  .home-blobg.blob-3 {
-    top: 30rem;
-    left: -10rem;
-  }
-  .home-blobg.blob-4 {
-    top: 22rem;
-    left: 22rem;
-  }
-  .newsletter-container {
-    flex-direction: column;
-    padding: 2rem;
-    gap: 1.5rem;
-  }
-  
-  .newsletter-text {
-    width: 100%;
-    text-align: center;
-  }
-  
-  .newsletter-text h3 { font-size: 1.5rem; }
-  .newsletter-text p { font-size: 1rem; }
-  
-  .newsletter-image { width: 100%; }
-  
-  .newsletter-input,
-  .newsletter-button {
-    width: 80%;
-  }
+  .home-blobg.blob-1 { top: -8rem; }
+  .home-blobg.blob-2 { top: 12rem; }
+  .home-blobg.blob-3 { top: 30rem; left: -10rem; }
+  .home-blobg.blob-4 { top: 22rem; left: 22rem; }
 }
 
-@media (min-width: 577px) and (max-width: 768px) {  
+@media (min-width: 577px) and (max-width: 767px) {
   .event-details h2 { font-size: 1.7rem; }
   .event-details p { font-size: 1.1rem; }
 }
 
-@media (max-width: 1024px) {
-  .logo-slider {
-    display: flex;
-    gap: 2rem;
-    animation: slide 40s linear infinite;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .newsletter-container {
-    padding: 2rem 0;
-  }
-
-  .newsletter-content-wrapper {
-    padding: 0 2rem;
-    gap: 1.5rem;
-  }
-
-  .newsletter-left-panel {
-    width: 65%; /* Adjust left panel width for tablets */
-  }
-
-  .newsletter-image {
-    width: 30%; /* Adjust image width for tablets */
-  }
-}
-
-@media (max-width: 767px) {
-  .newsletter-container {
-    padding: 2rem 0;
-  }
-
-  .newsletter-content-wrapper {
-    flex-direction: column; /* Stack items vertically */
-    padding: 0 1rem;
-    gap: 1.5rem;
-  }
-
-  .contour-overlay {
-    width: 100%; /* Cover full width when stacked */
-    opacity: 0.05; /* Make background image very subtle when stacked */
-  }
-
-  .newsletter-left-panel {
-    width: 100%; /* Full width when stacked */
-    text-align: center; /* Center text when stacked */
-  }
-
-  .newsletter-text {
-    padding: 0;
-    width: 100%;
-  }
-
-  .newsletter-image {
-    width: 80%; /* Larger image for mobile stack */
-    max-width: 300px;
-    justify-content: center; /* Center image when stacked */
-  }
-
-  .newsletter-form {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .newsletter-input,
-  .newsletter-button {
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 1rem;
-  }
-}
-
 @media (max-width: 480px) {
-  .newsletter-content-wrapper {
-    padding: 0 0.5rem;
+  .newsletter-container {
+    gap: var(--base-padding);
+  }
+  .newsletter-container > :nth-child(2) { /* NewsletterSignup component */
+     max-width: 100%;
   }
 
   .newsletter-text h3 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
-
   .newsletter-text p {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
+  /* Form elements are already 100% width from max-width: 767px block */
 
   .newsletter-image {
-    width: 90%; /* Even larger relative width for smallest screens */
+    width: 90%;
+    max-width: 280px;
+    margin-top: var(--base-padding);
   }
 }
 
-/* Screen Reader Mode Adjustments for Home Page */
+/* --- Screen Reader Mode Adjustments --- */
 body.screen-reader-mode .carousel-container {
   height: auto !important;
-  min-height: 50px; /* Provide a small buffer, or remove if not needed */
+  min-height: 50px;
 }
 
 body.screen-reader-mode .mission-container {
-  padding-top: 2rem !important;
-  padding-bottom: 2rem !important;
+  padding-top: var(--large-padding) !important;
+  padding-bottom: var(--large-padding) !important;
 }
 
 body.screen-reader-mode .newsletter-container {
   flex-direction: column !important;
   align-items: center !important;
-  padding: 2rem 1rem !important;
+  padding: var(--large-padding) var(--base-padding) !important;
 }
 
-body.screen-reader-mode .newsletter-text {
+body.screen-reader-mode .newsletter-container > :nth-child(2), /* NewsletterSignup component */
+body.screen-reader-mode .newsletter-text, /* If .newsletter-text is a direct child in some scenario */
+body.screen-reader-mode .newsletter-image {
   width: 100% !important;
   text-align: center !important;
-  padding: 0 !important;
 }
 
 body.screen-reader-mode .collaborators-container {
-  padding-top: 2rem !important;
-  padding-bottom: 2rem !important;
+  padding-top: var(--large-padding) !important;
+  padding-bottom: var(--large-padding) !important;
 }
