@@ -1,241 +1,251 @@
-.page-wrapper {
-  position: relative; /* Establishes a stacking context */
-  z-index: 1; /* Base layer for content */
+:root {
+  --programs-font: Poppins, "sans-serif";
+  --programs-primary-text: #043F70;
+  --programs-secondary-text: #333;
+  --programs-accent-color: #005BB5;
+  --programs-bg-light: white;
+  --programs-bg-medium: #f8f8f8;
+  --programs-bg-blobs: #f9f9f9; /* For blob background */
+  --programs-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --programs-image-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --programs-base-padding: 2rem;
+  --programs-large-padding: 4rem;
+}
+
+.programs-page.page-wrapper { /* More specific if needed */
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
 }
 
 .programs-container {
   position: relative;
-  overflow: hidden;
-  padding: 2rem 4rem;
-  border-radius: 8px;
-  font-family: Poppins, "sans-serif";
-  z-index: 2;
-  background-color: white;
+  overflow: hidden; /* Contains blobs if they are absolutely positioned within */
+  padding: var(--programs-base-padding) var(--programs-large-padding);
+  font-family: var(--programs-font);
+  z-index: 2; /* Above fixed blobs */
+  background-color: var(--programs-bg-light); /* Fallback if blobs don't cover */
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Base Animations */
 .pre-animate {
   opacity: 0;
   transform: translateY(20px);
 }
 
 .fade-in {
-  animation: fadeIn 1.2s ease-out forwards;
+  animation: programsFadeIn 1s ease-out forwards; /* Prefixed animation name */
+}
+
+@keyframes programsFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .scroll-to-top-btn {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #005BB5;
-  color: #FFFFFF;
+  background-color: var(--programs-accent-color);
+  color: var(--programs-bg-light);
   border: none;
-  padding: 10px;
+  padding: 10px 15px; /* Adjusted for arrow */
   font-size: 20px;
+  line-height: 1;
   cursor: pointer;
   border-radius: 50%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 100; /* Above other content */
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .scroll-to-top-btn:hover {
-  background-color: #043F70;
+  background-color: var(--programs-primary-text);
+  transform: translateY(-2px);
 }
 
-.scroll-to-top-btn.show {
-  display: block;
-}
-
-.programs-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #043F70;
+.programs-header-card {
+  background-color: transparent; /* Let container bg show */
+  border-radius: 12px;
   text-align: center;
+  padding: var(--programs-base-padding) 0;
+  margin-bottom: var(--programs-large-padding);
+  position: relative; /* For stacking context if needed */
+}
+
+.programs-main-title {
+  font-size: 2.8rem; /* Slightly larger */
+  font-weight: 700;
+  color: var(--programs-primary-text);
   margin-bottom: 1rem;
 }
 
 .programs-intro {
-  font-size: 1.2rem;
-  color: #333;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.programs-header-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  padding: 2rem 0;
-  margin-bottom: 2rem;
-  position: relative;
+  font-size: 1.25rem;
+  color: var(--programs-secondary-text);
+  max-width: 800px; /* Constrain width */
+  margin: 0 auto 2rem auto; /* Center and add bottom margin */
+  line-height: 1.7;
 }
 
 .program {
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--programs-large-padding);
   position: relative;
-  transition: all 0.3s ease;
-}
-
-.program:hover {
-  transform: translateY(-4px);
 }
 
 .program-card-container {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  background-color: #f8f8f8;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 2rem;
+  gap: var(--programs-large-padding); /* Increased gap */
+  background-color: var(--programs-bg-medium);
+  border-radius: 16px; /* Slightly larger radius */
+  box-shadow: var(--programs-card-shadow);
+  padding: var(--programs-large-padding);
+  overflow: hidden; /* Ensure content stays within rounded corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.program-card-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.program-card-container.text-first .program-image-wrapper {
+  order: 2;
+}
+.program-card-container.text-first .program-text-wrapper {
+  order: 1;
 }
 
 .program-image-wrapper {
-  flex-shrink: 0;
+  flex: 0 0 45%; /* Give a fixed basis, adjust as needed */
+  max-width: 500px; /* Max width for image container */
 }
 
 .program-text-wrapper {
-  flex-grow: 1;
+  flex: 1 1 55%; /* Allow text to take remaining space */
 }
 
 .program-title {
-  font-size: 1.8rem;
+  font-size: 2rem; /* Slightly larger */
   font-weight: 600;
-  color: #005BB5;
+  color: var(--programs-accent-color);
   margin-bottom: 1rem;
 }
 
 .program-description {
   font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
+  line-height: 1.7;
+  color: var(--programs-secondary-text);
 }
 
-/* Ensure the program image fits within its wrapper */
 .program-image {
-  width: 500px;
-  height: 400px;
+  width: 100%; /* Fill wrapper */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 400px; /* Cap height */
   object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Consistent radius */
+  box-shadow: var(--programs-image-shadow);
+  display: block; /* Remove extra space below image */
 }
 
-/* Background blobs */
 .programs-background-blobs {
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 0; /* Behind .programs-container */
   overflow: hidden;
   pointer-events: none;
-  background-color: #f9f9f9;
+  background-color: var(--programs-bg-blobs);
 }
 
 .programs-blobg {
   position: absolute;
-  width: 600px;
+  width: clamp(300px, 50vw, 700px); /* Responsive blob size */
   height: auto;
-  filter: blur(5px); 
-  animation: float 20s infinite ease-in-out;
+  filter: blur(8px); /* Slightly more blur */
+  opacity: 0.6; /* Slightly more subtle */
+  animation: programsFloat 25s infinite ease-in-out alternate; /* Common float, alternate direction */
 }
 
-.programs-blobg.blob-1 {
-  top: 0%;
-  left: 0%;
-  animation: moveBlob1 20s infinite ease-in-out;
+.programs-blobg.blob-1 { top: -10%; left: -15%; animation-duration: 28s; animation-name: programsMoveBlob1; }
+.programs-blobg.blob-2 { top: 15%; right: -10%; animation-duration: 32s; animation-name: programsMoveBlob2; }
+.programs-blobg.blob-3 { bottom: -15%; left: 5%; animation-duration: 26s; animation-name: programsMoveBlob3; }
+.programs-blobg.blob-4 { bottom: 5%; right: 0%; animation-duration: 30s; animation-name: programsMoveBlob4; }
+
+@keyframes programsFloat { /* Renamed */
+  0% { transform: translateY(0px) translateX(0px); }
+  100% { transform: translateY(-25px) translateX(15px); }
 }
 
-.programs-blobg.blob-2 {
-  top: 25%;
-  right: 5%;
-  animation: moveBlob2 20s infinite ease-in-out;
+/* Specific movements can still be used if desired, or rely on varied durations/delays of commonFloat */
+@keyframes programsMoveBlob1 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(30px, 25px) scale(1.1) rotate(5deg); }
+}
+@keyframes programsMoveBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-25px, 35px) scale(1.15) rotate(-5deg); }
+}
+@keyframes programsMoveBlob3 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(35px, -20px) scale(1.05) rotate(3deg); }
+}
+@keyframes programsMoveBlob4 {
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-30px, -30px) scale(1.12) rotate(-3deg); }
 }
 
-.programs-blobg.blob-3 {
-  bottom: 20%;
-  left: 0%;
-  animation: moveBlob3 20s infinite ease-in-out;
-}
-
-.programs-blobg.blob-4 {
-  bottom: 0%;
-  right: -10%;
-  animation: moveBlob4 20s infinite ease-in-out;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes moveBlob1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(20px, 20px) scale(1.1); }
-}
-
-@keyframes moveBlob2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-20px, 30px) scale(1.15); }
-}
-
-@keyframes moveBlob3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -20px) scale(1.1); }
-}
-
-@keyframes moveBlob4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-25px, -25px) scale(1.12); }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 992px) { /* Tablet and below */
   .programs-container {
-    padding-top: 4rem;
+    padding: var(--programs-base-padding) var(--programs-base-padding);
   }
-  .program-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .program-card-container {
+    gap: var(--programs-base-padding);
+    padding: var(--programs-base-padding);
   }
+  .program-image-wrapper {
+    flex-basis: 40%;
+  }
+}
 
+@media (max-width: 768px) { /* Mobile */
+  .programs-container {
+    padding-top: var(--programs-large-padding); /* Ensure space from header */
+  }
+  .programs-main-title {
+    font-size: 2.2rem;
+  }
+  .programs-intro {
+    font-size: 1.1rem;
+  }
   .program-card-container {
     flex-direction: column;
     text-align: center;
-    padding: 1.5rem;
   }
-
+  .program-card-container.text-first .program-image-wrapper,
+  .program-card-container.text-first .program-text-wrapper {
+    order: initial; /* Reset order for column layout */
+  }
   .program-image-wrapper {
     width: 100%;
-    margin-bottom: 1rem;
+    max-width: 400px; /* Limit image width on mobile stack */
+    margin-bottom: var(--programs-base-padding);
+    flex-basis: auto; /* Reset flex basis */
   }
-
   .program-text-wrapper {
     width: 100%;
   }
-
-    .program-image {
-      width: 100%; 
-      height: auto; 
-    }
-  .program-description p{
-    padding: 0;
+  .program-title {
+    font-size: 1.6rem;
+  }
+  .program-description {
+    font-size: 1rem;
+  }
+  .programs-blobg { /* Less aggressive blobs on mobile */
+    width: clamp(250px, 60vw, 500px);
+    filter: blur(10px);
+    opacity: 0.5;
   }
 }

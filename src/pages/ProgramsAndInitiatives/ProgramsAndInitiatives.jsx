@@ -1,8 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './ProgramsAndInitiatives.css';
-import Footer from '../../components/Footer/Footer';
+// import Footer from '../../components/Footer/Footer'; // Assuming Footer will be added later or is part of a layout component
 
-const blobImages = [
+const SCROLL_THRESHOLD_TOP_BTN = 300;
+
+const programData = [
+  {
+    id: 'garden',
+    title: 'Able Hearts Garden',
+    description: 'Launched in 2020 at the Lephoi Centre for the Visually Impaired, the "Able Hearts Garden" is a sustainable initiative that provides therapeutic activities, teaches self-sufficiency, and enhances the environment. It is a symbol of growth, confidence, and creativity for the children, encouraging them to nurture both their personal and environmental growth.',
+    imageSrc: '/src/assets/fixed/lephoi/garden.webp',
+    imageAlt: 'Able Hearts Garden',
+    imageOrder: 1, // 1 for image first, 2 for text first
+  },
+  {
+    id: 'talentShow',
+    title: 'Dynamic Talent Show',
+    description: 'Since 2018, the annual Dynamic Talent Show has empowered children with disabilities to showcase their artistic talents. The event fosters confidence and self-expression, giving these children a platform to shine. Additionally, essential donations such as clothing and food are distributed during the show, addressing critical needs in the community.',
+    imageSrc: '/src/assets/fixed/dynamictalent/talentshow.webp',
+    imageAlt: 'Dynamic Talent Show',
+    imageOrder: 2,
+  },
+  {
+    id: 'mochudiVisits',
+    title: 'Mochudi Resource Center Visits',
+    description: 'Our visits to the Mochudi Resource Center in 2020 and 2021 included fun-filled days of games, empowering messages, and donations of essential items. These visits aimed to build lasting relationships and provide continued support to children with disabilities, fostering a sense of belonging and joy.',
+    imageSrc: '/src/assets/fixed/mochudi/mochud.webp',
+    imageAlt: 'Mochudi Resource Center Visits',
+    imageOrder: 1,
+  },
+  {
+    id: 'tsogangSupport',
+    title: 'Tsogang Trust Support',
+    description: 'In 2022, the Able Hearts Foundation extended support to children impacted by HIV/AIDS through visits to Tsogang Trust. These efforts included the provision of food, clothing, toys, and school supplies, addressing both immediate material needs and long-term educational challenges.',
+    imageSrc: '/src/assets/fixed/tsogangtrust/tsogangtrust.webp',
+    imageAlt: 'Tsogang Trust Support',
+    imageOrder: 2,
+  },
+  {
+    id: 'covidHampers',
+    title: 'COVID-19 Food Hampers',
+    description: 'During the COVID-19 pandemic, Able Hearts distributed 40 food hampers to elderly residents of Gerald Estates. Partnering with MP Ignatius Moswaane, this initiative provided essential relief during a challenging and uncertain time, demonstrating a quick and compassionate response to community needs.',
+    imageSrc: '/src/assets/fixed/covid/covid.webp',
+    imageAlt: 'COVID-19 Food Hampers',
+    imageOrder: 1,
+  },
+  {
+    id: 'lavenderTea',
+    title: 'Lavender High Tea',
+    description: 'Introduced in 2020, the Lavender High Tea event brought women together to foster empowerment and personal growth. Featuring a panel of accomplished women, the event provided opportunities for networking, mentorship, and inspiration, encouraging participants to pursue their goals with confidence.',
+    imageSrc: '/src/assets/fixed/lavender/lavender.webp',
+    imageAlt: 'Lavender High Tea',
+    imageOrder: 2,
+  },
+  {
+    id: 'schoolDonations',
+    title: 'School Donations',
+    description: 'From Shakawe JSS in 2021 to Kedia Primary School in 2024, our school donation drives have provided uniforms, shoes, and toiletries to underprivileged students. These efforts aim to remove barriers to education, promote dignity, and empower students to focus on their learning journeys without material concerns.',
+    imageSrc: '/src/assets/fixed/kedia/kedia.webp',
+    imageAlt: 'School Donations',
+    imageOrder: 1, // Assuming image first for the last one, adjust if needed
+  },
+];
+
+const blobImagePaths = [
   '/src/assets/fixed/icons/blob1.webp',
   '/src/assets/fixed/icons/blob3.webp',
   '/src/assets/fixed/icons/blob4.webp',
@@ -10,11 +71,11 @@ const blobImages = [
 ];
 
 const ProgramsAndInitiatives = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 300);
+      setShowScrollToTop(window.scrollY > SCROLL_THRESHOLD_TOP_BTN);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -25,7 +86,9 @@ const ProgramsAndInitiatives = () => {
   };
 
   useEffect(() => {
-    const elements = document.querySelectorAll('.pre-animate');
+    const elementsToAnimate = document.querySelectorAll('.pre-animate');
+    if (elementsToAnimate.length === 0) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -35,191 +98,68 @@ const ProgramsAndInitiatives = () => {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 } // Slightly lower threshold for earlier trigger
     );
-  
-    elements.forEach((element) => observer.observe(element));
-  
+
+    elementsToAnimate.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
-  }, []); 
+  }, []);
+
+  const memoizedBlobImages = useMemo(() => blobImagePaths.map((blob, index) => (
+    <img
+      key={`blob-${index}`}
+      src={blob}
+      alt="" // Decorative images should have empty alt
+      className={`programs-blobg blob-${index + 1}`}
+      loading="lazy"
+      width="800" // Consider smaller intrinsic sizes if they are heavily blurred/scaled
+      height="800"
+      aria-hidden="true" // Hide from assistive technologies
+    />
+  )), []);
 
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper programs-page">
       <div className="programs-container">
-        {/* Background blobs */}
-        <div className="programs-background-blobs">
-          {blobImages.map((blob, index) => (
-            <img
-              key={index}
-              src={blob}
-              alt={`Decorative blob ${index + 1}`}
-              className={`programs-blobg blob-${index + 1}`}
-              loading="lazy"
-              width="800"
-              height="800"
-            />
-          ))}
+        <div className="programs-background-blobs" aria-hidden="true">
+          {memoizedBlobImages}
         </div>
         <header className="programs-header-card pre-animate">
-          <h1 className="programs-title">Programs & Initiatives</h1>
+          <h1 className="programs-main-title">Programs & Initiatives</h1>
           <p className="programs-intro">
             At Able Hearts Foundation, we are dedicated to creating meaningful and lasting change.
             Explore our key programs and initiatives aimed at empowering marginalized communities.
           </p>
         </header>
-        <section className="program pre-animate">
-          <div className="program-card-container">
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/lephoi/garden.webp"
-                alt="Able Hearts Garden"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
-            <div className="program-text-wrapper">
-              <h2 className="program-title">Able Hearts Garden</h2>
-              <p className="program-description">
-                Launched in 2020 at the Lephoi Centre for the Visually Impaired, the "Able Hearts Garden" is a sustainable initiative that provides therapeutic activities, teaches self-sufficiency, and enhances the environment. It is a symbol of growth, confidence, and creativity for the children, encouraging them to nurture both their personal and environmental growth.
-              </p>
-            </div>
-          </div>
-        </section>
 
-        <section className="program pre-animate">
-          <div className="program-card-container">
-            <div className="program-text-wrapper">
-              <h2 className="program-title">Dynamic Talent Show</h2>
-              <p className="program-description">
-                Since 2018, the annual Dynamic Talent Show has empowered children with disabilities to showcase their artistic talents. The event fosters confidence and self-expression, giving these children a platform to shine. Additionally, essential donations such as clothing and food are distributed during the show, addressing critical needs in the community.
-              </p>
+        {programData.map((program) => (
+          <section key={program.id} className="program pre-animate">
+            <div className={`program-card-container ${program.imageOrder === 2 ? 'text-first' : ''}`}>
+              <div className="program-image-wrapper">
+                <img
+                  className="program-image"
+                  src={program.imageSrc}
+                  alt={program.imageAlt}
+                  loading="lazy"
+                  width="500"
+                  height="400"
+                />
+              </div>
+              <div className="program-text-wrapper">
+                <h2 className="program-title">{program.title}</h2>
+                <p className="program-description">{program.description}</p>
+              </div>
             </div>
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/dynamictalent/talentshow.webp"
-                alt="Dynamic Talent Show"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
-          </div>
-        </section>
+          </section>
+        ))}
 
-        <section className="program pre-animate">
-          <div className="program-card-container">
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/mochudi/mochud.webp"
-                alt="Mochudi Resource Center Visits"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
-            <div className="program-text-wrapper">
-              <h2 className="program-title">Mochudi Resource Center Visits</h2>
-              <p className="program-description">
-                Our visits to the Mochudi Resource Center in 2020 and 2021 included fun-filled days of games, empowering messages, and donations of essential items. These visits aimed to build lasting relationships and provide continued support to children with disabilities, fostering a sense of belonging and joy.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="program pre-animate">
-          <div className="program-card-container">
-            <div className="program-text-wrapper">
-              <h2 className="program-title">Tsogang Trust Support</h2>
-              <p className="program-description">
-                In 2022, the Able Hearts Foundation extended support to children impacted by HIV/AIDS through visits to Tsogang Trust. These efforts included the provision of food, clothing, toys, and school supplies, addressing both immediate material needs and long-term educational challenges.
-              </p>
-            </div>
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/tsogangtrust/tsogangtrust.webp"
-                alt="Tsogang Trust Support"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="program pre-animate">
-          <div className="program-card-container">
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/covid/covid.webp"
-                alt="COVID-19 Food Hampers"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
-            <div className="program-text-wrapper">
-              <h2 className="program-title">COVID-19 Food Hampers</h2>
-              <p className="program-description">
-                During the COVID-19 pandemic, Able Hearts distributed 40 food hampers to elderly residents of Gerald Estates. Partnering with MP Ignatius Moswaane, this initiative provided essential relief during a challenging and uncertain time, demonstrating a quick and compassionate response to community needs.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="program pre-animate">
-          <div className="program-card-container">
-            <div className="program-text-wrapper">
-              <h2 className="program-title">Lavender High Tea</h2>
-              <p className="program-description">
-                Introduced in 2020, the Lavender High Tea event brought women together to foster empowerment and personal growth. Featuring a panel of accomplished women, the event provided opportunities for networking, mentorship, and inspiration, encouraging participants to pursue their goals with confidence.
-              </p>
-            </div>
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/lavender/lavender.webp"
-                alt="Lavender High Tea"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="program pre-animate">
-          <div className="program-card-container">
-            <div className="program-text-wrapper">
-              <h2 className="program-title">School Donations</h2>
-              <p className="program-description">
-                From Shakawe JSS in 2021 to Kedia Primary School in 2024, our school donation drives have provided uniforms, shoes, and toiletries to underprivileged students. These efforts aim to remove barriers to education, promote dignity, and empower students to focus on their learning journeys without material concerns.
-              </p>
-            </div>
-            <div className="program-image-wrapper">
-              <img
-                className="program-image"
-                src="/src/assets/fixed/kedia/kedia.webp"
-                alt="School Donations"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
-            </div>
-          </div>
-        </section>
-
-        {isScrolled && (
-          <button className="scroll-to-top-btn" onClick={scrollToTop}>
+        {showScrollToTop && (
+          <button type="button" className="scroll-to-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
             ↑
           </button>
         )}
       </div>
+      {/* <Footer /> */}
     </div>
   );
 };
