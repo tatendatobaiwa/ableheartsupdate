@@ -104,6 +104,8 @@
   margin-bottom: var(--terms-header-padding);
   padding-bottom: var(--terms-base-padding);
   border-bottom: 1px solid var(--terms-border-color);
+  border-radius: 12px;
+
 }
 .terms-of-use-title {
   font-size: 2.75rem;
