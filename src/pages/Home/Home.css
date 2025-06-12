@@ -1,45 +1,42 @@
 :root {
-  --primary-font: Poppins, "sans-serif";
-  --secondary-font: "Cedarville Cursive", serif;
+  --primary-font: 'Poppins', sans-serif;
+  --secondary-font: 'Cedarville Cursive', serif; /* Ensure this font is imported/available */
   --primary-text-color: #043F70;
   --highlight-color: #004d99;
   --accent-color-gold: #CC9917;
-  --accent-color-gold-dark: #A37A12; /* Added for button hover */
+  --accent-color-gold-dark: #A37A12;
   --accent-color-yellow: #F4BC2A;
-  --background-color-light: white;
+  --background-color-light: #FFFFFF;
   --background-color-medium: #f9f9f9;
-  --background-color-dark: #0066cc;
-  --text-color-light: white;
+  --background-color-dark: #0066cc; /* Consider a less saturated blue if too strong */
+  --text-color-light: #FFFFFF;
   --carousel-overlay-start: rgba(0, 0, 0, 0);
   --carousel-overlay-end: rgba(0, 0, 0, 0.7);
   --button-hover-bg: rgba(0, 0, 0, 0.9);
   --base-padding: 1rem;
   --large-padding: 2rem;
-  --body-padding-top: 80px;
-  --body-padding-top-small: 60px;
+  --section-padding-vertical: 3rem; /* Consistent vertical padding for sections */
   --input-border-color: #ccc;
 }
 
-body {
-  max-width: 100%;
-  padding-top: var(--body-padding-top);
-  overflow-x: hidden;
-  font-family: var(--primary-font);
+/*
+  The .page-wrapper for the Home page can be used for specific background
+  or full-width elements if needed, but general page padding and max-width
+  should be handled by .main-content or a PageContainer component as discussed.
+*/
+.home-page-wrapper {
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll from animations/content */
 }
 
-.body-container {
-  flex: 1 0 auto;
-  margin: 0 auto;
-  padding: var(--large-padding) var(--base-padding);
-  max-width: 100%;
-  overflow-x: hidden;
-}
 
 .carousel-container {
-  height: 80vh;
+  height: 75vh; /* Adjusted height */
+  max-height: 700px; /* Max height for very tall screens */
   position: relative;
   overflow: hidden;
   width: 100%;
+  background-color: var(--primary-text-color); /* Fallback bg */
 }
 
 .carousel-slide {
@@ -52,7 +49,8 @@ body {
   background-position: center;
   opacity: 0;
   transform: scale(1.05);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  will-change: opacity, transform; /* Performance hint */
 }
 
 .carousel-slide.active {
@@ -61,40 +59,31 @@ body {
   z-index: 2;
 }
 
-.carousel-slide.previous {
-  opacity: 0;
-  transform: scale(0.95);
-  z-index: 1;
-}
-
-.carousel-slide:not(.active):not(.previous) {
-  opacity: 0;
-  z-index: 0;
-}
-
 .carousel-slide::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    var(--carousel-overlay-start) 0%,
+    var(--carousel-overlay-start) 20%, /* Gradient starts a bit lower */
     var(--carousel-overlay-end) 100%
   );
+  z-index: 1; /* Ensure overlay is above image but below content */
 }
 
 .slide-content {
   position: absolute;
-  bottom: var(--base-padding);
-  inset-inline: 0;
-  padding: 0 var(--base-padding);
+  bottom: var(--large-padding); /* More space from bottom */
+  left: var(--large-padding);
+  right: var(--large-padding);
   color: var(--text-color-light);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s; /* Delayed transition */
+  z-index: 2; /* Above overlay */
 }
 
 .carousel-slide.active .slide-content {
@@ -104,100 +93,110 @@ body {
 
 .carousel-indicators {
   display: flex;
-  gap: var(--base-padding);
+  gap: 0.75rem; /* Slightly adjusted gap */
 }
 
 .indicator {
-  width: 20px;
-  height: 20px;
+  width: 12px; /* Smaller indicators */
+  height: 12px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.7);
-  border: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.7); /* Subtle border */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.indicator:hover {
+  transform: scale(1.1);
 }
 
 .indicator.active {
   background-color: var(--accent-color-gold);
+  border-color: var(--accent-color-gold-dark);
 }
 
 .event-details-row {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .event-details {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .event-details h2,
 .event-details p {
-  font-family: var(--secondary-font);
+  font-family: var(--primary-font); /* Using primary for readability, secondary can be an accent */
   margin: 0;
 }
 
 .event-details h2 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2.25rem); /* Responsive font size */
+  font-weight: 700;
 }
 
 .event-details p {
   color: var(--accent-color-yellow);
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-weight: 500;
 }
 
-.event-logo {
-  max-width: 200px;
+.event-logo-slide { /* Renamed from .event-logo to be specific */
+  width: clamp(60px, 15vw, 100px); /* Responsive logo size */
   height: auto;
-  margin: 0 15px 0.25rem 0;
+  object-fit: contain;
 }
 
 .mission-container {
   position: relative;
-  padding: var(--large-padding) var(--base-padding);
+  padding: var(--section-padding-vertical) var(--large-padding);
   background-color: var(--background-color-light);
   text-align: center;
-  z-index: 1;
-  overflow: hidden;
-  min-height: 400px;
+  z-index: 1; /* Above fixed blobs if they are viewport-wide */
+  overflow: hidden; /* Contains its own content, not the fixed blobs */
 }
 
 .home-background-blobs {
-  opacity: 0.5;
-  position: fixed;
+  opacity: 0.15; /* Softer blobs */
+  position: fixed; /* Relative to viewport */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
-  overflow: hidden;
+  z-index: -1; /* Behind all page content */
   pointer-events: none;
-  background-color: var(--background-color-medium);
+  /* background-color: var(--background-color-medium); Removed, let body bg show */
 }
 
 .home-blobg {
   position: absolute;
-  width: 600px;
+  width: clamp(300px, 40vw, 600px); /* Responsive blob size */
   height: auto;
-  filter: blur(5px);
-  animation: float 20s infinite ease-in-out;
+  filter: blur(10px); /* More blur */
+  animation: float 20s infinite ease-in-out alternate; /* Added alternate */
 }
 
-.home-blobg.blob-1 { top: -15%; left: -10%; animation-name: moveBlob1; }
-.home-blobg.blob-2 { top: 25%; left: 35%; animation-name: moveBlob2; }
-.home-blobg.blob-3 { bottom: 20%; left: 70%; animation-name: moveBlob3; }
-.home-blobg.blob-4 { bottom: 0%; right: -10%; animation-name: moveBlob4; }
+.home-blobg.blob-1 { top: -10%; left: -15%; animation-name: moveBlob1; animation-duration: 22s; }
+.home-blobg.blob-2 { top: 20%; left: 40%; animation-name: moveBlob2; animation-duration: 25s; }
+.home-blobg.blob-3 { bottom: 15%; left: 75%; animation-name: moveBlob3; animation-duration: 20s; }
+/* .home-blobg.blob-4 was removed from JSX, so removed here too */
 
-.page-wrapper {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-}
-
-.mission-container h2,
-.mission-container p {
+.mission-container h2 {
+  font-size: clamp(2rem, 5vw, 3rem); /* Responsive heading */
+  font-weight: 700; /* Bolder */
+  margin-bottom: var(--base-padding);
   color: var(--primary-text-color);
-  position: relative;
-  z-index: 2;
+}
+
+.mission-container p {
+  line-height: 1.7;
+  font-size: clamp(1rem, 2.5vw, 1.25rem); /* Responsive text */
+  margin-bottom: 0; /* Remove bottom margin if it's the last element */
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--primary-text-color);
 }
 
 .highlight {
@@ -205,30 +204,13 @@ body {
   font-weight: 700;
 }
 
-.mission-container h2 {
-  font-weight: 600;
-  font-size: 3.5rem;
-  margin-bottom: var(--base-padding);
-}
-
-.mission-container p {
-  line-height: 1.6;
-  font-size: 1.5rem;
-  margin-bottom: 3rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* --- Newsletter Section --- */
-.newsletter-container {
-  display: flex;
-  align-items: center;
-  padding: var(--large-padding);
+.newsletter-section-wrapper {
+  display: flex; /* Will be overridden by .newsletter-content-area for direct children */
+  padding: var(--section-padding-vertical) 0; /* Vertical padding, horizontal handled by content area */
   background-color: var(--background-color-dark);
-  gap: var(--large-padding);
   overflow: hidden;
   position: relative;
+  color: var(--text-color-light);
 }
 
 .contour-overlay {
@@ -244,304 +226,340 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.7;
+  opacity: 0.8; /* Softer scribble */
 }
 
-.newsletter-container > :nth-child(2), /* NewsletterSignup component */
-.newsletter-container > .newsletter-image {
+.newsletter-content-area {
+  display: flex;
+  align-items: center;
+  gap: var(--large-padding);
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 1200px; /* Max width for newsletter content */
+  margin: 0 auto; /* Center it */
+  padding: 0 var(--large-padding); /* Padding for content within this area */
 }
 
-.newsletter-container > :nth-child(2) { /* NewsletterSignup component */
+/* Styles for content generated by NewsletterSignup.jsx might be here or in its own CSS */
+/* Assuming NewsletterSignup.jsx creates .newsletter-text and .newsletter-form */
+.newsletter-content-area .newsletter-text { /* Target specifically */
   flex-grow: 1;
 }
 
 .newsletter-text h3,
 .newsletter-text p {
-  color: var(--text-color-light);
+  color: var(--text-color-light); /* Ensure this is applied */
   margin-bottom: var(--base-padding);
 }
 
 .newsletter-text h3 {
   margin-top: 0;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: bold;
 }
 
 .newsletter-text p {
-  font-size: 1.3rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
 }
 
 .newsletter-form {
   display: flex;
   gap: var(--base-padding);
-  margin-top: var(--large-padding);
+  margin-top: var(--large-padding); /* Space above form */
 }
 
 .newsletter-input {
-  padding: 0.75rem;
+  padding: 0.85rem 1rem; /* Slightly more padding */
   flex-grow: 1;
   border: 1px solid var(--input-border-color);
   border-radius: 4px;
   font-family: var(--primary-font);
   font-size: 1rem;
+  background-color: rgba(255,255,255,0.9); /* Slightly transparent */
+  color: var(--primary-text-color);
+}
+.newsletter-input::placeholder {
+  color: #6c757d; /* Placeholder color */
 }
 
 .newsletter-button {
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 1.5rem;
   background-color: var(--accent-color-gold);
-  color: var(--primary-text-color);
+  color: var(--primary-text-color); /* Ensure contrast */
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-family: var(--primary-font);
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .newsletter-button:hover {
   background-color: var(--accent-color-gold-dark);
+  transform: translateY(-2px);
 }
-/* End of styles for content by NewsletterSignup.jsx */
 
-.newsletter-image { /* This is the direct child div in Home.jsx */
+.newsletter-image-container {
   width: 33%;
-  max-width: 400px;
+  max-width: 380px; /* Slightly adjusted */
   flex-shrink: 0;
 }
 
-.newsletter-image img {
+.newsletter-image-actual { /* Target the img tag itself */
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 10px;
-
+  border-radius: 8px; /* Consistent border-radius */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* --- Collaborators Section --- */
 .collaborators-container {
   text-align: center;
   background-color: var(--background-color-light);
-  overflow: hidden;
-  padding-bottom: 4rem;
+  overflow: hidden; /* For the logo bar */
+  padding: var(--section-padding-vertical) 0; /* Vertical padding, horizontal handled by logo bar if needed */
 }
 
 .collaborators-container h3 {
   color: var(--primary-text-color);
-  font-weight: 600;
-  font-size: 2.5rem;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
   margin-bottom: var(--large-padding);
 }
 
 .logo-bar {
-  overflow: hidden;
+  overflow: hidden; /* Essential for the animation */
+  padding: 1rem 0; /* Some vertical space for the logos */
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
 }
 
 .logo-slider {
   display: flex;
+  align-items: center; /* Vertically align logos if heights vary */
   white-space: nowrap;
-  animation: slide 40s linear infinite;
-  gap: var(--large-padding);
+  animation: slide 60s linear infinite; /* Slower animation */
+  gap: clamp(2rem, 6vw, 4rem); /* Responsive gap */
+}
+.logo-slider:hover {
+  animation-play-state: paused; /* Pause on hover */
 }
 
-.logo-slider img {
-  flex-shrink: 0;
-  height: 100px;
+.collaborator-logo-item {
+  flex-shrink: 0; /* Prevent logos from shrinking */
+  display: inline-flex; /* For alignment */
+  align-items: center;
+}
+
+.collaborator-logo {
+  height: clamp(60px, 10vh, 80px); /* Responsive logo height */
   width: auto;
-  margin: 0 var(--base-padding);
+  max-width: 150px; /* Max width for very wide logos */
+  object-fit: contain;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+.collaborator-logo:hover {
+  opacity: 1;
 }
 
-/* --- Carousel Buttons --- */
 .prev-button,
 .next-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5); /* Slightly less opaque */
   color: var(--text-color-light);
   border: none;
-  padding: 10px 15px;
+  padding: 0.6rem 1rem; /* Adjusted padding */
   cursor: pointer;
-  font-size: 1.5rem;
-  border-radius: 5px;
+  font-size: 1.75rem; /* Larger icons */
+  border-radius: 50%; /* Circular buttons */
+  width: 44px; /* Explicit width */
+  height: 44px; /* Explicit height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 3;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
-.prev-button { left: 10px; }
-.next-button { right: 10px; }
+.prev-button { left: var(--base-padding); }
+.next-button { right: var(--base-padding); }
 
 .prev-button:hover,
 .next-button:hover {
   background-color: var(--button-hover-bg);
   color: var(--accent-color-yellow);
+  transform: translateY(-50%) scale(1.05);
 }
 
-/* --- Animations --- */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  50% { transform: translateY(-15px); }
 }
 
 @keyframes moveBlob1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(20px, 20px) scale(1.1); }
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(15px, 10px) scale(1.05) rotate(5deg); }
 }
 
 @keyframes moveBlob2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-20px, 30px) scale(1.15); }
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(-10px, 15px) scale(1.1) rotate(-5deg); }
 }
 
 @keyframes moveBlob3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -20px) scale(1.1); }
-}
-
-@keyframes moveBlob4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-25px, -25px) scale(1.12); }
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(10px, -10px) scale(1.05) rotate(3deg); }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(25px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slide {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); } /* For duplicated list */
 }
 
 .pre-animate {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(25px); /* Consistent with fadeIn animation */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Smooth transition for JS fallback */
+  will-change: opacity, transform;
 }
 
 .fade-in {
-  animation: fadeIn 1.2s ease-out forwards;
-}
-
-.fade-in-delayed {
-  animation: fadeIn 1.2s ease-out forwards;
-  animation-delay: 0.5s;
+  opacity: 1; /* Target state for JS fallback */
+  transform: translateY(0); /* Target state for JS fallback */
+  animation: fadeIn 1s ease-out forwards; /* Animation preferred */
 }
 
 /* --- Responsive Styles --- */
+
 @media (max-width: 1024px) {
-  .logo-slider { gap: var(--large-padding); }
+  .carousel-container {
+    height: 70vh;
+  }
+  .newsletter-content-area {
+    padding: 0 var(--base-padding); /* Less padding on tablet */
+  }
 }
 
-/* No specific tablet overrides for newsletter needed here if base + mobile is enough */
-/* @media (min-width: 768px) and (max-width: 1024px) {} */
-
 @media (max-width: 767px) {
-  /* Newsletter container layout adjustments */
-  .newsletter-container {
+  .carousel-container {
+    height: 60vh;
+    min-height: 350px; /* Ensure it's not too small */
+  }
+  .slide-content {
+    flex-direction: column;
+    align-items: center; /* Center content on mobile */
+    text-align: center;
+    bottom: var(--base-padding);
+    left: var(--base-padding);
+    right: var(--base-padding);
+  }
+  .event-details-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .event-logo-slide {
+    width: 70px;
+    margin-bottom: 0.5rem;
+  }
+  .carousel-indicators {
+    margin-top: 1rem; /* Space between text and indicators */
+  }
+  .mission-container {
+    padding: var(--section-padding-vertical) var(--base-padding);
+  }
+  .newsletter-section-wrapper {
+    padding-top: var(--section-padding-vertical);
+    padding-bottom: var(--section-padding-vertical);
+  }
+  .newsletter-content-area {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: var(--large-padding) var(--base-padding);
+    gap: var(--base-padding);
   }
-
-  .contour-overlay img {
-    opacity: 0.05;
-  }
-
-  .newsletter-container > :nth-child(2) { /* NewsletterSignup component */
+  .newsletter-content-area .newsletter-text {
     width: 100%;
-    max-width: 500px; /* Max width for the content block */
-    order: 1; /* Content first */
+    max-width: 500px;
+    order: 1;
   }
-
-  /* Responsive adjustments for the form elements inside NewsletterSignup */
   .newsletter-form {
     flex-direction: column;
-    align-items: stretch;
+    align-items: stretch; /* Full width buttons/inputs */
+    width: 100%;
   }
-
-  .newsletter-image { /* The direct child div in Home.jsx */
-    width: 80%;
+  .newsletter-image-container {
+    width: 70%;
     max-width: 300px;
-    order: 2; /* Image after content */
+    order: 2;
     margin-top: var(--large-padding);
   }
-}
+  .home-blobg { animation: none !important; display: none; } /* Hide blobs on mobile for performance/simplicity */
 
-@media (max-width: 576px) {
-  body { padding-top: var(--body-padding-top-small); }
-  .carousel-container { height: 40vh; }
-  .carousel-indicators { gap: 0.5rem; }
-  .indicator { width: 10px; height: 10px; }
-  .event-logo { display: none; }
-  .event-details-row { flex-direction: column; align-items: flex-start; }
-  .event-details h2 { font-size: 1rem; }
-  .event-details p { font-size: 0.8rem; padding: 0; }
-  .mission-container { padding: var(--large-padding) var(--base-padding); }
-  .home-blobg { animation: none; }
-  .home-blobg.blob-1, .home-blobg.blob-2, .home-blobg.blob-3, .home-blobg.blob-4 {
-    width: 450px; height: 515px;
+  .prev-button, .next-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
   }
-  .home-blobg.blob-1 { top: -8rem; }
-  .home-blobg.blob-2 { top: 12rem; }
-  .home-blobg.blob-3 { top: 30rem; left: -10rem; }
-  .home-blobg.blob-4 { top: 22rem; left: 22rem; }
-}
-
-@media (min-width: 577px) and (max-width: 767px) {
-  .event-details h2 { font-size: 1.7rem; }
-  .event-details p { font-size: 1.1rem; }
+  .prev-button { left: 0.5rem; }
+  .next-button { right: 0.5rem; }
 }
 
 @media (max-width: 480px) {
-  .newsletter-container {
-    gap: var(--base-padding);
+  .carousel-container {
+    height: 55vh;
+    min-height: 300px;
   }
-  .newsletter-container > :nth-child(2) { /* NewsletterSignup component */
-     max-width: 100%;
-  }
+  .event-details h2 { font-size: 1.25rem; }
+  .event-details p { font-size: 0.85rem; }
+  .event-logo-slide { display: none; } /* Hide logo on very small screens */
 
-  .newsletter-text h3 {
-    font-size: 1.75rem;
-  }
-  .newsletter-text p {
-    font-size: 1.1rem;
-  }
-  /* Form elements are already 100% width from max-width: 767px block */
+  .indicator { width: 10px; height: 10px; }
 
-  .newsletter-image {
-    width: 90%;
-    max-width: 280px;
-    margin-top: var(--base-padding);
+  .mission-container h2 { font-size: 1.75rem; }
+  .mission-container p { font-size: 0.95rem; }
+
+  .newsletter-text h3 { font-size: 1.5rem; }
+  .newsletter-text p { font-size: 1rem; }
+
+  .newsletter-image-container {
+    width: 80%;
+    max-width: 250px;
   }
+  .collaborators-container h3 { font-size: 1.5rem; }
+  .logo-slider { gap: 2rem; }
+  .collaborator-logo { height: 50px; }
 }
 
-/* --- Screen Reader Mode Adjustments --- */
+/* Screen Reader Mode Adjustments (from original, ensure they are still relevant) */
 body.screen-reader-mode .carousel-container {
   height: auto !important;
   min-height: 50px;
 }
-
-body.screen-reader-mode .mission-container {
-  padding-top: var(--large-padding) !important;
-  padding-bottom: var(--large-padding) !important;
-}
-
-body.screen-reader-mode .newsletter-container {
-  flex-direction: column !important;
-  align-items: center !important;
-  padding: var(--large-padding) var(--base-padding) !important;
-}
-
-body.screen-reader-mode .newsletter-container > :nth-child(2), /* NewsletterSignup component */
-body.screen-reader-mode .newsletter-text, /* If .newsletter-text is a direct child in some scenario */
-body.screen-reader-mode .newsletter-image {
-  width: 100% !important;
-  text-align: center !important;
-}
-
+body.screen-reader-mode .mission-container,
+body.screen-reader-mode .newsletter-section-wrapper,
 body.screen-reader-mode .collaborators-container {
   padding-top: var(--large-padding) !important;
   padding-bottom: var(--large-padding) !important;
+}
+body.screen-reader-mode .newsletter-content-area {
+  flex-direction: column !important;
+  align-items: center !important;
+}
+body.screen-reader-mode .newsletter-content-area .newsletter-text,
+body.screen-reader-mode .newsletter-image-container {
+  width: 100% !important;
+  text-align: center !important;
+}
+body.screen-reader-mode .home-background-blobs {
+  display: none !important;
 }

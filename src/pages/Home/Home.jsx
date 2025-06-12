@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Home.css';
 import NewsletterSignup from "../../components/NewsLetterSignup.jsx";
 
@@ -11,7 +11,7 @@ import mochudi from '/src/assets/fixed/mochudi/carousel4mochudi.webp';
 import blob2 from '/src/assets/fixed/icons/blob2.webp';
 import blob3 from '/src/assets/fixed/icons/blob3.webp';
 import blob4 from '/src/assets/fixed/icons/blob4.webp';
-import newsletterImageFile from '/src/assets/fixed/newspaper/newsletterimage.webp'; // Renamed to avoid conflict
+import newsletterImageFile from '/src/assets/fixed/newspaper/newsletterimage.webp';
 import scribble from '/src/assets/fixed/icons/scribblebackground.webp';
 import india from '/src/assets/fixed/icons/india.webp';
 import minjex from '/src/assets/fixed/icons/minjex.webp';
@@ -39,20 +39,20 @@ const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const imageMap = {
+  const imageMap = React.useMemo(() => ({
     landingPageImage, lephoi, kedia, tsogang, mochudi,
     blob2, blob3, blob4, newsletter: newsletterImageFile, scribble,
     india, minjex, nortex, trans, tropicana, sennfoods,
     francistownelectronics, valentines, bush, strub, bms,
-  };
+  }), []);
 
-  const slides = [
+  const slides = React.useMemo(() => [
     { image: 'landingPageImage', logo: whiteLogo, title: 'Dynamic Talent Show', date: 'August 20, 2023' },
     { image: 'lephoi', logo: whiteLogo, title: 'Lephoi Centre for the Visually Impaired', date: 'August 15, 2020' },
     { image: 'kedia', logo: whiteLogo, title: 'Kedia Primary School', date: 'July 6, 2024' },
     { image: 'tsogang', logo: whiteLogo, title: 'Tsogang Trust', date: 'October 27, 2022' },
     { image: 'mochudi', logo: whiteLogo, title: 'Mochudi Resource Center', date: 'April 22, 2021' },
-  ];
+  ], []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,13 +64,13 @@ const Home = () => {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 } // Lowered threshold slightly for earlier animation trigger
     );
 
-    document.querySelectorAll('.pre-animate, .collaborator-logo, .mission-container').forEach(element => observer.observe(element));
+    document.querySelectorAll('.pre-animate').forEach(element => observer.observe(element));
 
     Object.values(imageMap).forEach(imgSrc => {
-      if (typeof imgSrc === 'string') { // Ensure it's a path
+      if (typeof imgSrc === 'string') {
         const img = new Image();
         img.src = imgSrc;
       }
@@ -80,97 +80,103 @@ const Home = () => {
   }, [imageMap]);
 
   useEffect(() => {
+    if (slides.length === 0) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, CAROUSEL_INTERVAL);
     return () => clearInterval(interval);
   }, [slides.length]);
 
-  const changeSlide = (newIndexOrUpdater) => {
+  const changeSlide = useCallback((newIndexOrUpdater) => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentSlide(newIndexOrUpdater);
     setTimeout(() => setIsTransitioning(false), TRANSITION_DURATION);
-  };
+  }, [isTransitioning]);
 
-  const handleNextSlide = () => {
+  const handleNextSlide = useCallback(() => {
     changeSlide(prev => (prev + 1) % slides.length);
-  };
+  }, [changeSlide, slides.length]);
 
-  const handlePrevSlide = () => {
+  const handlePrevSlide = useCallback(() => {
     changeSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
+  }, [changeSlide, slides.length]);
 
-  const handleIndicatorClick = (index) => {
+  const handleIndicatorClick = useCallback((index) => {
     if (index === currentSlide) return;
     changeSlide(index);
-  };
+  }, [changeSlide, currentSlide]);
 
-  const getImageUrl = (key) => imageMap[key] || placeholder;
+  const getImageUrl = useCallback((key) => imageMap[key] || placeholder, [imageMap]);
 
   const handleImageError = (e) => {
     e.target.src = placeholder;
+    e.target.classList.add('image-error-placeholder'); // Optional: for styling broken images
   };
 
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper home-page-wrapper">
       <div className="home-container">
-        <div
-          className="carousel-container pre-animate"
-          role="region"
-          aria-label="Image Carousel"
-          aria-live="polite"
-        >
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
-              role="group"
-              aria-roledescription="slide"
-              style={{ backgroundImage: `url(${getImageUrl(slide.image)})` }}
-            >
-              <div className="slide-content">
-                <div className="event-details">
-                  <div className="event-details-row">
-                    <img
-                      src={slide.logo}
-                      alt="Event Logo"
-                      className="event-logo event-logo-slide"
-                      loading="lazy"
-                      onError={handleImageError}
-                      width={100}
-                      height={100}
-                    />
-                    <div className="event-text">
-                      <h2>{slide.title}</h2>
-                      <p>{slide.date}</p>
+        {slides.length > 0 && (
+          <div
+            className="carousel-container pre-animate"
+            role="region"
+            aria-label="Image Carousel"
+            aria-roledescription="carousel"
+            aria-live="polite"
+          >
+            {slides.map((slide, index) => (
+              <div
+                key={slide.title + index} // More robust key
+                className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`Slide ${index + 1} of ${slides.length}: ${slide.title}`}
+                style={{ backgroundImage: `url(${getImageUrl(slide.image)})` }}
+              >
+                <div className="slide-content">
+                  <div className="event-details">
+                    <div className="event-details-row">
+                      <img
+                        src={slide.logo}
+                        alt="" // Decorative, as title is present
+                        className="event-logo event-logo-slide"
+                        loading="lazy"
+                        onError={handleImageError}
+                        width={100}
+                        height={100}
+                      />
+                      <div className="event-text">
+                        <h2>{slide.title}</h2>
+                        <p>{slide.date}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="carousel-indicators">
-                  {slides.map((_, idx) => (
-                    <button
-                      key={idx}
-                      className={`indicator ${currentSlide === idx ? 'active' : ''}`}
-                      onClick={() => handleIndicatorClick(idx)}
-                      aria-label={`Go to slide ${idx + 1}`}
-                      {...(currentSlide === idx && { 'aria-current': 'true' })}
-                    />
-                  ))}
+                  <div className="carousel-indicators">
+                    {slides.map((_, idx) => (
+                      <button
+                        key={idx}
+                        className={`indicator ${currentSlide === idx ? 'active' : ''}`}
+                        onClick={() => handleIndicatorClick(idx)}
+                        aria-label={`Go to slide ${idx + 1}`}
+                        aria-current={currentSlide === idx ? 'true' : 'false'}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-          <button className="prev-button" onClick={handlePrevSlide} aria-label="Previous Slide">
-            ‹
-          </button>
-          <button className="next-button" onClick={handleNextSlide} aria-label="Next Slide">
-            ›
-          </button>
-        </div>
+            ))}
+            <button className="prev-button" onClick={handlePrevSlide} aria-label="Previous Slide">
+              ‹
+            </button>
+            <button className="next-button" onClick={handleNextSlide} aria-label="Next Slide">
+              ›
+            </button>
+          </div>
+        )}
 
         <div className="mission-container pre-animate">
-          <div className="home-background-blobs">
+          <div className="home-background-blobs" aria-hidden="true">
             <img src={getImageUrl('blob2')} alt="" className="home-blobg blob-1" loading="lazy" width={480} height={556} onError={handleImageError} />
             <img src={getImageUrl('blob3')} alt="" className="home-blobg blob-2" loading="lazy" width={516} height={556} onError={handleImageError} />
             <img src={getImageUrl('blob4')} alt="" className="home-blobg blob-3" loading="lazy" width={516} height={596} onError={handleImageError} />
@@ -189,29 +195,27 @@ const Home = () => {
           </p>
         </div>
 
-        <div className="newsletter-container pre-animate">
-          <div className="contour-overlay">
+        <div className="newsletter-section-wrapper pre-animate">
+          <div className="contour-overlay" aria-hidden="true">
             <img
               src={getImageUrl('scribble')}
-              alt="Scribble background"
+              alt=""
               onError={handleImageError}
-              loading="lazy"
-              className="lazy-image"
-              width="1000"
-              height="1280"
-            />
-          </div>
-          <NewsletterSignup />
-          <div className="newsletter-image">
-            <img
-              src={getImageUrl('newsletter')}
-              alt="Newsletter visual"
-              onError={handleImageError}
-              width="400"
-              height="400"
               loading="lazy"
               className="lazy-image"
             />
+          </div>
+          <div className="newsletter-content-area">
+            <NewsletterSignup />
+            <div className="newsletter-image-container">
+              <img
+                src={getImageUrl('newsletter')}
+                alt="Visual representation for newsletter" // More descriptive alt
+                onError={handleImageError}
+                loading="lazy"
+                className="lazy-image newsletter-image-actual"
+              />
+            </div>
           </div>
         </div>
 
@@ -220,17 +224,15 @@ const Home = () => {
           <div className="logo-bar">
             <div className="logo-slider">
               {duplicatedCollaboratorLogos.map((logoKey, index) => (
-                <img
-                  key={index}
-                  src={getImageUrl(logoKey)}
-                  className="collaborator-logo"
-                  alt={`${logoKey} logo`}
-                  height={100}
-                  data-imagename={logoKey}
-                  width={150}
-                  onError={handleImageError}
-                  loading="lazy"
-                />
+                <div className="collaborator-logo-item" key={`${logoKey}-${index}`}>
+                  <img
+                    src={getImageUrl(logoKey)}
+                    className="collaborator-logo"
+                    alt={`${logoKey} logo`}
+                    onError={handleImageError}
+                    loading="lazy"
+                  />
+                </div>
               ))}
             </div>
           </div>
