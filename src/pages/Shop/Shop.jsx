@@ -317,9 +317,9 @@ const Shop = () => {
       )}
 
       <div className={`mini-cart ${isCartOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <button className="mini-cart-close-btn" onClick={() => setIsCartOpen(false)} aria-label="Close cart"><X size={20} /></button>
         <div className="mini-cart-header">
           <h3 id="cart-title">Your Cart</h3>
-          <button className="mini-cart-close-btn" onClick={() => setIsCartOpen(false)} aria-label="Close cart"><X size={20} /></button>
         </div>
         
         <div className="mini-cart-items-container">
@@ -366,7 +366,10 @@ const Shop = () => {
         )}
       </div>
       
-      <button type="button" className="cart-toggle-btn" onClick={() => setIsCartOpen(!isCartOpen)} aria-label="Toggle cart visibility">
+      <button type="button" className="cart-toggle-btn" onClick={() => {
+        console.log('Cart toggle button clicked. Current isCartOpen:', isCartOpen);
+        setIsCartOpen(!isCartOpen);
+      }} aria-label="Toggle cart visibility">
         <ShoppingCart size={24} />
         {cart.length > 0 && <span className="cart-item-count">{cart.length}</span>}
       </button>
