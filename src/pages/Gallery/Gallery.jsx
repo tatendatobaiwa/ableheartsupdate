@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import './Gallery.css';
-// import Footer from '../../components/Footer/Footer';
 
-// --- Direct Image Imports ---
-
-// Blob Images
 import blob1 from '../../assets/fixed/icons/blob1.webp';
 import blob2 from '../../assets/fixed/icons/blob2.webp';
 import blob3 from '../../assets/fixed/icons/blob3.webp';
 import blob4 from '../../assets/fixed/icons/blob4.webp';
 
-// Kedia Event
 import kediaCover from '../../assets/fixed/kedia/kedia.webp';
 import kedia1 from '../../assets/fixed/kedia/K1.webp';
 import kedia2 from '../../assets/fixed/kedia/K2.webp';
@@ -19,31 +14,26 @@ import kedia4 from '../../assets/fixed/kedia/K4.webp';
 import kedia5 from '../../assets/fixed/kedia/K5.webp';
 import kedia6 from '../../assets/fixed/kedia/K6.webp';
 
-// Shakawe Event
 import shakaweCover from '../../assets/fixed/shakawe/shakawedono.webp';
 import shakawe1 from '../../assets/fixed/shakawe/S1.webp';
 import shakawe2 from '../../assets/fixed/shakawe/S2.webp';
 
-// Lavender High Tea Event
 import lavenderCover from '../../assets/fixed/lavender/lavender.webp';
 import lavender1 from '../../assets/fixed/lavender/L1.webp';
 import lavender2 from '../../assets/fixed/lavender/L2.webp';
 import lavender3 from '../../assets/fixed/lavender/L3.webp';
 
-// Covid Relief Event
 import covidCover from '../../assets/fixed/covid/covid.webp';
 import covid1 from '../../assets/fixed/covid/C1.webp';
 import covid2 from '../../assets/fixed/covid/C2.webp';
 import covid3 from '../../assets/fixed/covid/C3.webp';
 import covid4 from '../../assets/fixed/covid/C4.webp';
 
-// Tsogang Trust Event
 import tsogangCover from '../../assets/fixed/tsogangtrust/tsogangtrust.webp';
 import tsogang1 from '../../assets/fixed/tsogangtrust/T1.webp';
 import tsogang2 from '../../assets/fixed/tsogangtrust/T2.webp';
 import tsogang3 from '../../assets/fixed/tsogangtrust/T3.webp';
 
-// Mochudi Center Event
 import mochudiCover from '../../assets/fixed/mochudi/mochud.webp';
 import mochudi1 from '../../assets/fixed/mochudi/M1.webp';
 import mochudi2 from '../../assets/fixed/mochudi/M2.webp';
@@ -52,7 +42,6 @@ import mochudi4 from '../../assets/fixed/mochudi/M4.webp';
 import mochudi5 from '../../assets/fixed/mochudi/M5.webp';
 import mochudi6 from '../../assets/fixed/mochudi/M6.webp';
 
-// Dynamic Talent Show Event
 import dynamicTalentCover from '../../assets/fixed/dynamictalent/talentshow.webp';
 import dynamicTalent1 from '../../assets/fixed/dynamictalent/DT1.webp';
 import dynamicTalent2 from '../../assets/fixed/dynamictalent/DT2.webp';
@@ -66,9 +55,8 @@ import dynamicTalent9 from '../../assets/fixed/dynamictalent/DT9.webp';
 import dynamicTalent10 from '../../assets/fixed/dynamictalent/DT10.webp';
 import dynamicTalent11 from '../../assets/fixed/dynamictalent/DT11.webp';
 import dynamicTalent12 from '../../assets/fixed/dynamictalent/DT12.webp';
-import dynamicTalent14 from '../../assets/fixed/dynamictalent/DT14.webp'; // Assuming DT13 was intentionally skipped
+import dynamicTalent14 from '../../assets/fixed/dynamictalent/DT14.webp';
 
-// Lephoi Garden Event
 import lephoiGardenCover from '../../assets/fixed/lephoi/garden.webp';
 import lephoiGarden1 from '../../assets/fixed/lephoi/LG1.webp';
 import lephoiGarden2 from '../../assets/fixed/lephoi/LG2.webp';
@@ -78,47 +66,38 @@ import lephoiGarden5 from '../../assets/fixed/lephoi/LG5.webp';
 import lephoiGarden6 from '../../assets/fixed/lephoi/LG6.webp';
 import lephoiGarden7 from '../../assets/fixed/lephoi/LG7.webp';
 
-// News Articles Event
 import newspaperCover from '../../assets/fixed/newspaper/NP1.webp';
 import newspaper2 from '../../assets/fixed/newspaper/NP2.webp';
 import newspaper3 from '../../assets/fixed/newspaper/NP3.webp';
 import newspaper4 from '../../assets/fixed/newspaper/NP4.webp';
 import newspaper5 from '../../assets/fixed/newspaper/NP5.webp';
 
-// First Event
 import firstEventCover from '../../assets/fixed/firstevent/FE1.webp';
 import firstEvent2 from '../../assets/fixed/firstevent/FE2.webp';
 import firstEvent3 from '../../assets/fixed/firstevent/FE3.webp';
 import firstEvent4 from '../../assets/fixed/firstevent/FE4.webp';
 
-// Cheshire Foundation Event
 import cheshirefoundationCover from '../../assets/fixed/chesirefoundation/chescover.webp';
 import cheshirefoundation1 from '../../assets/fixed/chesirefoundation/ches1.webp';
 import cheshirefoundation2 from '../../assets/fixed/chesirefoundation/ches2.webp';
 import cheshirefoundation3 from '../../assets/fixed/chesirefoundation/ches3.webp';
 
-// Tlokweng Family Visit Event
 import tlokwengCover from '../../assets/fixed/tlokwengfamily/tlok2.webp';
 import tlokweng1 from '../../assets/fixed/tlokwengfamily/tlok1.webp';
-import tlokweng2 from '../../assets/fixed/tlokwengfamily/tlok3.webp'; // Assuming tlok3 is correct
-
-// --- End Direct Image Imports ---
+import tlokweng2 from '../../assets/fixed/tlokwengfamily/tlok3.webp';
 
 
 const blobImagePaths = [blob1, blob3, blob4, blob2];
 const SCROLL_THRESHOLD_TOP_BTN = 300;
 
-// Helper to create image objects, now taking imported image variables
 const createImageData = (id, importedUrl, caption, width = 800, height = 600) => ({
   id,
-  url: importedUrl, // The imported image variable is the URL
+  url: importedUrl,
   caption,
   width,
   height,
 });
 
-// Define galleryEventsData within the component or scope if it uses imported variables
-// This needs to be defined *after* all image imports
 const galleryEventsData = [
     {
       id: 'kedia',
@@ -313,7 +292,7 @@ const galleryEventsData = [
 
 const MemoizedImage = memo(({ src, alt, className, onClick, width, height, loading = "lazy" }) => (
   <img
-    src={src} // This will be the imported image variable
+    src={src}
     alt={alt}
     className={className}
     onClick={onClick}
@@ -371,7 +350,6 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
-    // Intersection Observer for fade-in effect
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -381,15 +359,19 @@ const Gallery = () => {
           }
         });
       },
-      { threshold: 0.1 } // Adjust threshold as needed
+      { threshold: 0.1 }
     );
 
-    // Observe elements for fade-in. Add classes to elements you want to animate.
-    document.querySelectorAll('.pre-animate').forEach(element => observer.observe(element));
+    const elementsToObserve = document.querySelectorAll('.gallery-page-wrapper .pre-animate');
+    elementsToObserve.forEach(element => observer.observe(element));
 
-    // Cleanup observer on component unmount
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+        elementsToObserve.forEach(element => {
+            if(element) observer.unobserve(element);
+        });
+        observer.disconnect();
+    }
+  }, [isContentLoaded]); // Rerun observer setup if contentLoaded changes, to catch initially hidden elements
 
   
   useEffect(() => {
@@ -409,7 +391,7 @@ const Gallery = () => {
   const memoizedBlobComponents = useMemo(() => blobImagePaths.map((blobSrc, index) => (
     <MemoizedImage
       key={`blob-${index}`}
-      src={blobSrc} // blobSrc is already the imported variable
+      src={blobSrc}
       alt=""
       className={`gallery-blobg blob-${index + 1}`}
       width="600"
@@ -424,12 +406,12 @@ const Gallery = () => {
         {memoizedBlobComponents}
       </div>
 
-      <header className={`gallery-header ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
+      <header className={`gallery-header ${isContentLoaded ? '' : 'pre-animate'}`}>
         <h1>Event Gallery</h1>
         <p>Explore our events and the moments that make them special.</p>
       </header>
 
-      <main className={`gallery-main-content ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
+      <main className={`gallery-main-content ${isContentLoaded ? '' : 'pre-animate'}`}>
         <div className="events-grid">
           {galleryEventsData.map((event) => (
             <div
@@ -442,7 +424,7 @@ const Gallery = () => {
               aria-label={`View details for ${event.title}`}
             >
               <MemoizedImage
-                src={event.coverImage} // This is now an imported image variable
+                src={event.coverImage}
                 alt={`Cover image for ${event.title}`}
                 className="event-cover-image"
                 width={400} 
@@ -487,7 +469,7 @@ const Gallery = () => {
                   aria-label={`View image: ${image.caption || 'Event image'}`}
                 >
                   <MemoizedImage
-                    src={image.url} // This is now an imported image variable
+                    src={image.url}
                     alt={image.caption || `Image from ${selectedEvent.title}`}
                     className="event-image-item"
                     width={image.width}
@@ -518,7 +500,7 @@ const Gallery = () => {
               ×
             </button>
             <MemoizedImage
-              src={selectedImage.url} // This is now an imported image variable
+              src={selectedImage.url}
               alt={selectedImage.caption || 'Enlarged gallery image'}
               className="enlarged-modal-image"
               width={selectedImage.width}
@@ -535,7 +517,6 @@ const Gallery = () => {
           ↑
         </button>
       )}
-      {/* <Footer /> */}
     </div>
   );
 };
