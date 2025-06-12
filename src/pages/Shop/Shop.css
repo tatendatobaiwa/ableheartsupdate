@@ -82,14 +82,18 @@
 }
 
 /* Header */
-.shop-header {
+.shop-header {  margin-bottom: 2rem;
+
+  margin-top: 2rem;
   background-color: transparent; /* Let container bg show */
   border-radius: 12px;
   text-align: center;
   position: relative;
   z-index: 2;
-  padding: var(--shop-base-padding) 0;
-  margin-bottom: var(--shop-large-padding);
+  padding: var(--shop-base-padding);
+  max-width: 1200px;
+  margin: 0 auto;  
+  margin-bottom: 2rem;
 }
 .shop-title-main {
   font-size: 2.6rem;
@@ -110,6 +114,7 @@
 .shop-main-content {
   position: relative;
   z-index: 1;
+  margin: 2rem;
 }
 .product-grid-shop {
   display: grid;
@@ -176,13 +181,15 @@
   background-color: var(--shop-modal-content-bg);
   padding: var(--shop-large-padding);
   border-radius: var(--shop-border-radius);
-  max-width: 550px; /* Max width for product modal */
+  max-width: 450px; /* Max width for product modal */
   width: 90%;
   position: relative;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   max-height: 90vh;
   overflow-y: auto;
   animation: shopModalSlideInAnimation 0.4s ease-out;
+  top: 15%;
+  height: auto;
 }
 
 @keyframes shopFadeInAnimation { from { opacity: 0; } to { opacity: 1; } }
@@ -212,10 +219,6 @@
   outline: none;
 }
 
-/* Product Modal Specifics */
-.shop-modal-close { /* If you need to target it specifically */
-  /* Inherits .modal-close-button */
-}
 .modal-product-header {
   text-align: center;
   margin-bottom: var(--shop-base-padding);
@@ -334,12 +337,13 @@
   padding: 0.8rem 0;
   font-size: 1rem;
   color: var(--shop-secondary-text);
-  -moz-appearance: textfield;
-}
+  appearance: textfield;
+}-moz-appearance
 .quantity-input-field::-webkit-outer-spin-button,
 .quantity-input-field::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+  appearance: none;
 }
 .quantity-input-field:focus {
   outline: none;
@@ -521,9 +525,7 @@
   color: var(--shop-primary-text);
   text-align: right;
 }
-.checkout-action { /* Specific class for checkout button in cart */
-  /* Inherits .cta-button */
-}
+
 .empty-cart-message {
   text-align: center;
   padding: var(--shop-large-padding);

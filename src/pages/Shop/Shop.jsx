@@ -87,6 +87,27 @@ const Shop = () => {
   const [formError, setFormError] = useState('');
 
   useEffect(() => {
+    // Intersection Observer for fade-in effect
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 } // Adjust threshold as needed
+    );
+
+    // Observe elements for fade-in. Add classes to elements you want to animate.
+    document.querySelectorAll('.pre-animate').forEach(element => observer.observe(element));
+
+    // Cleanup observer on component unmount
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     setIsContentLoaded(true);
     const handleScroll = () => setShowScrollToTop(window.scrollY > SCROLL_THRESHOLD_TOP_BTN);
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -212,17 +233,17 @@ const Shop = () => {
   )), []);
 
   return (
-    <div className={`shop-page-wrapper ${isContentLoaded ? 'content-loaded' : ''}`}>
-      <div className="shop-background-blobs" aria-hidden="true">
+    <div className="page-wrapper">
+      <div className="shop-background-blobs pre-animate" aria-hidden="true">
         {memoizedBlobComponents}
       </div>
-      <header className={`shop-header ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
+      <header className="shop-header pre-animate">
         <h1 className="shop-title-main">Shop with a Purpose</h1>
         <p className="shop-subtitle">
           Support our mission by purchasing items from our shop. Every purchase helps fund our initiatives.
         </p>
       </header>
-      <main className={`shop-main-content ${isContentLoaded ? 'fade-in-animate' : 'pre-animate'}`}>
+      <main className="shop-main-content pre-animate">
         <div className="product-grid-shop">
           {SHOP_PRODUCTS.map((product) => (
             <ProductCard key={product.id} product={product} onOpenModal={openModal} />

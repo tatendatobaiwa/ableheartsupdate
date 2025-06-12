@@ -69,6 +69,7 @@ const UBApp = () => {
   };
 
   return (
+  <div className="page-wrapper">
     <div className="ub-app-page-background">
       <div className="ub-background-blobs">
         {blobImages.map((blob, index) => (
@@ -203,6 +204,7 @@ const UBApp = () => {
         </div>
       )}
     </div>
+  </div>
   );
 };
 

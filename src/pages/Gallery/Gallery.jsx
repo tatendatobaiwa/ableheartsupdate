@@ -369,6 +369,28 @@ const Gallery = () => {
   const closeImageModal = useCallback(() => {
     setSelectedImage(null);
   }, []);
+
+  useEffect(() => {
+    // Intersection Observer for fade-in effect
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 } // Adjust threshold as needed
+    );
+
+    // Observe elements for fade-in. Add classes to elements you want to animate.
+    document.querySelectorAll('.pre-animate').forEach(element => observer.observe(element));
+
+    // Cleanup observer on component unmount
+    return () => observer.disconnect();
+  }, []);
+
   
   useEffect(() => {
     const handleKeyDown = (event) => {
