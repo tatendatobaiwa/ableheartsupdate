@@ -782,7 +782,6 @@
 @media (max-width: 768px) { /* Mobile */
   .shop-page-wrapper {
     padding: var(--shop-base-padding);
-    padding-top: calc(var(--site-header-height-mobile) + var(--shop-base-padding));
     padding-bottom: var(--shop-large-padding);
   }
   .product-grid-shop {
