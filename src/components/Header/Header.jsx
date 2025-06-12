@@ -20,17 +20,23 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
-    const handleResize = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
+    const handleResize = () => {
+      const mobileCheck = window.innerWidth <= MOBILE_BREAKPOINT;
+      setIsMobile(mobileCheck);
+      if (!mobileCheck && isMenuActive) {
+        setMenuActive(false); 
+      }
+    };
 
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check
+    handleResize();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isMenuActive]);
 
   const closeAllMenus = useCallback(() => {
     setMenuActive(false);
@@ -50,14 +56,14 @@ const Header = () => {
   };
 
   const toggleGetInvolvedDropdown = (e) => {
-    if (isMobile) return; // No dropdown on mobile
+    if (isMobile) return;
     e.stopPropagation();
     setGetInvolvedDropdownActive(prev => !prev);
     setIsSettingsDropdownActive(false);
   };
 
   const toggleSettingsDropdown = (e) => {
-    if (isMobile) return; // No dropdown on mobile
+    if (isMobile) return;
     e.stopPropagation();
     setIsSettingsDropdownActive(prev => !prev);
     setGetInvolvedDropdownActive(false);
@@ -87,7 +93,7 @@ const Header = () => {
     }
     setGetInvolvedDropdownActive(false);
     setIsSettingsDropdownActive(false);
-    if (path) navigate(path); // Navigate if path is provided
+    if (path !== undefined) navigate(path);
   };
 
   const handleDyslexiaToggle = () => {
@@ -100,17 +106,17 @@ const Header = () => {
   };
 
   const isActive = (path) => location.pathname === path;
-  const isGetInvolvedActive = () => 
-    isActive('/get-involved') || 
-    isActive('/ablehearts-ub') || 
+  const isGetInvolvedActive = () =>
+    isActive('/get-involved') ||
+    isActive('/ablehearts-ub') ||
     isActive('/ablehearts-biust');
 
   return (
-    <header className={isScrolled ? 'scrolled' : ''}>
+    <header className={`${isScrolled ? 'scrolled' : ''} ${isMobile ? 'mobile' : 'desktop'}`}>
       <nav role="navigation" aria-label="Main navigation">
         <div className="container">
           <div className="nav-content">
-            <button onClick={handleLogoClick} className="logo-button">
+            <button onClick={handleLogoClick} className="logo-button" aria-label="Navigate to homepage">
               <img src={ableheartslogo} alt="Able Hearts Logo" className="logo" />
             </button>
             <button
@@ -124,18 +130,18 @@ const Header = () => {
             </button>
             <ul id="nav-links" className={`nav-links ${isMenuActive ? 'active' : ''}`}>
               <li className="nav-item">
-                <Link to="/" className={isActive('/') ? 'active' : ''} onClick={() => handleNavLinkClick()}>
+                <Link to="/" className={isActive('/') ? 'active' : ''} onClick={() => handleNavLinkClick('/')}>
                   <span>Home</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/programs-and-initiatives" className={isActive('/programs-and-initiatives') ? 'active' : ''} onClick={() => handleNavLinkClick()}>
+                <Link to="/programs-and-initiatives" className={isActive('/programs-and-initiatives') ? 'active' : ''} onClick={() => handleNavLinkClick('/programs-and-initiatives')}>
                   <span>Programs & Initiatives</span>
                 </Link>
               </li>
               <li className={`nav-item dropdown get-involved-dropdown ${isGetInvolvedDropdownActive && !isMobile ? 'active' : ''}`}>
                 {isMobile ? (
-                  <Link to="/get-involved" className={isGetInvolvedActive() ? 'active' : ''} onClick={() => handleNavLinkClick()}>
+                  <Link to="/get-involved" className={isGetInvolvedActive() ? 'active' : ''} onClick={() => handleNavLinkClick('/get-involved')}>
                     <span>Get Involved</span>
                   </Link>
                 ) : (
@@ -145,23 +151,22 @@ const Header = () => {
                 )}
                 {!isMobile && (
                   <ul className="dropdown-menu">
-                    <li><Link to="/ablehearts-ub" onClick={() => handleNavLinkClick()}>AbleHearts UB</Link></li>
-                    <li><Link to="/ablehearts-biust" onClick={() => handleNavLinkClick()}>AbleHearts BIUST</Link></li>
-                    <li><Link to="/get-involved" onClick={() => handleNavLinkClick()}>Partner with Us</Link></li>
+                    <li><Link to="/ablehearts-ub" onClick={() => handleNavLinkClick('/ablehearts-ub')}>AbleHearts UB</Link></li>
+                    <li><Link to="/ablehearts-biust" onClick={() => handleNavLinkClick('/ablehearts-biust')}>AbleHearts BIUST</Link></li>
+                    <li><Link to="/get-involved" onClick={() => handleNavLinkClick('/get-involved')}>Partner with Us</Link></li>
                   </ul>
                 )}
               </li>
               <li className="nav-item">
-                <Link to="/gallery" className={isActive('/gallery') ? 'active' : ''} onClick={() => handleNavLinkClick()}>
+                <Link to="/gallery" className={isActive('/gallery') ? 'active' : ''} onClick={() => handleNavLinkClick('/gallery')}>
                   <span>Gallery</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/shop" className={isActive('/shop') ? 'active' : ''} onClick={() => handleNavLinkClick()}>
+                <Link to="/shop" className={isActive('/shop') ? 'active' : ''} onClick={() => handleNavLinkClick('/shop')}>
                   <span>Shop</span>
                 </Link>
               </li>
-              
               {isMobile ? (
                 <li className="nav-item mobile-dyslexia-toggle">
                   <button onClick={handleDyslexiaToggle} className="nav-link-button dyslexia-toggle-button">
@@ -170,7 +175,7 @@ const Header = () => {
                 </li>
               ) : (
                 <li className={`nav-item dropdown settings-dropdown-container ${isSettingsDropdownActive ? 'active' : ''}`}>
-                  <button onClick={toggleSettingsDropdown} className="settings-button nav-link-button" aria-expanded={isSettingsDropdownActive}>
+                  <button onClick={toggleSettingsDropdown} className="settings-button nav-link-button" aria-expanded={isSettingsDropdownActive} aria-label="Accessibility Settings">
                     <span>Settings</span>
                   </button>
                   <ul className="dropdown-menu settings-dropdown-menu">
