@@ -197,6 +197,7 @@
 
 /* Background blobs */
 .ub-background-blobs {
+  opacity: 0.7;
   position: fixed; 
   top: 0;
   left: 0;

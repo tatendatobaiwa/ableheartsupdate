@@ -16,6 +16,7 @@
 }
 
 .get-involved-background-blobs {
+  opacity: 0.7;
   position: fixed;
   top: 0;
   left: 0;
@@ -79,12 +80,13 @@
   background-color: white; /* Main content area background */
   overflow: hidden; /* Contains floats and positioned children */
   padding-bottom: 0;
-  z-index: 2; /* Above blobs, below fixed header if any */
-  margin: 0 auto; /* Center container if max-width is set */
+  z-index: 2;
+  margin: 0 auto;
 }
 
 /* New Get Involved Page Header Styles */
 .get-involved-page-header {
+  margin: 0 auto;
   position: relative;
   background-color: transparent;
   text-align: center;
