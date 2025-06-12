@@ -85,6 +85,8 @@
   z-index: 2; /* Above blobs if they were not fixed */
   padding: var(--gi-section-padding-vertical) var(--gi-section-padding-horizontal);
   margin-bottom: var(--gi-section-padding-vertical);
+  max-width: 1200px;
+  border-radius: 12px;
 }
 
 .get-involved-page-header h1 {

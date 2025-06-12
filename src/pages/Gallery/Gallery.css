@@ -82,7 +82,7 @@
   text-align: center;
   position: relative;
   z-index: 2;
-  padding: var(--gallery-base-padding) 0;
+  padding: 3rem;
   margin-bottom: var(--gallery-large-padding);
   border-radius: 12px; /* Retained from original if intended for a card-like header */
 }

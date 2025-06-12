@@ -79,7 +79,7 @@
 .programs-header-card {
   background-color: transparent;
   text-align: center;
-  padding: var(--programs-large-padding) 0 var(--programs-base-padding) 0; /* Adjusted padding */
+  padding: 3rem; /* Adjusted padding */
   margin-bottom: var(--programs-section-gap);
   position: relative;
   border-radius: 12px;

@@ -1,38 +1,31 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { ShoppingCart, X, Plus, Minus } from 'lucide-react';
-import { db } from '/src/firebase/config'; // Ensure this path is correct
+import { db } from '/src/firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Shop.css';
-// import Footer from '../../components/Footer/Footer';
 
-// --- Direct Image Imports ---
-// Blob Images
 import blob1 from '/src/assets/fixed/icons/blob1.webp';
 import blob2 from '/src/assets/fixed/icons/blob2.webp';
 import blob3 from '/src/assets/fixed/icons/blob3.webp';
 import blob4 from '/src/assets/fixed/icons/blob4.webp';
 
-// Product Images
 import whiteTfront from '/src/assets/fixed/merch/whiteTfront.webp';
 import whiteTback from '/src/assets/fixed/merch/whiteTback.webp';
 import whitejersey1 from '/src/assets/fixed/merch/whitejersey1.webp';
 import whitejersey2 from '/src/assets/fixed/merch/whitejersey2.webp';
 import blackjerseyfront from '/src/assets/fixed/merch/blackjerseyfront.webp';
 import blackjerseyback from '/src/assets/fixed/merch/blackjerseyback.webp';
-// --- End Direct Image Imports ---
 
-
-const BLOB_IMAGE_IMPORTS = [blob1, blob3, blob4, blob2]; // Use imported variables
+const BLOB_IMAGE_IMPORTS = [blob1, blob3, blob4, blob2];
 const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 const SCROLL_THRESHOLD_TOP_BTN = 300;
 
-// Product data now uses the imported image variables
 const SHOP_PRODUCTS = [
   {
     id: 1,
     name: 'Classic White T-Shirt',
     price: 200.00,
-    images: [whiteTfront, whiteTback], // Use imported variables
+    images: [whiteTfront, whiteTback],
   },
   {
     id: 2,
@@ -48,7 +41,6 @@ const SHOP_PRODUCTS = [
   },
 ];
 
-// Memoized ProductCard (can be in its own file)
 const ProductCard = memo(({ product, onOpenModal }) => (
   <div
     className="product-card-shop"
@@ -59,7 +51,7 @@ const ProductCard = memo(({ product, onOpenModal }) => (
     aria-label={`View details for ${product.name}`}
   >
     <img
-      src={product.images[0]} // This is now an imported image variable
+      src={product.images[0]}
       alt={product.name}
       className="product-image-shop"
       loading="lazy"
@@ -87,7 +79,6 @@ const Shop = () => {
   const [formError, setFormError] = useState('');
 
   useEffect(() => {
-    // Intersection Observer for fade-in effect
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -97,15 +88,17 @@ const Shop = () => {
           }
         });
       },
-      { threshold: 0.1 } // Adjust threshold as needed
+      { threshold: 0.1 }
     );
-
-    // Observe elements for fade-in. Add classes to elements you want to animate.
-    document.querySelectorAll('.pre-animate').forEach(element => observer.observe(element));
-
-    // Cleanup observer on component unmount
-    return () => observer.disconnect();
-  }, []);
+    const elementsToObserve = document.querySelectorAll('.shop-page-wrapper .pre-animate');
+    elementsToObserve.forEach(element => observer.observe(element));
+    return () => {
+        elementsToObserve.forEach(element => {
+            if(element) observer.unobserve(element);
+        });
+        observer.disconnect();
+    }
+  }, [isContentLoaded]);
 
   useEffect(() => {
     setIsContentLoaded(true);
@@ -141,7 +134,7 @@ const Shop = () => {
       price: selectedProduct.price,
       size: selectedSize,
       quantity: quantity,
-      image: selectedProduct.images[0], // This is an imported image variable
+      image: selectedProduct.images[0],
       timestamp: new Date().toLocaleString(),
     };
     setCart(prevCart => [...prevCart, cartItem]);
@@ -175,7 +168,7 @@ const Shop = () => {
       setFormError('Please enter a valid email address.');
       return;
     }
-    const phoneRegex = /^(?:\+267|0)?\d{7,8}$/; // Adjusted for 7 or 8 digits after prefix
+    const phoneRegex = /^(?:\+267|0)?\d{7,8}$/;
     if (!contactDetails.phone || !phoneRegex.test(contactDetails.phone.replace(/\s+/g, ''))) {
         setFormError('Please enter a valid Botswana phone number (e.g., +26771234567 or 71234567).');
         return;
@@ -213,16 +206,17 @@ const Shop = () => {
         if (enlargedImage) closeEnlargedImage();
         else if (selectedProduct) closeModal();
         else if (isCartOpen) setIsCartOpen(false);
+        else if (showSuccessModal) setShowSuccessModal(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [enlargedImage, selectedProduct, isCartOpen, closeEnlargedImage, closeModal]);
+  }, [enlargedImage, selectedProduct, isCartOpen, showSuccessModal, closeEnlargedImage, closeModal]);
 
   const memoizedBlobComponents = useMemo(() => BLOB_IMAGE_IMPORTS.map((blobSrc, index) => (
-    <img // Using standard img tag for blobs as MemoizedImage is for product images
+    <img
       key={`blob-${index}`}
-      src={blobSrc} // blobSrc is the imported variable
+      src={blobSrc}
       alt=""
       className={`shop-blobg blob-${index + 1}`}
       loading="lazy"
@@ -233,17 +227,17 @@ const Shop = () => {
   )), []);
 
   return (
-    <div className="page-wrapper">
-      <div className="shop-background-blobs pre-animate" aria-hidden="true">
+    <div className={`shop-page-wrapper ${isContentLoaded ? 'content-loaded' : ''}`}>
+      <div className="shop-background-blobs" aria-hidden="true">
         {memoizedBlobComponents}
       </div>
-      <header className="shop-header pre-animate">
+      <header className={`shop-header ${isContentLoaded ? '' : 'pre-animate'}`}>
         <h1 className="shop-title-main">Shop with a Purpose</h1>
         <p className="shop-subtitle">
           Support our mission by purchasing items from our shop. Every purchase helps fund our initiatives.
         </p>
       </header>
-      <main className="shop-main-content pre-animate">
+      <main className={`shop-main-content ${isContentLoaded ? '' : 'pre-animate'}`}>
         <div className="product-grid-shop">
           {SHOP_PRODUCTS.map((product) => (
             <ProductCard key={product.id} product={product} onOpenModal={openModal} />
@@ -259,7 +253,7 @@ const Shop = () => {
             </button>
             <div className="modal-product-header">
               <div className="modal-images-container">
-                {selectedProduct.images.map((imageSrc, index) => ( // imageSrc is the imported variable
+                {selectedProduct.images.map((imageSrc, index) => (
                   <img
                     key={index}
                     src={imageSrc}
@@ -268,6 +262,9 @@ const Shop = () => {
                     onClick={() => handleImageClick(imageSrc)}
                     width="100"
                     height="100"
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleImageClick(imageSrc)}
                   />
                 ))}
               </div>
@@ -328,7 +325,7 @@ const Shop = () => {
           ) : (
             cart.map((item) => (
               <div key={item.id} className="cart-item">
-                <img src={item.image} alt={item.name} className="cart-item-image" /> {/* item.image is imported variable */}
+                <img src={item.image} alt={item.name} className="cart-item-image" />
                 <div className="cart-item-details">
                   <h4>{item.name}</h4>
                   <p>Size: {item.size}, Qty: {item.quantity}</p>
@@ -366,17 +363,14 @@ const Shop = () => {
         )}
       </div>
       
-      <button type="button" className="cart-toggle-btn" onClick={() => {
-        console.log('Cart toggle button clicked. Current isCartOpen:', isCartOpen);
-        setIsCartOpen(!isCartOpen);
-      }} aria-label="Toggle cart visibility">
+      <button type="button" className="cart-toggle-btn" onClick={() => setIsCartOpen(prev => !prev)} aria-label="Toggle cart visibility" aria-expanded={isCartOpen}>
         <ShoppingCart size={24} />
         {cart.length > 0 && <span className="cart-item-count">{cart.length}</span>}
       </button>
 
       {enlargedImage && (
-        <div className="enlarged-image-overlay" onClick={closeEnlargedImage} role="dialog" aria-modal="true">
-          <img src={enlargedImage} alt="Enlarged product view" className="enlarged-image-content" /> {/* enlargedImage is imported variable */}
+        <div className="enlarged-image-overlay" onClick={closeEnlargedImage} role="dialog" aria-modal="true" aria-label="Enlarged product image">
+          <img src={enlargedImage} alt="Enlarged product view" className="enlarged-image-content" onClick={(e) => e.stopPropagation()} />
           <button className="modal-close-button enlarged-image-close-btn" onClick={closeEnlargedImage} aria-label="Close enlarged image"><X size={28}/></button>
         </div>
       )}
@@ -396,7 +390,6 @@ const Shop = () => {
           ↑
         </button>
       )}
-      {/* <Footer /> */}
     </div>
   );
 };

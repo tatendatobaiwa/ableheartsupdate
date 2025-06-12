@@ -44,7 +44,7 @@
   font-family: var(--shop-font);
   background-color: var(--shop-bg-page);
   color: var(--shop-primary-text);
-  padding-top: calc(var(--site-header-height) + var(--shop-large-padding));
+  padding-top: 2rem;
   padding-left: var(--shop-large-padding);
   padding-right: var(--shop-large-padding);
   padding-bottom: var(--shop-large-padding);
@@ -87,7 +87,7 @@
   width: clamp(300px, 45vw, 650px);
   height: auto;
   filter: blur(7px);
-  opacity: 0.55;
+  opacity: 0.3;
   animation: shopFloat 20s infinite ease-in-out alternate;
 }
 .shop-blobg.blob-1 { top: -8%; left: -12%; animation-duration: 23s; }
@@ -106,8 +106,7 @@
   border-radius: 12px;
   text-align: center;
   position: relative;
-  padding: var(--shop-base-padding) 0;
-  max-width: 1200px;
+  padding: 3rem;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
