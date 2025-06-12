@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import scribble from '/src/assets/fixed/icons/scribblebackground.webp';
 import DonationForm from '/src/components/DonationForm.jsx';
-// import Footer from '../../components/Footer/Footer'; // Assuming Footer is used elsewhere or will be added
-
 import './GetInvolved.css';
 
 const blobImages = [
@@ -29,9 +27,10 @@ const GetInvolved = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Intersection Observer for animations
   useEffect(() => {
-    const elements = document.querySelectorAll('.pre-animate');
+    const elements = document.querySelectorAll('.get-involved-container .pre-animate');
+    if (elements.length === 0) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -41,40 +40,37 @@ const GetInvolved = () => {
           }
         });
       },
-      { threshold: 0.1 } // Adjusted threshold slightly for earlier trigger if needed
+      { threshold: 0.1 }
     );
 
     elements.forEach((element) => observer.observe(element));
 
     return () => {
-      elements.forEach((element) => { // Ensure to unobserve all elements
+      elements.forEach((element) => {
         if (element) {
             observer.unobserve(element);
         }
       });
       observer.disconnect();
     };
-  }, []); // Rerun if component structure changes significantly, but usually fine
+  }, []);
 
   return (
-    <div className="page-wrapper">
+    <div className="page-wrapper get-involved-page-wrapper">
+      <div className="get-involved-background-blobs" aria-hidden="true">
+        {blobImages.map((blob, index) => (
+          <img
+            key={`blob-${index}`}
+            src={blob}
+            alt=""
+            className={`get-involved-blobg blob-${index + 1}`}
+            loading="lazy"
+            width="800"
+            height="800"
+          />
+        ))}
+      </div>
       <div className="get-involved-container">
-        {/* Background blobs */}
-        <div className="get-involved-background-blobs">
-          {blobImages.map((blob, index) => (
-            <img
-              key={index}
-              src={blob}
-              alt={`Decorative blob ${index + 1}`}
-              className={`get-involved-blobg blob-${index + 1}`}
-              loading="lazy"
-              width="800"
-              height="800"
-            />
-          ))}
-        </div>
-
-        {/* New Get Involved Header */}
         <header className="get-involved-page-header pre-animate">
           <h1>Get Involved</h1>
           <p>
@@ -82,17 +78,15 @@ const GetInvolved = () => {
           </p>
         </header>
 
-        {/* Donation Form Section */}
-        <div className="donation-form-section pre-animate">
+        <section className="donation-form-section pre-animate" aria-labelledby="donation-heading">
+          {/* Assuming DonationForm has an h2 or similar for "donation-heading" */}
           <DonationForm />
-        </div>
+        </section>
 
-        {/* AbleHearts UB, BIUST, and Partnerships Sections */}
-        <div className="additional-section pre-animate"> {/* This div can also have pre-animate if you want the whole block to fade in */}
-          {/* AbleHearts UB Section */}
-          <div className="content-container pre-animate"> {/* Apply pre-animate to individual sections for staggered effect */}
+        <div className="additional-sections-wrapper">
+          <section className="content-container pre-animate" aria-labelledby="ablehearts-ub-heading">
             <div className="left-content card">
-              <h2>AbleHearts UB</h2>
+              <h2 id="ablehearts-ub-heading">AbleHearts UB</h2>
               <p>
                 Our AbleHearts chapter at UB fosters a vibrant community of students working together to make a difference
                 in the lives of people with disabilities. Get involved to create a more inclusive world.
@@ -107,19 +101,18 @@ const GetInvolved = () => {
             <div className="right-content">
               <img
                 src="/src/assets/fixed/ubvolunteers.webp"
-                alt="AbleHearts UB"
+                alt="AbleHearts University of Botswana student volunteers group photo."
                 className="placeholder-image"
                 loading="lazy"
                 width="500"
                 height="300"
               />
             </div>
-          </div>
+          </section>
 
-          {/* AbleHearts BIUST Section */}
-          <div className="content-container pre-animate">
+          <section className="content-container pre-animate" aria-labelledby="ablehearts-biust-heading">
             <div className="left-content card">
-              <h2>AbleHearts BIUST</h2>
+              <h2 id="ablehearts-biust-heading">AbleHearts BIUST</h2>
               <p>
                 At BIUST, our AbleHearts chapter champions inclusion and innovation to support individuals with
                 disabilities. Join us in transforming campus life through collaboration and compassion.
@@ -134,25 +127,24 @@ const GetInvolved = () => {
             <div className="right-content">
               <img
                 src="/src/assets/fixed/biustvolunteers.webp"
-                alt="AbleHearts BIUST"
+                alt="AbleHearts BIUST student volunteers."
                 className="placeholder-image"
                 loading="lazy"
                 width="500"
                 height="300"
               />
             </div>
-          </div>
+          </section>
 
-          {/* Partnerships Section */}
-          <div className="content-container1 pre-animate" style={{ backgroundColor: '#0066cc', marginBottom: '0' }}>
-            <div className="contour-overlay">
-              <img src={scribble} alt="Scribblebackground"
+          <section className="content-container1 pre-animate" aria-labelledby="partnerships-heading" style={{ backgroundColor: '#0066cc', marginBottom: '0' }}>
+            <div className="contour-overlay" aria-hidden="true">
+              <img src={scribble} alt=""
                 loading="lazy" width="1000"
                 height="1280"
               />
             </div>
             <div className="partnership-left-content">
-              <h2 style={{ color: 'white' }}>Partnerships</h2>
+              <h2 id="partnerships-heading" style={{ color: 'white' }}>Partnerships</h2>
               <p style={{ color: 'white' }}>
                 Partner with us to amplify our efforts. Together, we can create impactful initiatives that empower
                 individuals with disabilities and drive community change.
@@ -166,10 +158,10 @@ const GetInvolved = () => {
                 Send Us an Email
               </button>
             </div>
-            <div className="right-content" style={{ padding: '0' }}>
+            <div className="right-content partnership-image-container" style={{ padding: '0' }}>
               <img
                 src="/src/assets/fixed/partner.webp"
-                alt="Partnerships"
+                alt="Hands shaking, symbolizing partnership."
                 className="placeholder-image"
                 style={{ borderRadius: '0' }}
                 loading="lazy"
@@ -177,15 +169,14 @@ const GetInvolved = () => {
                 height="300"
               />
             </div>
-          </div>
+          </section>
         </div>
         {isScrolled && (
-          <button className="scroll-to-top-btn" onClick={scrollToTop}>
+          <button type="button" className="scroll-to-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
             ↑
           </button>
         )}
       </div>
-      {/* <Footer /> */} {/* If you have a Footer component, it would typically go outside .get-involved-container or at the end of .page-wrapper */}
     </div>
   );
 };

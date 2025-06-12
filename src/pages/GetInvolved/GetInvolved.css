@@ -1,426 +1,400 @@
-/* Define CSS Variables (Optional, but good practice like in the example) */
 :root {
-  --primary-text-color: #043F70;
-  --secondary-text-color: #333;
-  --button-cta-bg: #008CFF;
-  --button-cta-hover-bg: #004d99;
-  --section-padding: 2rem;
-  --card-padding: 2.5rem;
+  --gi-primary-text-color: #043F70;
+  --gi-secondary-text-color: #333333;
+  --gi-button-cta-bg: #008CFF;
+  --gi-button-cta-hover-bg: #005BB5; /* Darker shade for hover */
+  --gi-button-secondary-bg: #0066cc;
+  --gi-button-secondary-hover-bg: #004d99;
+  --gi-section-padding-vertical: 3rem;
+  --gi-section-padding-horizontal: 2rem;
+  --gi-card-padding: 2rem; /* Adjusted card padding */
+  --gi-background-light: #FFFFFF;
+  --gi-background-blobs: #f0f2f5; /* Light background for blob area */
+  --gi-blob-opacity: 0.2; /* More subtle blobs */
 }
 
-.page-wrapper {
+.get-involved-page-wrapper.page-wrapper {
   position: relative;
-  z-index: 1;
   min-height: 100vh;
-  background-color: #ffffff; /* Added a light background to page-wrapper */
+  background-color: var(--gi-background-light);
 }
 
 .get-involved-background-blobs {
-  opacity: 0.7;
+  opacity: var(--gi-blob-opacity);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 0; /* Behind all content */
   overflow: hidden;
   pointer-events: none;
+  background-color: var(--gi-background-blobs);
 }
 
 .get-involved-blobg {
   position: absolute;
-  width: 600px;
+  width: clamp(400px, 60vw, 800px); /* Responsive blob size */
   height: auto;
-  filter: blur(5px);
-  animation: float 20s infinite ease-in-out;
+  filter: blur(15px); /* Increased blur */
+  animation: giFloat 25s infinite ease-in-out alternate; /* Common animation */
+  will-change: transform;
 }
 
-.get-involved-blobg.blob-1 { top: 0%; left: 0%; animation: moveBlob1 20s infinite ease-in-out; }
-.get-involved-blobg.blob-2 { top: 25%; right: 5%; animation: moveBlob2 20s infinite ease-in-out; }
-.get-involved-blobg.blob-3 { bottom: 20%; left: 0%; animation: moveBlob3 20s infinite ease-in-out; }
-.get-involved-blobg.blob-4 { bottom: 0%; right: -10%; animation: moveBlob4 20s infinite ease-in-out; }
+.get-involved-blobg.blob-1 { top: -10%; left: -15%; animation-duration: 28s; }
+.get-involved-blobg.blob-2 { top: 15%; right: -10%; animation-duration: 32s; }
+.get-involved-blobg.blob-3 { bottom: -15%; left: 5%; animation-duration: 26s; }
+.get-involved-blobg.blob-4 { bottom: 0%; right: -5%; animation-duration: 30s; }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-@keyframes moveBlob1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(20px, 20px) scale(1.1); }
-}
-@keyframes moveBlob2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-20px, 30px) scale(1.15); }
-}
-@keyframes moveBlob3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -20px) scale(1.1); }
-}
-@keyframes moveBlob4 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-25px, -25px) scale(1.12); }
+@keyframes giFloat { /* Prefixed animation name */
+  0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  100% { transform: translateY(-20px) translateX(15px) rotate(5deg); }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+/* Animations for content fade-in */
+@keyframes giFadeIn { /* Prefixed animation name */
+  from { opacity: 0; transform: translateY(25px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.pre-animate {
+.get-involved-container .pre-animate { /* Scoped to this page */
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(25px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
 }
 
-.fade-in {
-  animation: fadeIn 1.2s ease-out forwards;
+.get-involved-container .fade-in { /* Scoped to this page */
+  opacity: 1;
+  transform: translateY(0);
+  animation: giFadeIn 0.8s ease-out forwards;
 }
 
 .get-involved-container {
-  padding: var(--section-padding) 0; /* Use variable */
-  background-color: white; /* Main content area background */
-  overflow: hidden; /* Contains floats and positioned children */
-  padding-bottom: 0;
-  z-index: 2;
+  padding: 0; /* Remove padding, sections will handle their own */
+  background-color: transparent; /* Let page-wrapper or blobs show through */
+  overflow: hidden;
+  z-index: 1; /* Above fixed blobs */
   margin: 0 auto;
 }
 
-/* New Get Involved Page Header Styles */
 .get-involved-page-header {
-  margin: 0 auto;
-  position: relative;
   background-color: transparent;
+  position: relative;
   text-align: center;
-  z-index: 2;
-  padding: calc(var(--section-padding) * 1.5) var(--section-padding); /* More top/bottom padding */
-  margin-bottom: calc(var(--section-padding) * 1.5);
-  border-radius: 12px;
-  max-width: 1200px;
+  z-index: 2; /* Above blobs if they were not fixed */
+  padding: var(--gi-section-padding-vertical) var(--gi-section-padding-horizontal);
+  margin-bottom: var(--gi-section-padding-vertical);
 }
 
-.get-involved-page-header   /* Space below header */
-  /* Space below header */
-  h1 {
-  font-family: Poppins, "sans-serif";
-  font-size: 2.8rem;
+.get-involved-page-header h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.2rem);
   font-weight: 700;
-  color: var(--primary-text-color);
+  color: var(--gi-primary-text-color);
   margin-bottom: 0.75rem;
 }
 
 .get-involved-page-header p {
-  font-family: Poppins, "sans-serif";
-  font-size: 1.25rem;
-  color: var(--secondary-text-color);
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+  color: var(--gi-secondary-text-color);
   max-width: 700px;
-  margin: 0 auto 1.5rem auto; /* Center paragraph and add bottom margin */
-  line-height: 1.6;
+  margin: 0 auto 1rem auto;
+  line-height: 1.65;
   font-weight: 400;
 }
 
 .donation-form-section {
-  padding: 0 var(--section-padding); /* Consistent horizontal padding */
-  margin-bottom: calc(var(--section-padding) * 2); /* Space below donation form */
+  padding: 0 var(--gi-section-padding-horizontal);
+  margin-bottom: calc(var(--gi-section-padding-vertical) * 1.5);
+}
+
+.additional-sections-wrapper {
+  display: grid; /* Or flex, for managing section layout */
+  gap: calc(var(--gi-section-padding-vertical) * 1.5); /* Space between UB/BIUST/Partnership sections */
 }
 
 .content-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center; /* Vertically align items in a row */
-  margin: calc(var(--section-padding) * 2) 0; /* More vertical margin for sections */
-  gap: 4rem; /* Adjusted gap */
+  align-items: center;
+  gap: 2.5rem; /* Gap between text and image */
   position: relative;
-  padding: 0 var(--section-padding);
-  z-index: 3; /* Above page background but below fixed elements if any */
+  padding: 0 var(--gi-section-padding-horizontal);
+  z-index: 1;
 }
 
-/* Content Container for Partnership section */
 .content-container1 {
-  padding: 0; /* Full width for background color */
+  padding: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch; /* Stretch items to fill height */
   position: relative;
-  z-index: 3;
-  margin-top: calc(var(--section-padding) * 2);
-  max-height: fit-content;
-  /* background-color is set inline */
+  z-index: 1;
+  overflow: hidden; /* To contain rounded corners of image if any */
 }
 
-/* Left Content (for UB, BIUST cards) */
 .left-content {
-  width: 48%; /* Slightly adjust for gap */
-  /* padding: 0 2rem; Removed, card will handle its padding */
+  flex: 1 1 50%; /* Allow flex grow/shrink */
   text-align: left;
 }
 
-.left-content h2 { /* Specific to h2 in .left-content cards */
-  font-family: Poppins, "sans-serif";
+.left-content.card { /* Specific styling for UB/BIUST cards */
+  background-color: var(--gi-background-light);
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  padding: var(--gi-card-padding);
+  border: 1px solid #eef0f3; /* Lighter border */
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+.left-content.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.left-content h2 {
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  color: var(--primary-text-color);
+  color: var(--gi-primary-text-color);
   margin-bottom: 1rem;
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 4vw, 2rem);
 }
 
-.left-content p { /* Specific to p in .left-content cards */
-  font-family: Poppins, "sans-serif";
+.left-content p {
+  font-family: 'Poppins', sans-serif;
   line-height: 1.6;
-  color: var(--secondary-text-color);
-  font-size: 1.1rem; /* Slightly smaller for card content */
-  margin-bottom: 1.5rem; /* Adjusted margin */
+  color: var(--gi-secondary-text-color);
+  font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+  margin-bottom: 1.5rem;
 }
 
-/* Right Content (for UB, BIUST images) */
 .right-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 48%; /* Slightly adjust for gap */
-  /* padding: 0 2rem; Removed, image itself can have margin if needed */
-  z-index: 1; /* Below card text if overlapping, though flex gap should prevent */
-  min-height: auto; /* Let content define height */
+  flex: 1 1 45%; /* Adjust basis */
+  min-height: auto;
 }
 
 .placeholder-image {
   width: 100%;
-  height: auto;
+  height: 100%; /* Make image fill container height for content-container1 */
+  max-height: 350px; /* Max height for UB/BIUST images */
+  object-fit: cover; /* Cover ensures image fills space, might crop */
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   display: block;
 }
+.content-container1 .placeholder-image {
+  max-height: none; /* Allow partnership image to be full height of its container */
+  border-radius: 0; /* As per inline style */
+}
 
-/* Partnership Section Specifics */
+
 .partnership-left-content {
-  width: 50%;
-  padding: var(--section-padding) calc(var(--section-padding) * 2); /* Generous padding for text */
+  flex: 1 1 55%; /* More space for text */
+  padding: var(--gi-section-padding-vertical) var(--gi-section-padding-horizontal);
   text-align: left;
-  z-index: 5; /* Ensure text is above contour overlay */
+  z-index: 2; /* Above contour overlay */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .partnership-left-content h2 {
-  font-family: Poppins, "sans-serif";
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  /* color: white; Set inline */
   margin-bottom: 1rem;
-  font-size: 2.2rem; /* Slightly larger for emphasis */
+  font-size: clamp(1.8rem, 4.5vw, 2.2rem);
+  /* color: white; Set inline */
 }
 
 .partnership-left-content p {
-  font-family: Poppins, "sans-serif";
-  line-height: 1.6;
-  font-size: 1.15rem;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.65;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
   margin-bottom: 2rem;
+  /* color: white; Set inline */
 }
 
 .contour-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   pointer-events: none;
-  opacity: 0.3; /* Adjusted opacity */
-  z-index: 4; /* Below partnership text, above background */
+  opacity: 0.15; /* Softer overlay */
+  z-index: 1; /* Below partnership text */
 }
 
 .contour-overlay img {
-  max-height: 100%;
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-/* Buttons */
 .find-out-more-button,
 .email-button {
-  padding: 0.85rem 2.2rem; /* Slightly larger padding */
-  font-family: Poppins, "sans-serif";
-  font-size: 1rem;
-  font-weight: 500; /* Medium weight */
+  padding: 0.8rem 2rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 500;
   border: none;
-  border-radius: 6px; /* Slightly more rounded */
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  display: inline-block; /* Ensure proper spacing and alignment */
-  text-decoration: none; /* For potential future use as <a> */
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 1rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .find-out-more-button {
   color: #ffffff;
-  background-color: #0066cc; /* Specific blue for these buttons */
-  margin-top: 1rem;
+  background-color: var(--gi-button-secondary-bg);
 }
 .find-out-more-button:hover {
-  background-color: #004d99;
-  transform: scale(1.03);
+  background-color: var(--gi-button-secondary-hover-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .email-button {
-  z-index: 5; /* Above overlay */
-  background-color: white;
-  color: #0066cc;
-  margin-top: 1rem; /* Added margin top */
+  z-index: 2; /* Above overlay */
+  background-color: var(--gi-background-light);
+  color: var(--gi-button-secondary-bg);
 }
 .email-button:hover {
-  background-color: #f0f0f0; /* Lighter hover for white button */
-  color: #004d99;
-  transform: scale(1.03);
+  background-color: #f1f3f5; /* Lighter hover */
+  color: var(--gi-button-secondary-hover-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Card Style */
-.card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); /* Softer shadow */
-  padding: var(--card-padding);
-  /* margin-bottom: 3rem; Removed, parent .content-container handles spacing */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid #e9e9e9; /* Lighter border */
-}
-.card:hover {
-  transform: translateY(-6px); /* Less aggressive lift */
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-}
-
-/* Scroll to Top Button */
 .scroll-to-top-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--primary-text-color);
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--gi-primary-text-color);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    z-index: 1000;
-    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 1050; /* Ensure above header */
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .scroll-to-top-btn:hover {
-    background-color: var(--button-cta-hover-bg);
-    transform: scale(1.1);
+    background-color: var(--gi-button-cta-hover-bg);
+    transform: translateY(-2px) scale(1.05);
 }
 
-
-/* Responsive Adjustments */
-@media (max-width: 992px) { /* Larger tablets */
-  .left-content, .right-content, .partnership-left-content {
-    width: 47%; /* Adjust for slightly smaller screens if needed */
-  }
+@media (max-width: 992px) {
   .content-container {
-    gap: 3rem;
+    gap: 2rem;
+  }
+  .left-content, .right-content {
+    flex-basis: 100%; /* Prepare for stacking earlier if needed */
+  }
+  .partnership-left-content {
+    flex-basis: 100%;
+  }
+  .content-container1 .right-content { /* Partnership image container */
+    min-height: 250px; /* Ensure some height for the image */
   }
 }
 
-@media (max-width: 768px) { /* Tablets and mobiles */
-  .get-involved-page-header h1 {
-    font-size: 2.4rem; /* Responsive header font */
+@media (max-width: 768px) {
+  .get-involved-page-header {
+    padding-left: var(--gi-section-padding-horizontal);
+    padding-right: var(--gi-section-padding-horizontal);
   }
-  .get-involved-page-header p {
-    font-size: 1.15rem;
+  .donation-form-section {
+    padding-left: var(--gi-section-padding-horizontal);
+    padding-right: var(--gi-section-padding-horizontal);
   }
-
   .content-container,
   .content-container1 {
     flex-direction: column;
     text-align: center;
-    padding-left: var(--section-padding); /* Ensure padding is consistent */
-    padding-right: var(--section-padding);
-    gap: var(--section-padding); /* Reduce gap for stacked items */
+    padding-left: var(--gi-section-padding-horizontal);
+    padding-right: var(--gi-section-padding-horizontal);
+    gap: var(--gi-section-padding-vertical);
   }
    .content-container1 {
-    padding: 0; /* Keep full-width for bg color, children handle padding */
+    padding: 0; /* Full width for bg color */
    }
-
-
   .left-content,
   .right-content,
   .partnership-left-content {
     width: 100%;
-    text-align: center; /* Center content when stacked */
-  }
-  .left-content.card { /* Card specific adjustments */
-    padding: calc(var(--card-padding) - 0.5rem);
-    text-align: left; /* Or center if preferred for card content */
-  }
-  .left-content.card h2, .left-content.card p {
-    text-align: center; /* Center text within cards on mobile */
-  }
-
-
-  .partnership-left-content {
-    padding: var(--section-padding); /* Adjust padding for stacked layout */
-  }
-  .partnership-left-content h2,
-  .partnership-left-content p {
     text-align: center;
   }
-  .right-content { /* For images in UB/BIUST */
-    margin-top: 1rem; /* Add some space above image when stacked */
+  .left-content.card {
+    padding: var(--gi-card-padding);
   }
-  .content-container1 .right-content { /* For partnership image */
-    padding: 0 var(--section-padding) var(--section-padding) var(--section-padding); /* Add padding around image */
+  .left-content.card h2, .left-content.card p {
+    text-align: center;
   }
-
-
+  .partnership-left-content {
+    padding: var(--gi-section-padding-vertical) var(--gi-section-padding-horizontal);
+  }
+  .right-content {
+    margin-top: 1rem;
+  }
+  .content-container1 .right-content {
+    padding: 0; /* Image will be full width of this container */
+    min-height: 200px; /* Adjust height for mobile partnership image */
+  }
+  .content-container1 .placeholder-image {
+    border-radius: 0; /* Ensure no radius if it's edge to edge */
+  }
+  .find-out-more-button,
   .email-button {
-    margin: 1rem auto;
-    display: block; /* Make button block to take auto margins */
+    margin-left: auto;
+    margin-right: auto;
+    display: block; /* Center buttons */
+    width: fit-content; /* Size to content but allow centering */
+    max-width: 90%;
   }
-
-  .left-content h2, .partnership-left-content h2 {
-    font-size: 1.8rem;
+  .get-involved-blobg {
+    display: none; /* Hide blobs on mobile for performance */
   }
-  .left-content p, .partnership-left-content p {
-    font-size: 1rem;
-  }
-  .donation-form-section {
-    padding: 0 var(--section-padding);
+  .get-involved-background-blobs {
+    background-color: var(--gi-background-light); /* Simpler bg for mobile */
   }
 }
 
-@media (max-width: 540px) { /* Smaller Mobiles */
-  :root { /* Adjust base variables for smaller screens */
-    --section-padding: 1rem;
-    --card-padding: 1.5rem;
+@media (max-width: 540px) {
+  :root {
+    --gi-section-padding-vertical: 2rem;
+    --gi-section-padding-horizontal: 1rem;
+    --gi-card-padding: 1.5rem;
   }
   .get-involved-page-header h1 {
-    font-size: 2rem;
+    font-size: clamp(2rem, 6vw, 2.4rem);
   }
   .get-involved-page-header p {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: clamp(0.95rem, 3vw, 1.1rem);
   }
-
-  .left-content.card {
-    padding: var(--card-padding);
-  }
-
   .left-content h2, .partnership-left-content h2 {
-    font-size: 1.6rem;
+    font-size: clamp(1.5rem, 5vw, 1.8rem);
   }
   .left-content p, .partnership-left-content p {
-    font-size: 0.95rem;
-  }
-
-  .find-out-more-button,
-  .email-button {
-    padding: 0.7rem 1.8rem;
-    font-size: 0.9rem;
-    width: auto; /* Allow button to size to content or set to 100% if needed */
-    max-width: 280px; /* Prevent buttons from becoming too wide */
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+    font-size: clamp(0.9rem, 2.8vw, 1rem);
   }
   .scroll-to-top-btn {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     font-size: 20px;
-    bottom: 15px;
-    right: 15px;
+    bottom: 20px;
+    right: 20px;
   }
 }
