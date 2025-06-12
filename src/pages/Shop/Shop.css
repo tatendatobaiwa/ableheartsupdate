@@ -106,10 +106,11 @@
   border-radius: 12px;
   text-align: center;
   position: relative;
-  padding: 3rem;
+  padding: 3rem 0;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
+  pointer-events: none;
 }
 .shop-title-main {
   font-size: 2.6rem;
@@ -457,7 +458,7 @@
   height: 32px;
   transition: background-color 0.2s ease, color 0.2s ease;
   flex-shrink: 0;
-  z-index: 1002;
+  z-index: 1005;
   opacity: 1;
   visibility: visible;
 }
