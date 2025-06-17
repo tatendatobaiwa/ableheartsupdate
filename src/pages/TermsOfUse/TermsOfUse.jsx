@@ -93,7 +93,7 @@ const TermsOfUse = () => {
         </section>
       </div>
     </div>
-  );
+  )
 };
 
 export default TermsOfUse;

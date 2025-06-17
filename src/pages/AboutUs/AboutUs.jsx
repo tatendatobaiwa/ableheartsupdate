@@ -118,15 +118,12 @@ const AboutUs = () => {
               src="/src/assets/fixed/thefounderphoto.webp" 
               alt="Sakshi Bhargava, Founder of Able Hearts Foundation"
               className="founder-image"
-              width="250"
-              height="250"
             />
           </div>
           <div className="founder-details">
             <h3 className="founder-name">Sakshi Bhargava</h3>
             <p className="founder-bio">
-              Sakshi Bhargava is a visionary leader and passionate philanthropist dedicated to making a positive impact in communities across Botswana. With a background in pageantry and a heart for service, she established the Able Hearts Foundation to create meaningful change in the lives of those who need it most.
-            </p>
+            Sakshi Bhargava is a passionate philanthropist and advocate for equity, diversity, and inclusion. She holds an Honours BA in Political Science from the University of Western Ontario and was a delegate to the UN’s 69th Commission on the Status of Women (CSW69). Through Able Hearts, she works to create opportunities for children and youth in underserved communities, grounded in the belief that lasting change begins with compassion, dignity, and access for all.            </p>
             <div className="founder-achievements">
               <h4 className="achievements-title">Key Roles & Achievements</h4>
               <ul>
