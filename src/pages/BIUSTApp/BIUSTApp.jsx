@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFadeInAnimation, usePageFadeIn } from '../../hooks/useFadeInAnimation';
 import { useNavigate } from 'react-router-dom';
 import './BIUSTApp.css';
 import countryCodes from '/src/data/countryCodes.json';
@@ -17,6 +18,9 @@ const BIUSTApp = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
+
+  usePageFadeIn();
+  useFadeInAnimation('.biust-app-page-background');
 
   const validate = () => {
     const newErrors = {};
@@ -70,7 +74,7 @@ const BIUSTApp = () => {
   
 
   return (
-    <div className="biust-app-page-background">
+    <div className="biust-app-page-background page-fade-in">
       {/* Background blobs */}
       <div className="biust-background-blobs">
         {blobImages.map((blob, index) => (
@@ -83,19 +87,19 @@ const BIUSTApp = () => {
         ))}
       </div>
       <div className="biust-app-container">
-        <div className="biust-app-logo-container">
+        <div className="biust-app-logo-container pre-animate">
           <img src="/src/assets/fixed/icons/biust.webp" alt="biust Logo" className="biust-app-logo" 
           width="90"
           height="90"
           />
         </div>
 
-        <h1 className="biust-app-title">BIUST Branch Application</h1>
-        <p className="biust-app-description">
+        <h1 className="biust-app-title pre-animate">BIUST Branch Application</h1>
+        <p className="biust-app-description pre-animate">
           Join the AbleHearts community at BIUST! Fill out the form below to apply for membership and start making a difference.
         </p>
         <form 
-          className="biust-app-application-form" 
+          className="biust-app-application-form pre-animate" 
           method="POST" 
           onSubmit={handleSubmit}
         >

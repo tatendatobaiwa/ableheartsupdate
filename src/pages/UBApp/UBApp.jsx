@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFadeInAnimation, usePageFadeIn } from '../../hooks/useFadeInAnimation';
 import { useNavigate } from 'react-router-dom';
 import './UBApp.css';
 import countryCodes from '/src/data/countryCodes.json';
@@ -17,6 +18,9 @@ const UBApp = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
+
+  usePageFadeIn();
+  useFadeInAnimation('.page-wrapper');
 
   const validate = () => {
     const newErrors = {};
@@ -69,7 +73,7 @@ const UBApp = () => {
   };
 
   return (
-  <div className="page-wrapper">
+  <div className="page-wrapper page-fade-in">
     <div className="ub-app-page-background">
       <div className="ub-background-blobs">
         {blobImages.map((blob, index) => (
@@ -82,19 +86,19 @@ const UBApp = () => {
         ))}
       </div>
       <div className="ub-app-container">
-        <div className="ub-app-logo-container">
+        <div className="ub-app-logo-container pre-animate">
           <img src="/src/assets/fixed/icons/ub.webp" alt="UB Logo" className="ub-app-logo" 
           width="90"
           height="90"
           />
         </div>
 
-        <h1 className="ub-app-title">UB Branch Application</h1>
-        <p className="ub-app-description">
+        <h1 className="ub-app-title pre-animate">UB Branch Application</h1>
+        <p className="ub-app-description pre-animate">
           Join the AbleHearts community at UB! Fill out the form below to apply for membership and start making a difference.
         </p>
         <form 
-          className="ub-app-application-form" 
+          className="ub-app-application-form pre-animate" 
           method="POST" 
           onSubmit={handleSubmit}
         >

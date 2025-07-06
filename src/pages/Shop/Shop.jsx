@@ -3,6 +3,8 @@ import { ShoppingCart, X, Plus, Minus } from 'lucide-react';
 import { db } from '/src/firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Shop.css';
+import { useFadeInAnimation, usePageFadeIn } from '../../hooks/useFadeInAnimation';
+import SimpleSEO from '../../components/SEO/SimpleSEO';
 
 import blob1 from '/src/assets/fixed/icons/blob1.webp';
 import blob2 from '/src/assets/fixed/icons/blob2.webp';
@@ -77,6 +79,9 @@ const Shop = () => {
   const [contactDetails, setContactDetails] = useState({ email: '', phone: '' });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formError, setFormError] = useState('');
+
+  usePageFadeIn();
+  useFadeInAnimation('.shop-page-wrapper');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -227,20 +232,29 @@ const Shop = () => {
   )), []);
 
   return (
-    <div className={`shop-page-wrapper ${isContentLoaded ? 'content-loaded' : ''}`}>
+    <>
+      <SimpleSEO 
+        title="Shop with a Purpose"
+        description="Support our mission by purchasing items from our shop. Every purchase helps fund our initiatives. Browse our collection of t-shirts and jerseys."
+        keywords="shop, merchandise, t-shirts, jerseys, support, donation, able hearts foundation, Botswana"
+        type="website"
+      />
+      <div className={`shop-page-wrapper page-fade-in ${isContentLoaded ? 'content-loaded' : ''}`}>
       <div className="shop-background-blobs" aria-hidden="true">
         {memoizedBlobComponents}
       </div>
-      <header className={`shop-header ${isContentLoaded ? '' : 'pre-animate'}`}>
+      <header className={`shop-header pre-animate`}>
         <h1 className="shop-title-main">Shop with a Purpose</h1>
         <p className="shop-subtitle">
           Support our mission by purchasing items from our shop. Every purchase helps fund our initiatives.
         </p>
       </header>
-      <main className={`shop-main-content ${isContentLoaded ? '' : 'pre-animate'}`}>
+      <main className={`shop-main-content pre-animate`}>
         <div className="product-grid-shop">
-          {SHOP_PRODUCTS.map((product) => (
-            <ProductCard key={product.id} product={product} onOpenModal={openModal} />
+          {SHOP_PRODUCTS.map((product, index) => (
+            <div key={product.id} className="pre-animate-scale" style={{ transitionDelay: `${index * 0.2}s` }}>
+              <ProductCard product={product} onOpenModal={openModal} />
+            </div>
           ))}
         </div>
       </main>
@@ -387,10 +401,11 @@ const Shop = () => {
 
       {showScrollToTop && (
         <button type="button" className="scroll-to-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
-          â†‘
+          â†'
         </button>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 

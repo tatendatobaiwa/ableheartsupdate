@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './Home.css';
 import NewsletterSignup from "../../components/NewsLetterSignup.jsx";
+import SimpleSEO from "../../components/SEO/SimpleSEO.jsx";
 
 import landingPageImage from '/src/assets/fixed/landingpageimage.webp';
 import whiteLogo from '/src/assets/fixed/icons/whiteablehearts.webp';
@@ -115,7 +116,27 @@ const Home = () => {
   };
 
   return (
-    <div className="page-wrapper home-page-wrapper">
+    <>
+      <SimpleSEO 
+        title="Home"
+        description="Welcome to AbleHearts Foundation - Empowering individuals with disabilities and fostering inclusivity through various programs and initiatives in Botswana."
+        keywords="disability support, inclusivity, Botswana, foundation, empowerment, community, accessibility, able hearts"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "AbleHearts Foundation",
+          "description": "Empowering individuals with disabilities and fostering inclusivity through various programs and initiatives in Botswana.",
+          "url": "https://ableheartsfoundation.org",
+          "foundingDate": "2017",
+          "areaServed": "Botswana",
+          "knowsAbout": ["Disability Support", "Community Empowerment", "Inclusivity"],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "ableheartsfoundation@gmail.com"
+          }
+        }}
+      />
+      <div className="page-wrapper home-page-wrapper">
       <div className="home-container">
         {slides.length > 0 && (
           <div
@@ -239,6 +260,7 @@ const Home = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

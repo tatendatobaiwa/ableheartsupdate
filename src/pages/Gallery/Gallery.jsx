@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import './Gallery.css';
+import { useFadeInAnimation, usePageFadeIn } from '../../hooks/useFadeInAnimation';
+import SimpleSEO from '../../components/SEO/SimpleSEO';
 
 import blob1 from '../../assets/fixed/icons/blob1.webp';
 import blob2 from '../../assets/fixed/icons/blob2.webp';
@@ -309,6 +311,9 @@ const Gallery = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [isContentLoaded, setIsContentLoaded] = useState(false);
 
+  usePageFadeIn();
+  useFadeInAnimation('.gallery-page-wrapper');
+
   useEffect(() => {
     setIsContentLoaded(true);
 
@@ -401,22 +406,29 @@ const Gallery = () => {
   )), []);
 
   return (
-    <div className={`gallery-page-wrapper ${isContentLoaded ? 'content-loaded' : ''}`}>
+    <>
+      <SimpleSEO 
+        title="Event Gallery"
+        description="Explore our events and the moments that make them special. View photos from our community initiatives, talent shows, donations, and impact programs across Botswana."
+        keywords="gallery, events, photos, community initiatives, talent show, donations, Botswana, able hearts foundation"
+      />
+      <div className={`gallery-page-wrapper page-fade-in ${isContentLoaded ? 'content-loaded' : ''}`}>
       <div className="gallery-background-blobs" aria-hidden="true">
         {memoizedBlobComponents}
       </div>
 
-      <header className={`gallery-header ${isContentLoaded ? '' : 'pre-animate'}`}>
+      <header className={`gallery-header pre-animate`}>
         <h1>Event Gallery</h1>
         <p>Explore our events and the moments that make them special.</p>
       </header>
 
-      <main className={`gallery-main-content ${isContentLoaded ? '' : 'pre-animate'}`}>
+      <main className={`gallery-main-content pre-animate`}>
         <div className="events-grid">
-          {galleryEventsData.map((event) => (
+          {galleryEventsData.map((event, index) => (
             <div
               key={event.id}
-              className="event-card"
+              className={`event-card pre-animate-scale`}
+              style={{ transitionDelay: `${index * 0.1}s` }}
               onClick={() => handleEventClick(event)}
               role="button"
               tabIndex={0}
@@ -517,7 +529,8 @@ const Gallery = () => {
           ↑
         </button>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 
