@@ -63,6 +63,12 @@ body.dyslexia-mode h1, body.dyslexia-mode h2, body.dyslexia-mode h3, body.dyslex
 /* Import universal animations */
 @import url('./styles/animations.css');
 
+/* Import design system */
+@import url('./styles/designSystem.css');
+
+/* Import mobile optimizations */
+@import url('./styles/mobileOptimizations.css');
+
 /* Screen Reader Mode Styles */
 body.screen-reader-mode {
   /* General accessibility improvements */

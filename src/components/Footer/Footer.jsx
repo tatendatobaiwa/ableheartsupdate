@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import mailIcon from "../../assets/fixed/icons/mail.webp";
 import phoneIcon from "../../assets/fixed/icons/call.webp";
@@ -118,4 +118,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

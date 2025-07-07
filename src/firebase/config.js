@@ -3,24 +3,42 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Validate environment variables
+const requiredEnvVars = [
+  'VITE_FIREBASE_API_KEY',
+  'VITE_FIREBASE_AUTH_DOMAIN',
+  'VITE_FIREBASE_PROJECT_ID',
+  'VITE_FIREBASE_STORAGE_BUCKET',
+  'VITE_FIREBASE_MESSAGING_SENDER_ID',
+  'VITE_FIREBASE_APP_ID'
+];
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const missingVars = requiredEnvVars.filter(varName => !import.meta.env[varName]);
+if (missingVars.length > 0) {
+  throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+}
+
+// Firebase configuration using environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyAGAHKUJBbHaRmGa9CgF7wga72iLZ7fpYs",
-  authDomain: "ablehearts-577b0.firebaseapp.com",
-  projectId: "ablehearts-577b0",
-  storageBucket: "ablehearts-577b0.firebasestorage.app",
-  messagingSenderId: "101374129405",
-  appId: "1:101374129405:web:5e22f3ca0ff79149d6ba94",
-  measurementId: "G-6FBGDZTBXM"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Initialize Analytics only if measurement ID is provided and in production
+let analytics = null;
+if (import.meta.env.VITE_FIREBASE_MEASUREMENT_ID && import.meta.env.PROD) {
+  analytics = getAnalytics(app);
+}
+
+// Initialize Firestore
 const db = getFirestore(app);
 
-export { db };
+export { db, analytics, app };

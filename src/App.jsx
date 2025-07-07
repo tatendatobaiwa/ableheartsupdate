@@ -2,6 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import Header from './components/Header/Header.jsx';
 import Footer from "./components/Footer/Footer.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import MobileOptimizer from "./components/MobileOptimizer.jsx";
+import SecurityProvider from "./components/SecurityProvider.jsx";
+import CookieConsent from "./components/CookieConsent.jsx";
 import ProgramsAndInitiatives from "./pages/ProgramsAndInitiatives/ProgramsAndInitiatives.jsx";
 import GetInvolved from "./pages/GetInvolved/GetInvolved.jsx";
 import Shop from "./pages/Shop/Shop.jsx";
@@ -23,29 +26,29 @@ const blobImages = [
 
 function App() {
   return (
-    <>
-      {/* Background blobs */}
-      {/* This section is being removed to allow per-page blob control */}
-      
-      <div className="app-content" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <ScrollToTop /> {/* Ensures scroll-to-top functionality */}
-        <Header />
-        {/* Main Routes */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/programs-and-initiatives" element={<ProgramsAndInitiatives />} />
-          <Route path="/get-involved" element={<GetInvolved />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/terms-of-use" element={<TermsOfUse />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/ablehearts-ub" element={<UBApp />} />
-          <Route path="/ablehearts-biust" element={<BIUSTApp />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        </Routes>
-        <Footer />
-      </div>
-    </>
+    <SecurityProvider>
+      <MobileOptimizer>
+        <div className="app-content" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <ScrollToTop /> {/* Ensures scroll-to-top functionality */}
+          <Header />
+          {/* Main Routes */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/programs-and-initiatives" element={<ProgramsAndInitiatives />} />
+            <Route path="/get-involved" element={<GetInvolved />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/terms-of-use" element={<TermsOfUse />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/ablehearts-ub" element={<UBApp />} />
+            <Route path="/ablehearts-biust" element={<BIUSTApp />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          </Routes>
+          <Footer />
+          <CookieConsent />
+        </div>
+      </MobileOptimizer>
+    </SecurityProvider>
   );
 }
 
