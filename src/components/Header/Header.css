@@ -1,6 +1,6 @@
 :root {
   --header-background: #FFFFFF;
-  --header-background-scrolled: rgba(255, 255, 255, 0.85);
+  --header-background-scrolled: rgba(255, 255, 255, 0.90);
   --header-text-color: #043F70;
   --header-link-active-color: #008CFF;
   --header-link-hover-bg: #E0F2F7;
@@ -23,7 +23,7 @@ header {
   background-color: var(--header-background);
   font-family: var(--header-font);
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   margin: 0 auto;
 }
@@ -115,7 +115,9 @@ header {
 
 header.scrolled {
   background-color: var(--header-background-scrolled);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* Safari support */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 nav {

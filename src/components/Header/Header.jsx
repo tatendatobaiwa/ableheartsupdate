@@ -6,6 +6,7 @@ import './Header.css';
 import logo from '/src/assets/fixed/icons/ableheartslogo.webp';
 import MobileMenu from '../MobileNavigation/MobileMenu';
 import { NAVIGATION_ITEMS } from '../../constants/navigation';
+import { safeWindow } from '../../utils/safeDOMAccess';
 
 /**
  * Header component with navigation and mobile menu
@@ -13,6 +14,7 @@ import { NAVIGATION_ITEMS } from '../../constants/navigation';
  */
 const Header = memo(() => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
   const toggleMobileMenu = () => {
@@ -24,10 +26,33 @@ const Header = memo(() => {
     setMobileMenuOpen(false);
   }, [location]);
 
+  // Handle scroll effect for header transparency
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const shouldBeScrolled = scrollTop > 10; // Trigger after 10px scroll
+      
+      if (shouldBeScrolled !== isScrolled) {
+        setIsScrolled(shouldBeScrolled);
+      }
+    };
+
+    // Add scroll listener
+    safeWindow.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Check initial scroll position
+    handleScroll();
+
+    // Cleanup
+    return () => {
+      safeWindow.removeEventListener('scroll', handleScroll);
+    };
+  }, [isScrolled]);
+
   // Use consistent navigation items from constants
 
   return (
-    <header className="header" role="banner">
+    <header className={`header ${isScrolled ? 'scrolled' : ''}`} role="banner">
       <div className="header-container">
         <Link to="/" className="header-logo" aria-label="AbleHearts Foundation Home">
           <img src={logo} alt="AbleHearts Foundation Logo" />
