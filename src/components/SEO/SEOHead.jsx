@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet-async';
 
 const SEOHead = ({
@@ -99,6 +99,23 @@ const SEOHead = ({
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
     </Helmet>
   );
+};
+
+SEOHead.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  keywords: PropTypes.string,
+  image: PropTypes.string,
+  url: PropTypes.string,
+  type: PropTypes.string,
+  author: PropTypes.string,
+  siteName: PropTypes.string,
+  locale: PropTypes.string,
+  twitterHandle: PropTypes.string,
+  structuredData: PropTypes.object,
+  canonical: PropTypes.string,
+  noindex: PropTypes.bool,
+  nofollow: PropTypes.bool,
 };
 
 export default SEOHead;

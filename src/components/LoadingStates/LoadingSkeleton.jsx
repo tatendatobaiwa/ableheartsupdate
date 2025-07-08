@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import './LoadingSkeleton.css';
 
 const LoadingSkeleton = ({ 
@@ -21,14 +21,32 @@ const LoadingSkeleton = ({
   return count === 1 ? skeletons[0] : <div className="skeleton-group">{skeletons}</div>;
 };
 
+LoadingSkeleton.propTypes = {
+  variant: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  count: PropTypes.number,
+  className: PropTypes.string,
+  animate: PropTypes.bool
+};
+
 // Predefined skeleton components for common use cases
 export const TextSkeleton = ({ lines = 3, ...props }) => (
   <LoadingSkeleton variant="text" count={lines} {...props} />
 );
 
+TextSkeleton.propTypes = {
+  lines: PropTypes.number
+};
+
 export const ImageSkeleton = ({ width = '100%', height = '200px', ...props }) => (
   <LoadingSkeleton variant="image" width={width} height={height} {...props} />
 );
+
+ImageSkeleton.propTypes = {
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+};
 
 export const CardSkeleton = () => (
   <div className="skeleton-card">

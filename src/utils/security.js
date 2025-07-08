@@ -162,7 +162,9 @@ export const secureStorage = {
     try {
       localStorage.setItem(key, JSON.stringify(item));
     } catch (error) {
-      console.warn('Failed to store item securely:', error);
+      if (import.meta.env.DEV) {
+        console.warn('Failed to store item securely:', error);
+      }
     }
   },
   
@@ -181,7 +183,9 @@ export const secureStorage = {
       
       return item.value;
     } catch (error) {
-      console.warn('Failed to retrieve item securely:', error);
+      if (import.meta.env.DEV) {
+        console.warn('Failed to retrieve item securely:', error);
+      }
       return null;
     }
   },
@@ -190,7 +194,9 @@ export const secureStorage = {
     try {
       localStorage.removeItem(key);
     } catch (error) {
-      console.warn('Failed to remove item securely:', error);
+      if (import.meta.env.DEV) {
+        console.warn('Failed to remove item securely:', error);
+      }
     }
   },
   
@@ -198,7 +204,9 @@ export const secureStorage = {
     try {
       localStorage.clear();
     } catch (error) {
-      console.warn('Failed to clear storage securely:', error);
+      if (import.meta.env.DEV) {
+        console.warn('Failed to clear storage securely:', error);
+      }
     }
   }
 };

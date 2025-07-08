@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import './Input.css';
 
 /**
@@ -145,6 +146,26 @@ const Input = ({
       )}
     </div>
   );
+};
+
+Input.propTypes = {
+  type: PropTypes.string,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  error: PropTypes.string,
+  required: PropTypes.bool,
+  disabled: PropTypes.bool,
+  helperText: PropTypes.string,
+  size: PropTypes.string,
+  className: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  autoComplete: PropTypes.string,
+  maxLength: PropTypes.number,
+  pattern: PropTypes.string,
+  autoFocus: PropTypes.bool,
 };
 
 export default Input;

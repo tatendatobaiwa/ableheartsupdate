@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useFadeInAnimation, usePageFadeIn } from '../../hooks/useFadeInAnimation';
 import { useNavigate } from 'react-router-dom';
 import './BIUSTApp.css';
 import countryCodes from '/src/data/countryCodes.json';
-import Footer from '../../components/Footer/Footer';
+
 
 const blobImages = [
   '/src/assets/fixed/icons/blob1.webp',
@@ -65,7 +65,7 @@ const BIUSTApp = () => {
           setStatus('error');
           alert('Failed to send form. Please try again.');
         }
-      } catch (err) {
+      } catch (error) {
         setStatus('error');
         alert('Failed to send form. Please try again.');
       }

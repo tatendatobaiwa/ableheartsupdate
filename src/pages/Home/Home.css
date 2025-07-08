@@ -158,7 +158,7 @@
 }
 
 .home-background-blobs {
-  opacity: 0.15; /* Softer blobs */
+  opacity: 0.5; /* Softer blobs */
   position: fixed; /* Relative to viewport */
   top: 0;
   left: 0;
@@ -226,7 +226,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.8; /* Softer scribble */
+  opacity: 1.0; /* Softer scribble */
 }
 
 .newsletter-content-area {

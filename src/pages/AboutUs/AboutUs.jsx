@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './AboutUs.css';
 import ubLogo from '/src/assets/fixed/icons/ub.webp';
 import biustLogo from '/src/assets/fixed/icons/biust.webp';
-import Footer from '../../components/Footer/Footer';
+
 
 import blob1 from '../../assets/fixed/icons/blob1.webp';
 import blob2 from '../../assets/fixed/icons/blob2.webp';
 import blob3 from '../../assets/fixed/icons/blob3.webp';
 import blob4 from '../../assets/fixed/icons/blob4.webp';
 
-const ubTeam = [
-  { name: 'Banoziba Gombalume', role: 'President', image: '/src/assets/fixed/bano.jpg' }
-];
 
-const biustTeam = [
-  { name: 'Kgosi Moagi-Angaman ', role: 'President', image: '/src/assets/fixed/kgosi.jpg' }
-];
 
 const blobImages = [
   blob1,
@@ -123,7 +117,7 @@ const AboutUs = () => {
           <div className="founder-details">
             <h3 className="founder-name">Sakshi Bhargava</h3>
             <p className="founder-bio">
-            Sakshi Bhargava is a passionate philanthropist and advocate for equity, diversity, and inclusion. She holds an Honours BA in Political Science from the University of Western Ontario and was a delegate to the UN’s 69th Commission on the Status of Women (CSW69). Through Able Hearts, she works to create opportunities for children and youth in underserved communities, grounded in the belief that lasting change begins with compassion, dignity, and access for all.            </p>
+            Sakshi Bhargava is a passionate philanthropist and advocate for equity, diversity, and inclusion. She holds an Honours BA in Political Science from the University of Western Ontario and was a delegate to the UN&apos;s 69th Commission on the Status of Women (CSW69). Through Able Hearts, she works to create opportunities for children and youth in underserved communities, grounded in the belief that lasting change begins with compassion, dignity, and access for all.            </p>
             <div className="founder-achievements">
               <h4 className="achievements-title">Key Roles & Achievements</h4>
               <ul>

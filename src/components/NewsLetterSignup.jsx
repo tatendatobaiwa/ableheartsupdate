@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { db } from '../firebase/config';
 import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 
@@ -36,7 +36,9 @@ const NewsletterSignup = () => {
       setEmail('');
       setMessage('Thanks for subscribing!');
     } catch (error) {
-      console.error("Error adding document: ", error);
+      if (import.meta.env.DEV) {
+        console.error("Error adding document: ", error);
+      }
       setMessage('Failed to subscribe. Please try again.');
     } finally {
       setLoading(false);

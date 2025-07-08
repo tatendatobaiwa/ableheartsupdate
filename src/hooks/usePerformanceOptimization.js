@@ -25,7 +25,7 @@ export const usePerformanceOptimization = () => {
     try {
       const { preloadImages } = await import('../utils/performance');
       await preloadImages(criticalImages);
-    } catch (error) {
+    } catch (e) {
       // Failed to preload critical resources
     }
   }, []);
@@ -103,7 +103,7 @@ export const useIntersectionObserver = (options = {}) => {
   }), [threshold, rootMargin]);
 
   const createObserver = useCallback((callback) => {
-    return new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           callback(entry);
@@ -113,6 +113,7 @@ export const useIntersectionObserver = (options = {}) => {
         }
       });
     }, observerOptions);
+    return observer;
   }, [observerOptions, triggerOnce]);
 
   return { createObserver };

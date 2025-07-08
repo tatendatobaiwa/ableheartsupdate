@@ -8,5 +8,8 @@ export {
   EventCardSkeleton 
 } from './LoadingSkeleton';
 
+// Error handling components
+export { default as ErrorFallback } from './ErrorFallback';
+
 // Loading state hook
 export { default as useLoadingState } from './useLoadingState';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './PrivacyPolicy.css';
 // import Footer from '../../components/Footer/Footer';
 
@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
         <section className="privacy-section">
           <h2 className="privacy-section-title">1. Introduction</h2>
           <p className="privacy-text">
-            Able Hearts Foundation (“we,” “us,” or “our”) is committed to protecting the privacy of our volunteers and website users. This Privacy Policy outlines how we collect, use, and safeguard your personal information when you apply to our campus clubs at BIUST and UB or otherwise interact with our website.
+            Able Hearts Foundation (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting the privacy of our volunteers and website users. This Privacy Policy outlines how we collect, use, and safeguard your personal information when you apply to our campus clubs at BIUST and UB or otherwise interact with our website.
           </p>
         </section>
 

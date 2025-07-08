@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { trackButtonClick } from '../../utils/analytics';
 import './Button.css';
 
@@ -81,6 +81,19 @@ const Button = ({
       </span>
     </button>
   );
+};
+
+Button.propTypes = {
+  variant: PropTypes.oneOf(['primary', 'secondary', 'outline', 'ghost']),
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
+  trackingName: PropTypes.string,
+  trackingLocation: PropTypes.string,
+  className: PropTypes.string,
+  type: PropTypes.oneOf(['button', 'submit', 'reset']),
 };
 
 export default Button;

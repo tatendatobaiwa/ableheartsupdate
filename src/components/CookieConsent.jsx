@@ -1,5 +1,5 @@
-import React, { useState, useEffect, memo } from 'react';
-import { useSecurity } from './SecurityProvider';
+import { useState, useEffect, memo } from 'react';
+import { useSecurity } from '../context/SecurityContext';
 import './CookieConsent.css';
 
 /**
@@ -7,7 +7,7 @@ import './CookieConsent.css';
  * GDPR/CCPA compliant cookie consent management
  */
 const CookieConsent = memo(() => {
-  const { cookieConsent, setCookieConsent, hasConsent } = useSecurity();
+  const { cookieConsent, setCookieConsent } = useSecurity();
   const [showBanner, setShowBanner] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [preferences, setPreferences] = useState({
@@ -86,7 +86,7 @@ const CookieConsent = memo(() => {
               <h3>We value your privacy</h3>
               <p>
                 We use cookies to enhance your browsing experience, serve personalized content, 
-                and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+                and analyze our traffic. By clicking &quot;Accept All&quot;, you consent to our use of cookies.
               </p>
               <div className="cookie-banner-actions">
                 <button 

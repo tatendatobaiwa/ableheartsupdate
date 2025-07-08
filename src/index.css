@@ -1,65 +1,3 @@
-@font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/fonts/OpenDyslexic-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/fonts/OpenDyslexic-Bold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/fonts/OpenDyslexic-Italic.woff') format('woff');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenDyslexic';
-  src: url('/fonts/OpenDyslexic-BoldItalic.woff') format('woff');
-  font-weight: bold;
-  font-style: italic;
-}
-
-/* Optionally, if you want to support Alta and Mono variants separately */
-@font-face {
-  font-family: 'OpenDyslexicAlta';
-  src: url('/fonts/OpenDyslexicAlta-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'OpenDyslexicAlta';
-  src: url('/fonts/OpenDyslexicAlta-Italic.woff') format('woff');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'OpenDyslexicMono';
-  src: url('/fonts/OpenDyslexicMono-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-/* Dyslexia Mode Styles */
-body.dyslexia-mode {
-  font-family: 'OpenDyslexic', sans-serif !important;
-  line-height: 1.6 !important;
-  letter-spacing: 0.05em !important;
-}
-
-/* Optional: Adjust specific elements if needed */
-body.dyslexia-mode h1, body.dyslexia-mode h2, body.dyslexia-mode h3, body.dyslexia-mode p, body.dyslexia-mode span, body.dyslexia-mode a {
-  font-family: 'OpenDyslexic', sans-serif !important;
-}
-
 /* Import universal animations */
 @import url('./styles/animations.css');
 
@@ -68,6 +6,13 @@ body.dyslexia-mode h1, body.dyslexia-mode h2, body.dyslexia-mode h3, body.dyslex
 
 /* Import mobile optimizations */
 @import url('./styles/mobileOptimizations.css');
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('/fonts/OpenDyslexic-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* Screen Reader Mode Styles */
 body.screen-reader-mode {

@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { safeMap, safeLength, isValidArray } from '../../utils/safeArrayOperations';
+import { safeDocument, safeWindow } from '../../utils/safeDOMAccess';
 import './Home.css';
 import NewsletterSignup from "../../components/NewsLetterSignup.jsx";
 import SimpleSEO from "../../components/SEO/SimpleSEO.jsx";
@@ -81,12 +83,12 @@ const Home = () => {
   }, [imageMap]);
 
   useEffect(() => {
-    if (slides.length === 0) return;
+    if (!isValidArray(slides)) return;
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % safeLength(slides));
     }, CAROUSEL_INTERVAL);
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, [safeLength(slides)]);
 
   const changeSlide = useCallback((newIndexOrUpdater) => {
     if (isTransitioning) return;
@@ -96,11 +98,11 @@ const Home = () => {
   }, [isTransitioning]);
 
   const handleNextSlide = useCallback(() => {
-    changeSlide(prev => (prev + 1) % slides.length);
+    changeSlide(prev => (prev + 1) % safeLength(slides));
   }, [changeSlide, slides.length]);
 
   const handlePrevSlide = useCallback(() => {
-    changeSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
+    changeSlide(prev => (prev === 0 ? safeLength(slides) - 1 : prev - 1));
   }, [changeSlide, slides.length]);
 
   const handleIndicatorClick = useCallback((index) => {
@@ -138,7 +140,7 @@ const Home = () => {
       />
       <div className="page-wrapper home-page-wrapper">
       <div className="home-container">
-        {slides.length > 0 && (
+        {isValidArray(slides) && (
           <div
             className="carousel-container pre-animate"
             role="region"
@@ -146,13 +148,13 @@ const Home = () => {
             aria-roledescription="carousel"
             aria-live="polite"
           >
-            {slides.map((slide, index) => (
+            {safeMap(slides, (slide, index) => (
               <div
                 key={slide.title + index} // More robust key
                 className={`carousel-slide ${index === currentSlide ? 'active' : ''}`}
                 role="group"
                 aria-roledescription="slide"
-                aria-label={`Slide ${index + 1} of ${slides.length}: ${slide.title}`}
+                aria-label={`Slide ${index + 1} of ${safeLength(slides)}: ${slide.title}`}
                 style={{ backgroundImage: `url(${getImageUrl(slide.image)})` }}
               >
                 <div className="slide-content">
@@ -174,7 +176,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="carousel-indicators">
-                    {slides.map((_, idx) => (
+                    {safeMap(slides, (_, idx) => (
                       <button
                         key={idx}
                         className={`indicator ${currentSlide === idx ? 'active' : ''}`}
@@ -208,7 +210,7 @@ const Home = () => {
             empower individuals with disabilities to embrace their full potential.
             Guided by our belief that{' '}
             <span className="highlight">
-              "We are all equal in the fact that we are all different,"
+              &quot;We are all equal in the fact that we are all different,&quot;
             </span>{' '}
             we are committed to fostering inclusivity, celebrating diversity, and
             driving meaningful change in communities. Together, we strive to create
@@ -244,7 +246,7 @@ const Home = () => {
           <h3>Our Valued Collaborators</h3>
           <div className="logo-bar">
             <div className="logo-slider">
-              {duplicatedCollaboratorLogos.map((logoKey, index) => (
+              {safeMap(duplicatedCollaboratorLogos, (logoKey, index) => (
                 <div className="collaborator-logo-item" key={`${logoKey}-${index}`}>
                   <img
                     src={getImageUrl(logoKey)}

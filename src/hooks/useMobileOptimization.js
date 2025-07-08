@@ -60,7 +60,6 @@ export const useTouchGestures = (element, options = {}) => {
     onSwipeRight,
     onSwipeUp,
     onSwipeDown,
-    onPinch,
     threshold = 50,
     preventScroll = false
   } = options;

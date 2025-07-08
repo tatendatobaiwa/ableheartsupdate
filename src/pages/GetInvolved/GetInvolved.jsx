@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import scribble from '/src/assets/fixed/icons/scribblebackground.webp';
 import DonationForm from '/src/components/DonationForm.jsx';

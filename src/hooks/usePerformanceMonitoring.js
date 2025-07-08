@@ -7,7 +7,7 @@ import { globalPerformanceMonitor, performanceUtils } from '../utils/performance
 
 // Main performance monitoring hook
 export const usePerformanceMonitoring = (componentName) => {
-  const [performanceData, setPerformanceData] = useState(null);
+  const [performanceData] = useState(null);
   const renderStartTime = useRef(null);
 
   // Track component render performance
@@ -92,7 +92,7 @@ export const useComponentPerformance = (componentName) => {
       updateCount: updateCount.current,
       lastUpdateTime: updateTime
     }));
-  });
+  }, [setPerformanceMetrics]);
 
   return performanceMetrics;
 };

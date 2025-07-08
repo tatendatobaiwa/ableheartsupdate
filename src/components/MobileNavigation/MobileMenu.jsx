@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { X, Menu, ChevronDown, ChevronUp } from 'lucide-react';
+import PropTypes from 'prop-types';
+import { X, ChevronDown, ChevronUp } from 'lucide-react';
+import { safeMap, isValidArray } from '../../utils/safeArrayOperations';
+import { safeDocument } from '../../utils/safeDOMAccess';
 import './MobileMenu.css';
 
 const MobileMenu = ({ isOpen, onClose, navigationItems }) => {
@@ -14,14 +17,19 @@ const MobileMenu = ({ isOpen, onClose, navigationItems }) => {
 
   // Prevent body scroll when menu is open
   useEffect(() => {
+    const body = safeDocument.getBody();
+    if (!body) return;
+
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = '';
+      body.style.overflow = '';
     }
 
     return () => {
-      document.body.style.overflow = '';
+      if (body) {
+        body.style.overflow = '';
+      }
     };
   }, [isOpen]);
 
@@ -61,7 +69,7 @@ const MobileMenu = ({ isOpen, onClose, navigationItems }) => {
         </div>
 
         <div className="mobile-menu-content">
-          {navigationItems.map((item) => (
+          {safeMap(navigationItems, (item) => (
             <div key={item.id} className="mobile-menu-item">
               {item.submenu ? (
                 <>
@@ -83,7 +91,7 @@ const MobileMenu = ({ isOpen, onClose, navigationItems }) => {
                     id={`submenu-${item.id}`}
                     className={`mobile-submenu ${expandedItems[item.id] ? 'expanded' : ''}`}
                   >
-                    {item.submenu.map((subItem) => (
+                    {safeMap(item.submenu, (subItem) => (
                       <Link
                         key={subItem.id}
                         to={subItem.path}
@@ -123,6 +131,21 @@ const MobileMenu = ({ isOpen, onClose, navigationItems }) => {
       </nav>
     </div>
   );
+};
+
+MobileMenu.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  navigationItems: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    label: PropTypes.string.isRequired,
+    path: PropTypes.string,
+    submenu: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      label: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired
+    }))
+  })).isRequired
 };
 
 export default MobileMenu;

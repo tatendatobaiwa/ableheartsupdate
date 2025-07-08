@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import mailIcon from "../../assets/fixed/icons/mail.webp";
 import phoneIcon from "../../assets/fixed/icons/call.webp";

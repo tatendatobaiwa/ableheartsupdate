@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import PropTypes from 'prop-types';
 import { ShoppingCart, X, Plus, Minus } from 'lucide-react';
 import { db } from '/src/firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { safeMap, safeLength, isValidArray } from '../../utils/safeArrayOperations';
+import { safeDocument, safeWindow } from '../../utils/safeDOMAccess';
 import './Shop.css';
 import { useFadeInAnimation, usePageFadeIn } from '../../hooks/useFadeInAnimation';
 import SimpleSEO from '../../components/SEO/SimpleSEO';
@@ -65,6 +68,11 @@ const ProductCard = memo(({ product, onOpenModal }) => (
   </div>
 ));
 ProductCard.displayName = 'ProductCard';
+
+ProductCard.propTypes = {
+  product: PropTypes.object.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
+};
 
 const Shop = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -182,7 +190,7 @@ const Shop = () => {
     setIsSubmitting(true);
     try {
       const orderData = {
-        items: cart.map(item => ({
+        items: safeMap(cart, item => ({
           productId: item.productId, name: item.name, price: item.price,
           size: item.size, quantity: item.quantity,
         })),
@@ -198,7 +206,9 @@ const Shop = () => {
       setIsCartOpen(false);
       setContactDetails({ email: '', phone: '' });
     } catch (error) {
-      console.error('Error submitting order:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error submitting order:', error);
+      }
       setFormError('Failed to place pre-order. Please try again or contact support.');
     } finally {
       setIsSubmitting(false);
@@ -218,7 +228,7 @@ const Shop = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [enlargedImage, selectedProduct, isCartOpen, showSuccessModal, closeEnlargedImage, closeModal]);
 
-  const memoizedBlobComponents = useMemo(() => BLOB_IMAGE_IMPORTS.map((blobSrc, index) => (
+  const memoizedBlobComponents = useMemo(() => safeMap(BLOB_IMAGE_IMPORTS, (blobSrc, index) => (
     <img
       key={`blob-${index}`}
       src={blobSrc}
@@ -251,7 +261,7 @@ const Shop = () => {
       </header>
       <main className={`shop-main-content pre-animate`}>
         <div className="product-grid-shop">
-          {SHOP_PRODUCTS.map((product, index) => (
+          {safeMap(SHOP_PRODUCTS, (product, index) => (
             <div key={product.id} className="pre-animate-scale" style={{ transitionDelay: `${index * 0.2}s` }}>
               <ProductCard product={product} onOpenModal={openModal} />
             </div>
@@ -267,7 +277,7 @@ const Shop = () => {
             </button>
             <div className="modal-product-header">
               <div className="modal-images-container">
-                {selectedProduct.images.map((imageSrc, index) => (
+                {safeMap(selectedProduct?.images, (imageSrc, index) => (
                   <img
                     key={index}
                     src={imageSrc}
@@ -288,7 +298,7 @@ const Shop = () => {
               <div className="size-selector">
                 <p>Select Size:</p>
                 <div className="size-buttons-container">
-                  {SIZES.map((size) => (
+                  {safeMap(SIZES, (size) => (
                     <button
                       key={size}
                       type="button"
@@ -334,10 +344,10 @@ const Shop = () => {
         </div>
         
         <div className="mini-cart-items-container">
-          {cart.length === 0 ? (
+          {safeLength(cart) === 0 ? (
             <p className="empty-cart-message">Your cart is empty.</p>
           ) : (
-            cart.map((item) => (
+            safeMap(cart, (item) => (
               <div key={item.id} className="cart-item">
                 <img src={item.image} alt={item.name} className="cart-item-image" />
                 <div className="cart-item-details">
@@ -353,7 +363,7 @@ const Shop = () => {
           )}
         </div>
 
-        {cart.length > 0 && (
+        {safeLength(cart) > 0 && (
           <>
             <div className="contact-details-form">
               <h4>Contact for Pre-order</h4>
@@ -379,7 +389,7 @@ const Shop = () => {
       
       <button type="button" className="cart-toggle-btn" onClick={() => setIsCartOpen(prev => !prev)} aria-label="Toggle cart visibility" aria-expanded={isCartOpen}>
         <ShoppingCart size={24} />
-        {cart.length > 0 && <span className="cart-item-count">{cart.length}</span>}
+        {safeLength(cart) > 0 && <span className="cart-item-count">{safeLength(cart)}</span>}
       </button>
 
       {enlargedImage && (
@@ -401,7 +411,7 @@ const Shop = () => {
 
       {showScrollToTop && (
         <button type="button" className="scroll-to-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
-          â†'
+          ï¿½'
         </button>
       )}
       </div>

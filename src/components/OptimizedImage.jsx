@@ -1,4 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Optimized Image component with lazy loading and error handling
@@ -71,5 +72,17 @@ const OptimizedImage = memo(({
 });
 
 OptimizedImage.displayName = 'OptimizedImage';
+
+OptimizedImage.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  loading: PropTypes.oneOf(['lazy', 'eager']),
+  placeholder: PropTypes.string,
+  onLoad: PropTypes.func,
+  onError: PropTypes.func,
+};
 
 export default OptimizedImage;

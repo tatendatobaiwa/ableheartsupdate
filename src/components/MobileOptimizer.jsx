@@ -1,4 +1,5 @@
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { 
   useMobileDetection, 
   useViewportManagement, 
@@ -93,5 +94,9 @@ const MobileOptimizer = memo(({ children }) => {
 });
 
 MobileOptimizer.displayName = 'MobileOptimizer';
+
+MobileOptimizer.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default MobileOptimizer;

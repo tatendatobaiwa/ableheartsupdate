@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Simple SEO component that doesn't require react-helmet-async
@@ -73,6 +74,16 @@ const SimpleSEO = ({
   }, [title, description, keywords, image, url, type, structuredData]);
 
   return null; // This component doesn't render anything
+};
+
+SimpleSEO.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  keywords: PropTypes.string,
+  image: PropTypes.string,
+  url: PropTypes.string,
+  type: PropTypes.string,
+  structuredData: PropTypes.object,
 };
 
 export default SimpleSEO;

@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import PropTypes from 'prop-types';
+import { safeMap, isValidArray } from '../../utils/safeArrayOperations';
+import { safeDocument, safeWindow } from '../../utils/safeDOMAccess';
 import './Gallery.css';
 import { useFadeInAnimation, usePageFadeIn } from '../../hooks/useFadeInAnimation';
 import SimpleSEO from '../../components/SEO/SimpleSEO';
@@ -288,7 +291,7 @@ const galleryEventsData = [
         if (isNaN(dateA.valueOf())) return 1;
         if (isNaN(dateB.valueOf())) return -1;
         return dateB - dateA;
-      } catch (e) { return 0; }
+      } catch (error) { return 0; }
   });
 
 
@@ -304,6 +307,16 @@ const MemoizedImage = memo(({ src, alt, className, onClick, width, height, loadi
   />
 ));
 MemoizedImage.displayName = 'MemoizedImage';
+
+MemoizedImage.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  loading: PropTypes.string,
+};
 
 const Gallery = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -393,7 +406,7 @@ const Gallery = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedImage, selectedEvent, closeImageModal, closeEventModal]);
 
-  const memoizedBlobComponents = useMemo(() => blobImagePaths.map((blobSrc, index) => (
+  const memoizedBlobComponents = useMemo(() => safeMap(blobImagePaths, (blobSrc, index) => (
     <MemoizedImage
       key={`blob-${index}`}
       src={blobSrc}
@@ -424,7 +437,7 @@ const Gallery = () => {
 
       <main className={`gallery-main-content pre-animate`}>
         <div className="events-grid">
-          {galleryEventsData.map((event, index) => (
+          {safeMap(galleryEventsData, (event, index) => (
             <div
               key={event.id}
               className={`event-card pre-animate-scale`}
@@ -470,7 +483,7 @@ const Gallery = () => {
               <p id="event-modal-description-text" className="event-modal-description-text">{selectedEvent.description}</p>
             </div>
             <div className="event-images-grid">
-              {selectedEvent.images.map((image) => (
+              {safeMap(selectedEvent?.images, (image) => (
                 <div
                   key={image.id}
                   className="event-image-card"

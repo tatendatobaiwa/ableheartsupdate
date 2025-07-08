@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './ProgramsAndInitiatives.css';
 
 const SCROLL_THRESHOLD_TOP_BTN = 300;

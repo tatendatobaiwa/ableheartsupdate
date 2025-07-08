@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useEffect, useState, memo } from 'react';
-import { 
-  initializeSecurity, 
-  securityMonitoring, 
+import { useEffect, useState, memo } from 'react';
+import PropTypes from 'prop-types';
+import {
+  initializeSecurity,
+  securityMonitoring,
   privacyProtection,
-  RateLimiter 
+  RateLimiter
 } from '../utils/securityEnhancements';
-
-const SecurityContext = createContext();
+import SecurityContext, { useSecurity } from '../context/SecurityContext';
 
 /**
  * Security Provider Component
@@ -113,13 +113,9 @@ export const SecurityProvider = memo(({ children }) => {
 
 SecurityProvider.displayName = 'SecurityProvider';
 
-// Hook to use security context
-export const useSecurity = () => {
-  const context = useContext(SecurityContext);
-  if (!context) {
-    throw new Error('useSecurity must be used within a SecurityProvider');
-  }
-  return context;
+SecurityProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default SecurityProvider;
+export { useSecurity };

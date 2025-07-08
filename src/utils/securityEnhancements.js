@@ -314,13 +314,18 @@ export const securityMonitoring = {
       details
     };
 
+    // Only log security events in production or when explicitly enabled
+    if (!import.meta.env.PROD && import.meta.env.VITE_ENABLE_SECURITY_LOGGING !== 'true') {
+      return; // Skip logging in development unless explicitly enabled
+    }
+
     // In production, send to security monitoring service
     if (import.meta.env.PROD) {
       // Send to monitoring service
       // fetch('/api/security/log', { method: 'POST', body: JSON.stringify(securityEvent) });
     } else {
-      // Log to console in development
-      console.warn('Security Event:', securityEvent);
+      // Only log to console in development if explicitly enabled
+      console.info('Security Event:', securityEvent);
     }
   },
 

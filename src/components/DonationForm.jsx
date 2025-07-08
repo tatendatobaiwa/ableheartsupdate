@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { validateFormData, formRateLimiter, generateCSRFToken, secureStorage } from '../utils/security.js';
-import { trackFormSubmission, trackDonation } from '../utils/analytics.js';
+import { useState, useEffect, useRef } from 'react';
+
 import './DonationForm.css';
 
 const DonationForm = () => {
@@ -113,7 +112,9 @@ const DonationForm = () => {
       }
     } catch (err) {
       setError('There was a problem submitting your donation request: ' + err.message);
-      console.error('Submission error:', err);
+      if (import.meta.env.DEV) {
+        console.error('Submission error:', err);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -148,7 +149,7 @@ const DonationForm = () => {
         <div className="form-success">
           <div className="form-header">
             <h2 className="form-title">Thank You for Your {donationType === 'monetary' ? 'Monetary' : 'Non-Monetary'} Donation!</h2>
-            <p className="form-subtitle">We'll be in touch soon with details.</p>
+            <p className="form-subtitle">We&apos;ll be in touch soon with details.</p>
             <button 
               onClick={handleReset} 
               className="submit-button"

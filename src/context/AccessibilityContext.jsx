@@ -1,45 +1,41 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { safeJSONStorage } from '../utils/safeStorage';
 
 const AccessibilityContext = createContext();
 
 export const AccessibilityProvider = ({ children }) => {
   const [isDyslexiaModeEnabled, setIsDyslexiaModeEnabled] = useState(() => {
-    // Initialize from localStorage or default to false
-    try {
-      return JSON.parse(localStorage.getItem('dyslexiaMode')) || false;
-    } catch (error) {
-      console.error("Failed to parse dyslexiaMode from localStorage", error);
-      return false;
-    }
+    // Initialize from safe storage or default to false
+    return safeJSONStorage.getItem('dyslexiaMode', false);
   });
 
   const [isScreenReaderModeEnabled, setIsScreenReaderModeEnabled] = useState(() => {
-    // Initialize from localStorage or default to false
-    try {
-      return JSON.parse(localStorage.getItem('screenReaderMode')) || false;
-    } catch (error) {
-      console.error("Failed to parse screenReaderMode from localStorage", error);
-      return false;
-    }
+    // Initialize from safe storage or default to false
+    return safeJSONStorage.getItem('screenReaderMode', false);
   });
 
   useEffect(() => {
-    localStorage.setItem('dyslexiaMode', JSON.stringify(isDyslexiaModeEnabled));
-    if (isDyslexiaModeEnabled) {
-      document.body.classList.add('dyslexia-mode');
-    } else {
-      document.body.classList.remove('dyslexia-mode');
+    safeJSONStorage.setItem('dyslexiaMode', isDyslexiaModeEnabled);
+    if (typeof document !== 'undefined' && document.body) {
+      if (isDyslexiaModeEnabled) {
+        document.body.classList.add('dyslexia-mode');
+      } else {
+        document.body.classList.remove('dyslexia-mode');
+      }
     }
   }, [isDyslexiaModeEnabled]);
 
   useEffect(() => {
-    localStorage.setItem('screenReaderMode', JSON.stringify(isScreenReaderModeEnabled));
-    if (isScreenReaderModeEnabled) {
-      document.body.classList.add('screen-reader-mode');
-      // Potentially announce changes or focus on main content for screen readers
-      // For example, you might add an aria-live region to announce the mode change.
-    } else {
-      document.body.classList.remove('screen-reader-mode');
+    safeJSONStorage.setItem('screenReaderMode', isScreenReaderModeEnabled);
+    if (typeof document !== 'undefined' && document.body) {
+      if (isScreenReaderModeEnabled) {
+        document.body.classList.add('screen-reader-mode');
+        // Potentially announce changes or focus on main content for screen readers
+        // For example, you might add an aria-live region to announce the mode change.
+      } else {
+        document.body.classList.remove('screen-reader-mode');
+      }
     }
   }, [isScreenReaderModeEnabled]);
 
@@ -63,4 +59,8 @@ export const AccessibilityProvider = ({ children }) => {
   );
 };
 
-export const useAccessibility = () => useContext(AccessibilityContext); 
+AccessibilityProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+ 

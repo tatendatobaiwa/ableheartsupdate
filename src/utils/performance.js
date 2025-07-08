@@ -150,7 +150,7 @@ export const cacheManager = {
 // Bundle size optimization - dynamic imports
 export const loadComponent = async (componentPath) => {
   try {
-    const module = await import(componentPath);
+    const module = await import(/* @vite-ignore */ componentPath);
     return module.default || module;
   } catch (error) {
     // Failed to load component: componentPath, error

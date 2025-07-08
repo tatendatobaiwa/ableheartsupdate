@@ -1,4 +1,5 @@
-import React, { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { 
   useWebVitals, 
   useResourceMonitoring, 
@@ -238,5 +239,9 @@ const PerformanceDashboard = memo(({ isVisible = false }) => {
 });
 
 PerformanceDashboard.displayName = 'PerformanceDashboard';
+
+PerformanceDashboard.propTypes = {
+  isVisible: PropTypes.bool,
+};
 
 export default PerformanceDashboard;
