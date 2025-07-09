@@ -36,6 +36,18 @@ const collaboratorLogosList = [
   'india', 'minjex', 'nortex', 'trans', 'tropicana', 'sennfoods',
   'francistownelectronics', 'valentines', 'bush', 'strub', 'bms',
 ];
+
+// Mapping of logo keys to their respective website URLs
+const collaboratorLinks = {
+  'sennfoods': 'https://sennfoods.com/',
+  'strub': 'https://www.strubbotswana.com/',
+  'bms': 'https://www.bms.co.bw/',
+  'tropicana': 'https://tropicana.co.bw/',
+  'trans': 'https://trans.co.bw/',
+  'nortex': 'https://www.nortex.co.za/',
+  // Other logos without links remain as non-clickable
+};
+
 const duplicatedCollaboratorLogos = [...collaboratorLogosList, ...collaboratorLogosList];
 
 const Home = () => {
@@ -246,8 +258,9 @@ const Home = () => {
           <h3>Our Valued Collaborators</h3>
           <div className="logo-bar">
             <div className="logo-slider">
-              {safeMap(duplicatedCollaboratorLogos, (logoKey, index) => (
-                <div className="collaborator-logo-item" key={`${logoKey}-${index}`}>
+              {safeMap(duplicatedCollaboratorLogos, (logoKey, index) => {
+                const logoUrl = collaboratorLinks[logoKey];
+                const logoContent = (
                   <img
                     src={getImageUrl(logoKey)}
                     className="collaborator-logo"
@@ -255,8 +268,26 @@ const Home = () => {
                     onError={handleImageError}
                     loading="lazy"
                   />
-                </div>
-              ))}
+                );
+
+                return (
+                  <div className="collaborator-logo-item" key={`${logoKey}-${index}`}>
+                    {logoUrl ? (
+                      <a
+                        href={logoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="collaborator-logo-link"
+                        aria-label={`Visit ${logoKey} website`}
+                      >
+                        {logoContent}
+                      </a>
+                    ) : (
+                      logoContent
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
