@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './AboutUs.css';
 import ubLogo from '/src/assets/fixed/icons/ub.webp';
 import biustLogo from '/src/assets/fixed/icons/biust.webp';
+import AnimatedNumber from '../../components/AnimatedNumber';
 
 
 import blob1 from '../../assets/fixed/icons/blob1.webp';
@@ -134,18 +135,27 @@ const AboutUs = () => {
       <section className="about-section impact-section pre-animate">
         <h2 className="section-title">Our Impact</h2>
         <div className="impact-grid">
-          <div className="impact-card">
-            <h3>1000+</h3>
-            <p>Lives Touched</p>
-          </div>
-          <div className="impact-card">
-            <h3>9</h3>
-            <p>Initiated Programs</p>
-          </div>
-          <div className="impact-card">
-            <h3>8+</h3>
-            <p>Years of Service</p>
-          </div>
+          <AnimatedNumber
+            endValue={1000}
+            suffix="+"
+            label="Lives Touched"
+            duration={2.5}
+            className="primary"
+          />
+          <AnimatedNumber
+            endValue={9}
+            suffix=""
+            label="Initiated Programs"
+            duration={2.0}
+            className="success"
+          />
+          <AnimatedNumber
+            endValue={8}
+            suffix="+"
+            label="Years of Service"
+            duration={1.8}
+            className="warning"
+          />
         </div>
       </section>
 
@@ -165,6 +175,7 @@ const AboutUs = () => {
           ))}
         </div>
       </section>
+
       
       <section className="about-section team-section pre-animate">
         <h2 className="section-title">Meet Our Branch Presidents</h2>

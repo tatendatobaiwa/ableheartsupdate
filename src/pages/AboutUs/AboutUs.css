@@ -244,6 +244,54 @@
   background-color: #043F70;
 }
 
+/* Impact Section */
+.impact-section {
+  background: transparent;
+  padding: 4rem 2rem;
+  margin: 3rem 0;
+  text-align: center;
+  position: relative;
+}
+
+.impact-section .section-title {
+  font-size: 2.5rem;
+  color: #005BB5;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments for impact section */
+@media (max-width: 768px) {
+  .impact-section {
+    padding: 3rem 1rem;
+    margin: 2rem 0;
+  }
+  
+  .impact-section .section-title {
+    font-size: 2rem;
+  }
+  
+  .impact-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .impact-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 /* Animations */
 .pre-animate {
   opacity: 0;
