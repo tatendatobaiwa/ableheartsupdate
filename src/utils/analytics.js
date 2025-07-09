@@ -1,83 +1,186 @@
 /**
- * Analytics utility for tracking user interactions and page views
- * Supports Google Analytics 4 and custom event tracking
+ * Production-Ready Analytics utility for tracking user interactions and page views
+ * Supports Google Analytics 4 with GDPR/CCPA compliance
+ * Integrates with cookie consent system
  */
+
+import { safeJSONStorage } from './safeStorage';
+import { createLogger } from './logger';
+
+const logger = createLogger('Analytics');
 
 // Configuration
 const ANALYTICS_CONFIG = {
   GA4_MEASUREMENT_ID: import.meta.env.VITE_GA4_MEASUREMENT_ID || import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
   DEBUG_MODE: import.meta.env.DEV,
-  ENABLED: import.meta.env.VITE_ENABLE_ANALYTICS === 'true' && import.meta.env.PROD,
+  ENABLED: import.meta.env.VITE_ENABLE_ANALYTICS === 'true',
+  REQUIRE_CONSENT: true, // Always require consent for GDPR compliance
 };
 
-// Initialize Google Analytics 4
+/**
+ * Check if analytics consent has been granted
+ */
+const hasAnalyticsConsent = () => {
+  if (!ANALYTICS_CONFIG.REQUIRE_CONSENT) return true;
+  
+  const consent = safeJSONStorage.getItem('cookie_consent');
+  return consent && consent.analytics === true;
+};
+
+/**
+ * Initialize Google Analytics 4 with consent management
+ */
 export const initializeAnalytics = () => {
-  if (!ANALYTICS_CONFIG.ENABLED) {
-    // Analytics disabled in development mode
+  if (!ANALYTICS_CONFIG.ENABLED || !ANALYTICS_CONFIG.GA4_MEASUREMENT_ID) {
+    logger.info('Analytics disabled or missing measurement ID');
     return;
   }
 
-  // Load Google Analytics 4 script
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_CONFIG.GA4_MEASUREMENT_ID}`;
-  document.head.appendChild(script);
-
-  // Initialize gtag
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    window.dataLayer.push(arguments);
+  // Check if consent is required and granted
+  if (ANALYTICS_CONFIG.REQUIRE_CONSENT && !hasAnalyticsConsent()) {
+    logger.info('Analytics consent not granted, skipping initialization');
+    return;
   }
-  window.gtag = gtag;
 
-  gtag('js', new Date());
-  gtag('config', ANALYTICS_CONFIG.GA4_MEASUREMENT_ID, {
-    debug_mode: ANALYTICS_CONFIG.DEBUG_MODE,
-    send_page_view: true,
-  });
+  try {
+    // Load Google Analytics 4 script
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_CONFIG.GA4_MEASUREMENT_ID}`;
+    script.onerror = () => {
+      logger.error('Failed to load Google Analytics script');
+    };
+    document.head.appendChild(script);
 
-  if (ANALYTICS_CONFIG.DEBUG_MODE) {
-    // Analytics initialized with GA4 ID: ${ANALYTICS_CONFIG.GA4_MEASUREMENT_ID}
+    // Initialize gtag
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    window.gtag = gtag;
+
+    // Configure gtag with privacy settings
+    gtag('js', new Date());
+    gtag('config', ANALYTICS_CONFIG.GA4_MEASUREMENT_ID, {
+      debug_mode: ANALYTICS_CONFIG.DEBUG_MODE,
+      send_page_view: true,
+      anonymize_ip: true, // GDPR compliance
+      allow_google_signals: hasAnalyticsConsent(), // Respect consent
+      allow_ad_personalization_signals: hasAnalyticsConsent(),
+      cookie_expires: 63072000, // 2 years in seconds
+      cookie_update: true,
+      cookie_flags: 'SameSite=Strict;Secure', // Enhanced security
+    });
+
+    // Set consent mode
+    gtag('consent', 'default', {
+      analytics_storage: hasAnalyticsConsent() ? 'granted' : 'denied',
+      ad_storage: 'denied', // Always deny ad storage for privacy
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+    });
+
+    logger.info('Google Analytics 4 initialized successfully', {
+      measurementId: ANALYTICS_CONFIG.GA4_MEASUREMENT_ID,
+      consentGranted: hasAnalyticsConsent()
+    });
+
+  } catch (error) {
+    logger.error('Error initializing Google Analytics', error);
   }
 };
 
-// Track page views
+/**
+ * Update consent settings for Google Analytics
+ */
+export const updateAnalyticsConsent = (consentGranted) => {
+  if (!window.gtag) {
+    logger.warn('Google Analytics not initialized, cannot update consent');
+    return;
+  }
+
+  try {
+    window.gtag('consent', 'update', {
+      analytics_storage: consentGranted ? 'granted' : 'denied',
+    });
+
+    logger.info('Analytics consent updated', { consentGranted });
+
+    // Re-initialize if consent was granted
+    if (consentGranted && ANALYTICS_CONFIG.ENABLED) {
+      initializeAnalytics();
+    }
+  } catch (error) {
+    logger.error('Error updating analytics consent', error);
+  }
+};
+
+/**
+ * Track page views with consent checking
+ */
 export const trackPageView = (pagePath, pageTitle) => {
-  if (!ANALYTICS_CONFIG.ENABLED || !window.gtag) {
-    if (ANALYTICS_CONFIG.DEBUG_MODE) {
-      // Page view tracked (debug): { pagePath, pageTitle }
-    }
+  if (!ANALYTICS_CONFIG.ENABLED || !hasAnalyticsConsent() || !window.gtag) {
+    logger.debug('Page view not tracked - analytics disabled or consent not granted', {
+      enabled: ANALYTICS_CONFIG.ENABLED,
+      consent: hasAnalyticsConsent(),
+      gtag: !!window.gtag
+    });
     return;
   }
 
-  window.gtag('config', ANALYTICS_CONFIG.GA4_MEASUREMENT_ID, {
-    page_path: pagePath,
-    page_title: pageTitle,
-  });
+  try {
+    window.gtag('config', ANALYTICS_CONFIG.GA4_MEASUREMENT_ID, {
+      page_path: pagePath,
+      page_title: pageTitle,
+      custom_map: {
+        dimension1: 'user_consent_status'
+      }
+    });
 
-  if (ANALYTICS_CONFIG.DEBUG_MODE) {
-    // Page view tracked: { pagePath, pageTitle }
+    // Track additional page metadata
+    window.gtag('event', 'page_view', {
+      page_title: pageTitle,
+      page_location: window.location.href,
+      page_path: pagePath,
+      user_consent_status: 'granted'
+    });
+
+    logger.debug('Page view tracked', { pagePath, pageTitle });
+  } catch (error) {
+    logger.error('Error tracking page view', error);
   }
 };
 
-// Track custom events
+/**
+ * Track custom events with consent checking and enhanced parameters
+ */
 export const trackEvent = (eventName, parameters = {}) => {
-  if (!ANALYTICS_CONFIG.ENABLED || !window.gtag) {
-    if (ANALYTICS_CONFIG.DEBUG_MODE) {
-      // Event tracked (debug): { eventName, parameters }
-    }
+  if (!ANALYTICS_CONFIG.ENABLED || !hasAnalyticsConsent() || !window.gtag) {
+    logger.debug('Event not tracked - analytics disabled or consent not granted', {
+      eventName,
+      enabled: ANALYTICS_CONFIG.ENABLED,
+      consent: hasAnalyticsConsent()
+    });
     return;
   }
 
-  window.gtag('event', eventName, {
-    event_category: parameters.category || 'engagement',
-    event_label: parameters.label,
-    value: parameters.value,
-    ...parameters,
-  });
+  try {
+    const eventParams = {
+      event_category: parameters.category || 'general',
+      event_label: parameters.label || '',
+      value: parameters.value || 0,
+      user_consent_status: 'granted',
+      timestamp: new Date().toISOString(),
+      ...parameters,
+    };
 
-  if (ANALYTICS_CONFIG.DEBUG_MODE) {
-    // Event tracked: { eventName, parameters }
+    window.gtag('event', eventName, eventParams);
+
+    logger.debug('Event tracked', { eventName, parameters: eventParams });
+  } catch (error) {
+    logger.error('Error tracking event', { eventName, error });
   }
 };
 

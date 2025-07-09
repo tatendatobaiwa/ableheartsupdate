@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp } from 'firebase/app';
+import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
 // Validate environment variables
@@ -26,7 +27,7 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  measurementId: import.meta.env.VITE_GA4_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -39,6 +40,22 @@ if (import.meta.env.VITE_FIREBASE_MEASUREMENT_ID && import.meta.env.PROD) {
 }
 
 // Initialize Firestore
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
-export { db, analytics, app };
+// Initialize Firebase Analytics (with consent checking)
+export const initializeFirebaseAnalytics = async () => {
+  try {
+    const supported = await isSupported();
+    if (supported) {
+      const analytics = getAnalytics(app);
+      return analytics;
+    }
+    console.warn('Firebase Analytics not supported in this environment');
+    return null;
+  } catch (error) {
+    console.error('Firebase Analytics initialization error:', error);
+    return null;
+  }
+};
+
+export default app;

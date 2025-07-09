@@ -7,7 +7,7 @@ import { AccessibilityProvider } from './context/AccessibilityContext.jsx';
 import { initializeAnalytics, trackPerformance, trackUserEngagement } from './utils/analytics.js';
 import { loadCriticalResources, registerServiceWorker } from './utils/performance.js';
 
-// Initialize analytics
+// Initialize analytics (will check consent automatically)
 initializeAnalytics();
 
 // Load critical resources for performance
