@@ -12,6 +12,11 @@ const blobImages = [
 ];
 
 const TermsOfUse = () => {
+  // Set page title
+  useEffect(() => {
+    document.title = 'Terms of Use | AbleHearts Foundation';
+  }, []);
+
   usePageFadeIn();
   useFadeInAnimation('.terms-page-wrapper');
 

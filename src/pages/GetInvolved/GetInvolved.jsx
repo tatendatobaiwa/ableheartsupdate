@@ -15,6 +15,11 @@ const GetInvolved = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
 
+  // Set page title
+  useEffect(() => {
+    document.title = 'Get Involved | AbleHearts Foundation';
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 300);

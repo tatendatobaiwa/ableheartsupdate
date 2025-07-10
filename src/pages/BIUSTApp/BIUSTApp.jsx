@@ -19,6 +19,11 @@ const BIUSTApp = () => {
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
 
+  // Set page title
+  useEffect(() => {
+    document.title = 'AbleHearts BIUST | AbleHearts Foundation';
+  }, []);
+
   usePageFadeIn();
   useFadeInAnimation('.biust-app-page-background');
 

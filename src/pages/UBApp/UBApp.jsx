@@ -19,6 +19,11 @@ const UBApp = () => {
   const [status, setStatus] = useState('');
   const navigate = useNavigate();
 
+  // Set page title
+  useEffect(() => {
+    document.title = 'AbleHearts UB | AbleHearts Foundation';
+  }, []);
+
   usePageFadeIn();
   useFadeInAnimation('.page-wrapper');
 

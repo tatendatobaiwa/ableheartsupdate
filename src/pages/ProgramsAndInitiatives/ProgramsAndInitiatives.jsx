@@ -60,6 +60,22 @@ const programData = [
     imageAlt: 'Students receiving donations at Kedia Primary School.',
     imageOrder: 1,
   },
+  {
+    id: 'cheshireFoundation',
+    title: 'Cheshire Foundation Partnership',
+    description: 'Our collaboration with Cheshire Foundation represents a significant milestone in our mission to support individuals with disabilities. Through our BIUST branch, we have delivered essential resources to the Cheshire Foundation of Botswana, Palapye Regional Office. This partnership demonstrates our commitment to working with established organizations to maximize our impact and reach vulnerable communities. The initiative includes providing medical supplies, daily living aids, and educational materials to enhance the quality of life for residents and beneficiaries of the foundation.',
+    imageSrc: '/src/assets/fixed/chesirefoundation/chescover.webp',
+    imageAlt: 'Members of Ablehearts BIUST and Cheshire Foundation staff.',
+    imageOrder: 2,
+  },
+  {
+    id: 'familyDonations',
+    title: 'Family Donations Program',
+    description: 'Our Family Donations Program exemplifies our grassroots approach to community support. Through our UB branch, we have traveled to Tlokweng and other communities across Botswana to provide direct assistance to families in need. This program focuses on identifying and supporting families facing economic hardships, providing them with essential resources including food, clothing, household items, and educational materials. By working directly with families, we ensure that our support reaches those who need it most, creating lasting relationships and sustainable impact within local communities.',
+    imageSrc: '/src/assets/fixed/tlokwengfamily/tlok2.webp',
+    imageAlt: 'Ablehearts UB delivering donations in Tlokweng.',
+    imageOrder: 1,
+  },
 ];
 
 const blobImagePaths = [
@@ -71,6 +87,11 @@ const blobImagePaths = [
 
 const ProgramsAndInitiatives = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+
+  // Set page title
+  useEffect(() => {
+    document.title = 'Programs & Initiatives | AbleHearts Foundation';
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

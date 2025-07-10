@@ -14,6 +14,7 @@ const PrivacyPolicy = () => {
   const [isContentLoaded, setIsContentLoaded] = useState(false);
 
   useEffect(() => {
+    document.title = 'Privacy Policy | AbleHearts Foundation';
     setIsContentLoaded(true);
     window.scrollTo(0, 0); // Scroll to top on mount
   }, []);

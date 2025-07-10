@@ -35,6 +35,11 @@ const biustPresident = {
 const AboutUs = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // Set page title
+  useEffect(() => {
+    document.title = 'About Us | AbleHearts Foundation';
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 300);
