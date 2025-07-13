@@ -131,7 +131,7 @@ const GetInvolved = () => {
             </div>
             <div className="right-content">
               <img
-                src="/src/assets/fixed/biustvolunteers.webp"
+                src="/src/assets/fixed/chesirefoundation/chescover.webp"
                 alt="AbleHearts BIUST student volunteers."
                 className="placeholder-image"
                 loading="lazy"

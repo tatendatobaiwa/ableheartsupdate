@@ -4,7 +4,7 @@
   --gallery-secondary-text: #333333;
   --gallery-light-text: #FFFFFF;
   --gallery-accent-color: #005BB5;
-  --gallery-bg-page: #FFFFFF;
+  --gallery-bg-page: #f0f0f0;
   --gallery-bg-blobs: #f0f2f5;
   --gallery-card-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
   --gallery-card-hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
@@ -48,6 +48,7 @@
 
 
 .gallery-background-blobs {
+  opacity: 0.2;
   position: fixed;
   top: 0;
   left: 0;
@@ -60,17 +61,16 @@
 }
 .gallery-blobg {
   position: absolute;
-  width: clamp(300px, 40vw, 600px);
+  width: clamp(400px, 60vw, 800px); /* Responsive blob size */
   height: auto;
-  filter: blur(8px); /* Slightly more blur */
-  opacity: 0.25; /* More subtle */
-  animation: galleryFloat 20s infinite ease-in-out alternate;
+  filter: blur(15px); /* Increased blur */
+  animation: giFloat 25s infinite ease-in-out alternate; /* Common animation */
   will-change: transform;
 }
-.gallery-blobg.blob-1 { top: -15%; left: -15%; animation-duration: 22s; }
-.gallery-blobg.blob-2 { top: 15%; right: -20%; animation-duration: 25s; }
-.gallery-blobg.blob-3 { bottom: -10%; left: 0%; animation-duration: 18s; }
-.gallery-blobg.blob-4 { bottom: 5%; right: -5%; animation-duration: 23s; }
+.gallery-blobg.blob-1 { top: -10%; left: -15%; animation-duration: 22s; }
+.gallery-blobg.blob-2 { top: 15%; right: -10%; animation-duration: 25s; }
+.gallery-blobg.blob-3 { bottom: -15%; left: 5%; animation-duration: 18s; }
+.gallery-blobg.blob-4 { top: -10%; right: -5%; animation-duration: 23s; }
 
 @keyframes galleryFloat {
   0% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
@@ -85,6 +85,8 @@
   padding: 3rem;
   margin-bottom: var(--gallery-large-padding);
   border-radius: 12px; /* Retained from original if intended for a card-like header */
+    max-width: 1200px;
+
 }
 .gallery-header h1 {
   font-size: clamp(2.2rem, 5vw, 3rem); /* Responsive */

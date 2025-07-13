@@ -71,7 +71,6 @@
 }
 
 .get-involved-container {
-  padding: 0; /* Remove padding, sections will handle their own */
   background-color: transparent; /* Let page-wrapper or blobs show through */
   overflow: hidden;
   z-index: 1; /* Above fixed blobs */
@@ -79,6 +78,7 @@
 }
 
 .get-involved-page-header {
+  margin-top: 1rem;
   background-color: transparent;
   position: relative;
   text-align: center;
