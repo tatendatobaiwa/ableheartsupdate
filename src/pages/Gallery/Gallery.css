@@ -229,7 +229,7 @@
 
 .event-modal-content {
   width: 90%;
-  max-width: 1000px; /* Slightly reduced max-width */
+  max-width: 1200px; /* Slightly reduced max-width */
 }
 .event-modal-header {
   padding: var(--gallery-large-padding);
@@ -257,23 +257,30 @@
 }
 .event-images-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Min size for thumbnails */
+  grid-template-columns: repeat(auto-fill, 160px); /* Min size for thumbnails */
   gap: var(--gallery-base-padding);
   padding: var(--gallery-large-padding);
   overflow-y: auto;
   flex-grow: 1;
   background-color: var(--gallery-bg-page);
+  justify-content: center; /* Center the grid items */
 }
 .event-image-card {
   position: relative;
   border-radius: calc(var(--gallery-border-radius) * 0.75);
   overflow: hidden;
-  aspect-ratio: 1 / 1;
   cursor: pointer;
   box-shadow: var(--gallery-card-shadow);
   transition: transform var(--gallery-transition-duration) ease, box-shadow var(--gallery-transition-duration) ease;
   background-color: #d8dde2;
 }
+
+.event-image-card::before {
+  content: '';
+  display: block;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+}
+
 .event-image-card:hover,
 .event-image-card:focus-visible {
   transform: scale(1.03);
@@ -282,6 +289,9 @@
   outline-offset: 1px;
 }
 .event-image-item {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -393,7 +403,7 @@
 
   .event-modal-title-text { font-size: clamp(1.5rem, 3.5vw, 1.8rem); }
   .event-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, 140px);
     padding: var(--gallery-base-padding);
     gap: var(--gallery-base-padding);
   }
@@ -441,7 +451,7 @@
   .event-modal-title-text { font-size: clamp(1.4rem, 4vw, 1.6rem); }
   .event-modal-description-text { font-size: clamp(0.85rem, 2.5vw, 0.95rem); }
   .event-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    grid-template-columns: repeat(auto-fill, 110px);
     padding: var(--gallery-base-padding);
     gap: 0.6rem;
   }
@@ -472,7 +482,7 @@
     grid-template-columns: 1fr; /* Single column for very small screens */
   }
   .event-images-grid {
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fill, 90px);
   }
   .event-card-title { font-size: clamp(1.1rem, 3.5vw, 1.3rem); }
   .event-card-date { font-size: clamp(0.75rem, 1.8vw, 0.85rem); }
