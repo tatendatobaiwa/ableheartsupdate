@@ -351,7 +351,6 @@ const Gallery = () => {
   const handleEventClick = useCallback((event) => {
     setSelectedEvent(event);
     setSelectedImage(null);
-    document.body.style.overflow = 'hidden';
   }, []);
 
   const handleImageClick = useCallback((image) => {
@@ -360,7 +359,6 @@ const Gallery = () => {
 
   const closeEventModal = useCallback(() => {
     setSelectedEvent(null);
-    document.body.style.overflow = '';
   }, []);
 
   const closeImageModal = useCallback(() => {
