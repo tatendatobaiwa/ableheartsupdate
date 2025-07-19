@@ -126,13 +126,11 @@ const Shop = () => {
     setSelectedProduct(product);
     setSelectedSize(product.defaultSize || 'M');
     setQuantity(1);
-    document.body.style.overflow = 'hidden';
   }, []);
 
   const closeModal = useCallback(() => {
     setSelectedProduct(null);
     setEnlargedImage(null);
-    document.body.style.overflow = '';
   }, []);
 
   const handleImageClick = useCallback((image) => setEnlargedImage(image), []);
@@ -353,11 +351,13 @@ const Shop = () => {
                 <div className="cart-item-details">
                   <h4>{item.name}</h4>
                   <p>Size: {item.size}, Qty: {item.quantity}</p>
-                  <p>P{(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="cart-item-price-row">
+                    P{(item.price * item.quantity).toFixed(2)}
+                    <button className="remove-item-btn" onClick={() => removeFromCart(item.id)} aria-label={`Remove ${item.name} from cart`}>
+                      <X size={16} />
+                    </button>
+                  </p>
                 </div>
-                <button className="remove-item-btn" onClick={() => removeFromCart(item.id)} aria-label={`Remove ${item.name} from cart`}>
-                  <X size={16} />
-                </button>
               </div>
             ))
           )}
@@ -387,10 +387,12 @@ const Shop = () => {
         )}
       </div>
       
-      <button type="button" className="cart-toggle-btn" onClick={() => setIsCartOpen(prev => !prev)} aria-label="Toggle cart visibility" aria-expanded={isCartOpen}>
-        <ShoppingCart size={24} />
-        {safeLength(cart) > 0 && <span className="cart-item-count">{safeLength(cart)}</span>}
-      </button>
+      {!isCartOpen && (
+        <button type="button" className="cart-toggle-btn" onClick={() => setIsCartOpen(prev => !prev)} aria-label="Toggle cart visibility" aria-expanded={isCartOpen}>
+          <ShoppingCart size={24} />
+          {safeLength(cart) > 0 && <span className="cart-item-count">{safeLength(cart)}</span>}
+        </button>
+      )}
 
       {enlargedImage && (
         <div className="enlarged-image-overlay" onClick={closeEnlargedImage} role="dialog" aria-modal="true" aria-label="Enlarged product image">
@@ -411,7 +413,7 @@ const Shop = () => {
 
       {showScrollToTop && (
         <button type="button" className="scroll-to-top-btn" onClick={scrollToTop} aria-label="Scroll to top">
-          �'
+          ↑
         </button>
       )}
       </div>
